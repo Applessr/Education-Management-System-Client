@@ -6,6 +6,8 @@ import Unauthorized from "../pages/Unauthorized";
 import StudentLayout from "../layouts/StudentLayout";
 import TeacherLayout from "../layouts/TeacherLayout";
 import AdminLayout from "../layouts/AdminLayout";
+import ChooseRole from "../pages/auth/ChooseRole";
+import AuthenLayout from "../layouts/AuthenLayout";
 
 
 const router = createBrowserRouter([
@@ -14,6 +16,15 @@ const router = createBrowserRouter([
         element: <GuestLayout />,
         children: [
             { index: true, element: <LandingPage /> },
+            { path: 'unauthorization', element: <Unauthorized /> },
+            { path: '*', element: <NotFound /> }
+        ],
+    },
+    {
+        path: '/authentication',
+        element: <AuthenLayout />,
+        children: [
+            { index: true, element: <ChooseRole /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
         ],
