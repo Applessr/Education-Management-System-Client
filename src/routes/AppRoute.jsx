@@ -8,6 +8,7 @@ import TeacherLayout from "../layouts/TeacherLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
+import Login from "../pages/auth/Login";
 
 
 const router = createBrowserRouter([
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
         element: <AuthenLayout />,
         children: [
             { index: true, element: <ChooseRole /> },
+            { path: 'login', element: <Login />},
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
         ],
