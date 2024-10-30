@@ -9,7 +9,7 @@ const GuestLayout = () => {
       <Outlet/>
       
     </div>
-  )
-}
+  );
+};
 
-export default GuestLayout
+export default GuestLayout;
