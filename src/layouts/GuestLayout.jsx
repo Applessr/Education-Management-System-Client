@@ -1,12 +1,13 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import GuestFooter from "../components/guest/GuestFooter";
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import GuestHeader from '../components/guest/GuestHeader'
 
 const GuestLayout = () => {
   return (
     <div>
-      <Outlet />
-      <GuestFooter />
+      <GuestHeader />
+      <Outlet/>
+      
     </div>
   );
 };
