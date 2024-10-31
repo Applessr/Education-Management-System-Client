@@ -40,9 +40,9 @@ const Login = () => {
                 <div className='w-full max-w-2xl'> 
                     <div className='flex items-center justify-center gap-3 mb-12'> 
                         <img 
-                            src="/path-to-logo.png"
+                            src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
                             alt="PierreUT Logo"
-                            className='h-12 w-12'
+                            className='h-40 w-40'
                         />
                         <span className='text-3xl font-semibold text-blue-600 border-2 border-blue-300 rounded-lg px-4 py-1'>
                             PierreUT
