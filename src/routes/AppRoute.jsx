@@ -9,8 +9,10 @@ import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
 import Login from "../pages/auth/Login";
-import StudentEnroll from "../components/student/StudentEnroll";
+import LoginEmployee from "../pages/auth/LoginEmployee";
+import { UserContextProvider } from "../contexts/UserContext";
 import EnrollmentFlow from "../components/student/CourseNode";
+import StudentInfo from "../pages/student/StudentInfo";
 
 
 const router = createBrowserRouter([
@@ -25,10 +27,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/authentication',
-        element: <AuthenLayout />,
+        element: <UserContextProvider><AuthenLayout /></UserContextProvider>,
         children: [
             { index: true, element: <ChooseRole /> },
-            { path: 'login', element: <Login />},
+            { path: 'login', element: <Login /> },
+            { path: 'login-employee', element: <LoginEmployee /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
         ],
@@ -38,7 +41,7 @@ const router = createBrowserRouter([
         element: <StudentLayout />,
         children: [
             { index: true, element: <LandingPage /> },
-            { path: "profile", element: <StudentInfo /> },
+            { path: "profile", element: <StudentInfo/> },
             { path: 'enroll', element: <EnrollmentFlow /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
@@ -65,9 +68,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function AppRouter() {
-  return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  );
+    return (
+        <div>
+            <RouterProvider router={router} />
+        </div>
+    );
 }
