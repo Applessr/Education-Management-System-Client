@@ -9,6 +9,8 @@ import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
 import Login from "../pages/auth/Login";
+import StudentEnroll from "../components/student/StudentEnroll";
+import EnrollmentFlow from "../components/student/CourseNode";
 
 
 const router = createBrowserRouter([
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
         element: <StudentLayout />,
         children: [
             { index: true, element: <LandingPage /> },
+            { path: 'enroll', element: <EnrollmentFlow /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
         ],
