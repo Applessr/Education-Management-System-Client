@@ -5,12 +5,12 @@ const GuestHeader = () => {
     return (
         <header>
             <div className="bg-blue-600 text-white">
-                <div className="gap-6s container mx-auto flex justify-center space-x-8 py-3 text-lg font-semibold">
+                <div className="gap-6s items-center container mx-auto flex justify-center space-x-8 py-3 text-lg font-semibold">
                     <div className="flex items-center space-x-4">
                         <img
-                            src="https://example.com/university-logo.png"
+                            src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
                             alt="University Logo"
-                            className="h-10"
+                            className="h-40 w-40"
                         />
                     </div>
                     <Link to="/about" className="text-2xl font-bold hover:text-black">ABOUT</Link>
