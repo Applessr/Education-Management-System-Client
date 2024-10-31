@@ -13,6 +13,9 @@ import LoginEmployee from "../pages/auth/LoginEmployee";
 import { UserContextProvider } from "../contexts/UserContext";
 import EnrollmentFlow from "../components/student/CourseNode";
 import StudentInfo from "../pages/student/StudentInfo";
+import ClassSchedule from "../pages/student/ClassSchedule";
+import ExamSchedule from "../pages/student/ExamSchedule";
+
 
 
 const router = createBrowserRouter([
@@ -43,6 +46,8 @@ const router = createBrowserRouter([
             { index: true, element: <LandingPage /> },
             { path: "profile", element: <StudentInfo/> },
             { path: 'enroll', element: <EnrollmentFlow /> },
+            { path: "class-schedule", element: <ClassSchedule /> },
+      { path: "exam-schedule", element: <ExamSchedule /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
         ],
