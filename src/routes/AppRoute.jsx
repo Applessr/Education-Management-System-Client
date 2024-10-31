@@ -12,6 +12,7 @@ import Login from "../pages/auth/Login";
 import LoginEmployee from "../pages/auth/LoginEmployee";
 import { UserContextProvider } from "../contexts/UserContext";
 import EnrollmentFlow from "../components/student/CourseNode";
+import StudentInfo from "../pages/student/StudentInfo";
 
 
 const router = createBrowserRouter([
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
         element: <StudentLayout />,
         children: [
             { index: true, element: <LandingPage /> },
-            { path: "profile", element: <StudentInfo /> },
+            { path: "profile", element: <StudentInfo/> },
             { path: 'enroll', element: <EnrollmentFlow /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }

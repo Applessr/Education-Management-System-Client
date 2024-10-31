@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 const UserContext = createContext()
 
 import React from 'react'
-import { loginASEmployee } from "../api/auth";
+import { loginASEmployee, loginGoogle } from "../api/auth";
 import { toast } from "react-toastify";
 
 const UserContextProvider = (props) => {
@@ -15,8 +15,9 @@ const UserContextProvider = (props) => {
     const loginEmployee = async (form) => {
         try {
             const response = await loginASEmployee(form)
-            console.log(response)
-            localStorage.setItem('token',response.data.token)
+            setUser(response.data.user.user)
+            console.log(user, 'user')
+            localStorage.setItem('token', response.data.token)
             const role = response.data.user.user.role
             toast.success(`Login as ${role}`)
             console.log(role);
@@ -39,11 +40,26 @@ const UserContextProvider = (props) => {
             toast.error('Login Fail Try again');
         }
     };
+    const loginWithGoogle = async (token) => {
+        try {
+            const response = await loginGoogle(token);
+            setUser(response.data.user.employee);
+            localStorage.setItem('token', response.data.token);
+            const role = response.data.user.employee.role;
+            toast.success(`Login as ${role}`);
+            console.log(role);
+        } catch (error) {
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+        }
+    };
+
+    const values = { loginEmployee, loginWithGoogle }
 
 
     return (
         <div>
-            <UserContext.Provider value={{ loginEmployee }}>
+            <UserContext.Provider value={values}>
                 {props.children}
             </UserContext.Provider>
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import validateEmployeeLogin from '../../utils/loginvalidator';
 import useUser from '../../hooks/useUser';
 import { toast } from 'react-toastify';
+import LoginGoogle from './LoginGoogle';
 
 const LoginEmployee = () => {
     const { loginEmployee } = useUser()
@@ -130,6 +131,8 @@ const LoginEmployee = () => {
                             Sign In
                         </button>
                     </form>
+                    <div className='divider'></div>
+                    <LoginGoogle />
 
                     <div className='mt-12 text-sm text-gray-600 space-y-4'>
                         <p>
