@@ -38,6 +38,7 @@ const router = createBrowserRouter([
         element: <StudentLayout />,
         children: [
             { index: true, element: <LandingPage /> },
+            { path: "profile", element: <StudentInfo /> },
             { path: 'enroll', element: <EnrollmentFlow /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
@@ -64,9 +65,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function AppRouter() {
-    return (
-        <div>
-            <RouterProvider router={router} />
-        </div>
-    )
-};
+  return (
+    <div>
+      <RouterProvider router={router} />
+    </div>
+  );
+}
