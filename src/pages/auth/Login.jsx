@@ -1,24 +1,36 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import validateStudentLogin from '../../utils/loginStudentValidator';
+import useUser from '../../hooks/useUser';
 
 const Login = () => {
+    const { loginStudent } = useUser()
     const [formData, setFormData] = useState({
-        identify: '',
+        identifier: '',
         password: '',
     });
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
+    const hdlOnChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handleSubmit = (e) => {
+
+    const hdlSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login attempt with:', formData);
-    };
+        const validationErrors = validateStudentLogin(formData)
+        if (validationErrors) {
+            return setFormErrors(validationErrors);
+        }
+        try {
+            await loginStudent(formData)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     return (
         <div className='min-h-screen flex'>
@@ -52,16 +64,16 @@ const Login = () => {
                         Nice to see you again
                     </h2>
 
-                    <form onSubmit={handleSubmit} className='space-y-8'> 
+                    <form onSubmit={hdlSubmit} className='space-y-8'> 
                         <div>
                             <label className='block text-lg font-medium text-gray-700 mb-2'> 
                                 PierreUT ID
                             </label>
                             <input
                                 type="text"
-                                name="pierreId"
-                                value={formData.pierreId}
-                                onChange={handleChange}
+                                name="identifier"
+                                value={formData.identifier}
+                                onChange={hdlOnChange}
                                 className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                 placeholder='Email or phone number'
                             />
@@ -76,7 +88,7 @@ const Login = () => {
                                     type="password"
                                     name="password"
                                     value={formData.password}
-                                    onChange={handleChange}
+                                    onChange={hdlOnChange}
                                     className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                     placeholder='Enter password'
                                 />
@@ -89,13 +101,13 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <div className='flex items-center justify-between'>
+                        {/* <div className='flex items-center justify-between'>
                             <div className='flex items-center'>
                                 <input
                                     type="checkbox"
                                     name="rememberMe"
                                     checked={formData.rememberMe}
-                                    onChange={handleChange}
+                                    onChange={hdlOnChange}
                                     className='h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded'
                                 />
                                 <label className='ml-3 block text-lg text-gray-700'> 
@@ -105,7 +117,7 @@ const Login = () => {
                             <Link to="/forgot-password" className='text-lg text-blue-600 hover:text-blue-500'> 
                                 Forgot password?
                             </Link>
-                        </div>
+                        </div> */}
 
                         <button
                             type="submit"

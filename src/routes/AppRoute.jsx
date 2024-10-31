@@ -43,11 +43,11 @@ const router = createBrowserRouter([
         path: '/student',
         element: <StudentLayout />,
         children: [
-            { index: true, element: <LandingPage /> },
-            { path: "profile", element: <StudentInfo/> },
+            { index: true, element: <StudentInfo /> },
+            { path: "profile", element: <StudentInfo /> },
             { path: 'enroll', element: <EnrollmentFlow /> },
             { path: "class-schedule", element: <ClassSchedule /> },
-      { path: "exam-schedule", element: <ExamSchedule /> },
+            { path: "exam-schedule", element: <ExamSchedule /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
         ],
