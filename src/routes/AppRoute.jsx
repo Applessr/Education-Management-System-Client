@@ -9,6 +9,8 @@ import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
 import Login from "../pages/auth/Login";
+import LoginEmployee from "../pages/auth/LoginEmployee";
+import { UserContextProvider } from "../contexts/UserContext";
 
 
 const router = createBrowserRouter([
@@ -23,10 +25,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/authentication',
-        element: <AuthenLayout />,
+        element: <UserContextProvider><AuthenLayout /></UserContextProvider>,
         children: [
             { index: true, element: <ChooseRole /> },
-            { path: 'login', element: <Login />},
+            { path: 'login', element: <Login /> },
+            { path: 'login-employee', element: <LoginEmployee /> },
             { path: 'unauthorization', element: <Unauthorized /> },
             { path: '*', element: <NotFound /> }
         ],
