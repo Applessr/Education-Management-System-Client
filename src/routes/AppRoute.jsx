@@ -17,6 +17,7 @@ import ClassSchedule from "../pages/student/ClassSchedule";
 import ExamSchedule from "../pages/student/ExamSchedule";
 import StudentPayment from "../pages/student/StudentPayment";
 import AcademicSchedule from "../pages/student/AcademicSchedule";
+import StudentEnrollResult from "../pages/student/StudentEnrollResult";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       { path: "*", element: <NotFound /> },
     ],
   },
-    
+
   {
     path: "/authentication",
     element: (
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <StudentInfo /> },
       { path: "enroll", element: <EnrollmentFlow /> },
+      { path: "enrollResult", element: <StudentEnrollResult /> },
       { path: "academic-schedule", element: <AcademicSchedule /> },
       // { path: "class-schedule", element: <ClassSchedule /> },
       // { path: "exam-schedule", element: <ExamSchedule /> },
@@ -59,7 +61,7 @@ const router = createBrowserRouter([
       { path: "*", element: <NotFound /> },
     ],
   },
-      
+
   {
     path: "/teacher",
     element: <TeacherLayout />,
