@@ -26,6 +26,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminSchedule from "../pages/admin/AdminSchedule";
 import AdminProfessor from "../pages/admin/AdminProfessor";
 import AdminStudent from "../pages/admin/AdminStudent";
+import StudentEnrollResult from "../pages/student/StudentEnrollResult";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,7 @@ const router = createBrowserRouter([
       { path: "profile", element: <StudentInfo /> },
       { path: "enroll", element: <EnrollmentFlow /> },
       { path: "dashboard", element: <StudentDashboard /> },
+      { path: "enrollResult", element: <StudentEnrollResult /> },
       { path: "academic-schedule", element: <AcademicSchedule /> },
       { path: "payment", element: <StudentPayment /> },
       { path: "unauthorization", element: <Unauthorized /> },
@@ -77,8 +79,8 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <TeacherDashboard /> },
       { path: "schedule", element: <TeacherSchedule /> },
       { path: "course", element: <TeacherCourse /> },
-      { path: "requested-course", element: <TeacherRequestedCourse />},
-      { path: "advisors", element: <TeacherAdvisors/>},
+      { path: "requested-course", element: <TeacherRequestedCourse /> },
+      { path: "advisors", element: <TeacherAdvisors /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
