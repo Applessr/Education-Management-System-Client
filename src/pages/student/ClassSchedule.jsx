@@ -1,285 +1,164 @@
-//////////////////////////////no2
+import React from 'react';
 
-// import React from "react";
-
-// // Sample data for classes with start and end times
-// const classes = [
-//   {
-//     name: "Math",
-//     code: "MATH101",
-//     location: "Room 101",
-//     day: "Monday",
-//     startTime: "9:00",
-//     endTime: "10:30",
-//   },
-//   {
-//     name: "Science",
-//     code: "SCI201",
-//     location: "Lab 1",
-//     day: "Wednesday",
-//     startTime: "10:30",
-//     endTime: "12:00",
-//   },
-//   {
-//     name: "History",
-//     code: "HIS301",
-//     location: "Room 202",
-//     day: "Friday",
-//     startTime: "13:00",
-//     endTime: "14:30",
-//   },
-// ];
-
-// // Days and 30-minute time slots from 7:00 to 17:00 for the grid
-// const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-// const times = Array.from({ length: 20 }, (_, i) => {
-//   const hour = 7 + Math.floor(i / 2);
-//   const minutes = i % 2 === 0 ? "00" : "30";
-//   return `${hour}:${minutes}`;
-// });
-
-// // Helper function to check if a time slot is within the class time range
-// const isWithinClassTime = (classStart, classEnd, slotTime) => {
-//   const [classStartHour, classStartMinutes] = classStart.split(":").map(Number);
-//   const [classEndHour, classEndMinutes] = classEnd.split(":").map(Number);
-//   const [slotHour, slotMinutes] = slotTime.split(":").map(Number);
-
-//   const slotTimeInMinutes = slotHour * 60 + slotMinutes;
-//   const classStartInMinutes = classStartHour * 60 + classStartMinutes;
-//   const classEndInMinutes = classEndHour * 60 + classEndMinutes;
-
-//   return (
-//     slotTimeInMinutes >= classStartInMinutes &&
-//     slotTimeInMinutes < classEndInMinutes
-//   );
-// };
-
-// // Helper function to calculate the number of slots a class spans
-// const getRowSpan = (classStart, classEnd) => {
-//   const [classStartHour, classStartMinutes] = classStart.split(":").map(Number);
-//   const [classEndHour, classEndMinutes] = classEnd.split(":").map(Number);
-
-//   const startInMinutes = classStartHour * 60 + classStartMinutes;
-//   const endInMinutes = classEndHour * 60 + classEndMinutes;
-
-//   return (endInMinutes - startInMinutes) / 30; // 30 minutes per slot
-// };
-
-// const ClassSchedule = () => {
-//   return (
-//     <div className="p-4 max-w-5xl mx-auto">
-//       <table className="w-full border border-gray-200 shadow-md">
-//         <thead>
-//           <tr>
-//             <th className="border border-gray-300 px-4 py-2 bg-gray-100 text-left">
-//               Time
-//             </th>
-//             {days.map((day) => (
-//               <th
-//                 key={day}
-//                 className="border border-gray-300 px-4 py-2 bg-gray-100 text-center"
-//               >
-//                 {day}
-//               </th>
-//             ))}
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {times.map((time, timeIndex) => (
-//             <tr key={time}>
-//               <td className="border border-gray-300 px-4 py-2 bg-gray-50 font-medium">
-//                 {time}
-//               </td>
-//               {days.map((day) => {
-//                 // Find class that matches the day and includes the current time slot
-//                 const classDetails = classes.find(
-//                   (cls) =>
-//                     cls.day === day &&
-//                     isWithinClassTime(cls.startTime, cls.endTime, time)
-//                 );
-
-//                 // Check if this is the first slot for the class to apply rowSpan
-//                 if (classDetails && time === classDetails.startTime) {
-//                   const rowSpan = getRowSpan(
-//                     classDetails.startTime,
-//                     classDetails.endTime
-//                   );
-//                   return (
-//                     <td
-//                       key={day}
-//                       className="border border-gray-300 px-4 py-2 text-center bg-blue-50"
-//                       rowSpan={rowSpan}
-//                     >
-//                       <div>
-//                         <span className="block font-semibold text-blue-700">
-//                           {classDetails.name}
-//                         </span>
-//                         <span className="text-gray-600 text-sm">
-//                           {classDetails.code}
-//                         </span>
-//                         <span className="text-gray-500 text-sm block">
-//                           {classDetails.location}
-//                         </span>
-//                         <span className="text-gray-500 text-xs block">{`${classDetails.startTime} - ${classDetails.endTime}`}</span>
-//                       </div>
-//                     </td>
-//                   );
-//                 }
-
-//                 // Return empty cell if it's within the time range of an already rendered class
-//                 return classDetails ? null : (
-//                   <td
-//                     key={day}
-//                     className="border border-gray-300 px-4 py-2 bg-white"
-//                   ></td>
-//                 );
-//               })}
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default ClassSchedule;
-
-/////////////////////////////////no3
-
-import React from "react";
-
-// Sample data for classes with start and end times
+// Sample data structure matching backend datetime format
 const classes = [
   {
     name: "Math",
     code: "MATH101",
+    instructor: "Dr. Smith",
     location: "Room 101",
-    day: "Monday",
-    startTime: "9:00",
-    endTime: "10:30",
+    startTime: "2024-11-01T09:00:00",
+    endTime: "2024-11-01T10:30:00",
+    dayOfWeek: 1, // 1 = Monday
+    color: "bg-blue-50 hover:bg-blue-100"
   },
   {
     name: "Science",
-    code: "SCI201",
+    code: "SCI201", 
+    instructor: "Dr. Johnson",
     location: "Lab 1",
-    day: "Wednesday",
-    startTime: "10:30",
-    endTime: "12:00",
+    startTime: "2024-11-01T10:30:00",
+    endTime: "2024-11-01T12:00:00",
+    dayOfWeek: 3, // 3 = Wednesday
+    color: "bg-green-50 hover:bg-green-100"
   },
   {
     name: "History",
     code: "HIS301",
+    instructor: "Prof. Williams",
     location: "Room 202",
-    day: "Friday",
-    startTime: "13:00",
-    endTime: "14:30",
-  },
+    startTime: "2024-11-01T13:00:00",
+    endTime: "2024-11-01T14:30:00",
+    dayOfWeek: 5, // 5 = Friday
+    color: "bg-purple-50 hover:bg-purple-100"
+  }
 ];
 
-// Time slots from 7:00 to 17:00 in 30-minute increments
 const times = Array.from({ length: 19 }, (_, i) => {
   const hour = 8 + Math.floor(i / 2);
   const minutes = i % 2 === 0 ? "00" : "30";
-  return `${hour}:${minutes}`;
+  return `${hour.toString().padStart(2, '0')}:${minutes}`;
 });
+
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-// Helper functions
-const isWithinClassTime = (classStart, classEnd, slotTime) => {
-  const [classStartHour, classStartMinutes] = classStart.split(":").map(Number);
-  const [classEndHour, classEndMinutes] = classEnd.split(":").map(Number);
-  const [slotHour, slotMinutes] = slotTime.split(":").map(Number);
+const isWithinClassTime = (classStartTime, classEndTime, slotTime) => {
+  const [slotHour, slotMinute] = slotTime.split(":").map(Number);
+  const startDate = new Date(classStartTime);
+  const endDate = new Date(classEndTime);
+  const slotMinutes = slotHour * 60 + slotMinute;
+  const startMinutes = startDate.getHours() * 60 + startDate.getMinutes();
+  const endMinutes = endDate.getHours() * 60 + endDate.getMinutes();
 
-  const slotTimeInMinutes = slotHour * 60 + slotMinutes;
-  const classStartInMinutes = classStartHour * 60 + classStartMinutes;
-  const classEndInMinutes = classEndHour * 60 + classEndMinutes;
-
-  return (
-    slotTimeInMinutes >= classStartInMinutes &&
-    slotTimeInMinutes < classEndInMinutes
-  );
+  return slotMinutes >= startMinutes && slotMinutes < endMinutes;
 };
 
-const getRowSpan = (classStart, classEnd) => {
-  const [classStartHour, classStartMinutes] = classStart.split(":").map(Number);
-  const [classEndHour, classEndMinutes] = classEnd.split(":").map(Number);
+const getColSpan = (startTime, endTime) => {
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+  const durationMinutes = (end - start) / (1000 * 60);
+  return durationMinutes / 30;
+};
 
-  const startInMinutes = classStartHour * 60 + classStartMinutes;
-  const endInMinutes = classEndHour * 60 + classEndMinutes;
+const formatTimeDisplay = (dateTimeString) => {
+  return new Date(dateTimeString).toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+};
 
-  return (endInMinutes - startInMinutes) / 30;
+const getDayIndex = (dayOfWeek) => {
+  return dayOfWeek - 1; // Convert 1-based to 0-based index
 };
 
 const ClassSchedule = () => {
   return (
-    <div className="p-4 max-w-5xl ">
-      <table className="min-w-full table-auto border border-gray-200 shadow-md">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2 bg-gray-100 text-left">
-              Day
-            </th>
-            {times.map((time) => (
-              <th
-                key={time}
-                className="border border-gray-300 px-4 py-2 bg-gray-100 text-center"
+    <div className="bg-white rounded-lg shadow-lg p-4">
+      <div className="mb-4">
+        <h2 className="text-xl font-semibold text-gray-800">Weekly Class Schedule</h2>
+      </div>
+      <div className="min-w-[800px] overflow-x-auto">
+        <table className="w-full border-collapse" role="grid" aria-label="Class Schedule">
+          <thead>
+            <tr>
+              <th 
+                className="border border-gray-200 px-4 py-2 bg-gray-100 text-left font-semibold"
+                scope="col"
               >
-                {time}
+                Day
               </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {days.map((day) => (
-            <tr key={day}>
-              <td className="border border-gray-300 px-4 py-2 bg-gray-50 font-medium">
-                {day}
-              </td>
-              {times.map((time) => {
-                const classDetails = classes.find(
-                  (cls) =>
-                    cls.day === day &&
-                    isWithinClassTime(cls.startTime, cls.endTime, time)
-                );
-
-                if (classDetails && time === classDetails.startTime) {
-                  const colSpan = getRowSpan(
-                    classDetails.startTime,
-                    classDetails.endTime
+              {times.map((time) => (
+                <th
+                  key={time}
+                  className="border border-gray-200 px-4 py-2 bg-gray-100 text-center font-semibold text-sm"
+                  scope="col"
+                >
+                  {time}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {days.map((day, dayIndex) => (
+              <tr key={day}>
+                <th
+                  className="border border-gray-200 px-4 py-2 bg-gray-50 font-medium text-left"
+                  scope="row"
+                >
+                  {day}
+                </th>
+                {times.map((time) => {
+                  const classDetails = classes.find(
+                    (cls) =>
+                      getDayIndex(cls.dayOfWeek) === dayIndex &&
+                      isWithinClassTime(cls.startTime, cls.endTime, time)
                   );
-                  return (
+
+                  if (classDetails && `${new Date(classDetails.startTime).getHours().toString().padStart(2, '0')}:${new Date(classDetails.startTime).getMinutes().toString().padStart(2, '0')}` === time) {
+                    const colSpan = getColSpan(
+                      classDetails.startTime,
+                      classDetails.endTime
+                    );
+                    return (
+                      <td
+                        key={time}
+                        className={`border border-gray-200 px-2 py-1 text-center transition-colors duration-200 ${classDetails.color}`}
+                        colSpan={colSpan}
+                      >
+                        <div className="flex flex-col gap-0.5">
+                          <span className="font-semibold text-blue-700">
+                            {classDetails.name}
+                          </span>
+                          <span className="text-gray-600 text-sm">
+                            {classDetails.code}
+                          </span>
+                          <span className="text-gray-500 text-sm">
+                            {classDetails.instructor}
+                          </span>
+                          <span className="text-gray-500 text-sm">
+                            {classDetails.location}
+                          </span>
+                          <span className="text-gray-500 text-xs">
+                            {`${formatTimeDisplay(classDetails.startTime)} - ${formatTimeDisplay(classDetails.endTime)}`}
+                          </span>
+                        </div>
+                      </td>
+                    );
+                  }
+
+                  return classDetails ? null : (
                     <td
                       key={time}
-                      className="border border-gray-300 px-4 py-2 text-center bg-blue-50"
-                      colSpan={colSpan}
-                    >
-                      <div className="whitespace-normal overflow-hidden">
-                        <span className="block font-semibold text-blue-700">
-                          {classDetails.name}
-                        </span>
-                        <span className="text-gray-600 text-sm">
-                          {classDetails.code}
-                        </span>
-                        <span className="text-gray-500 text-sm block">
-                          {classDetails.location}
-                        </span>
-                        <span className="text-gray-500 text-xs block">{`${classDetails.startTime} - ${classDetails.endTime}`}</span>
-                      </div>
-                    </td>
+                      className="border border-gray-200 px-4 py-2 bg-white"
+                    />
                   );
-                }
-
-                return classDetails ? null : (
-                  <td
-                    key={time}
-                    className="border border-gray-300 px-4 py-2 bg-white"
-                  ></td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
