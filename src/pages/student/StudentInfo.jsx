@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   UserRound,
   School,
@@ -187,6 +188,7 @@ function StudentInfo() {
           </div>
         </div>
       )}
+
     </div>
   );
 }
