@@ -9,9 +9,9 @@ import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
 import Login from "../pages/auth/Login";
+import EnrollmentFlow from "../components/student/CourseNode";
 import LoginEmployee from "../pages/auth/LoginEmployee";
 import { UserContextProvider } from "../contexts/UserContext";
-import EnrollmentFlow from "../components/student/CourseNode";
 import StudentInfo from "../pages/student/StudentInfo";
 import ClassSchedule from "../pages/student/ClassSchedule";
 import ExamSchedule from "../pages/student/ExamSchedule";
@@ -27,6 +27,7 @@ const router = createBrowserRouter([
       { path: "*", element: <NotFound /> },
     ],
   },
+    
   {
     path: "/authentication",
     element: (
@@ -56,6 +57,7 @@ const router = createBrowserRouter([
       { path: "*", element: <NotFound /> },
     ],
   },
+      
   {
     path: "/teacher",
     element: <TeacherLayout />,

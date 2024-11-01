@@ -5,7 +5,7 @@ const GuestContext = createContext()
 
 import React from 'react'
 
-const GuestContextProvider = () => {
+const GuestContextProvider = (props) => {
   return (
     <div>
       
