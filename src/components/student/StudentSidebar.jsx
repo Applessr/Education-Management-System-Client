@@ -8,6 +8,7 @@ import {
   WalletCards,
   Bell,
   LogOut,
+  LayoutDashboard,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
@@ -19,6 +20,11 @@ const StudentSidebar = () => {
 
   const sidebarItems = [
     { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
+    {
+      icon: <LayoutDashboard size={24} />,
+      text: "Dashboard",
+      name: "dashboard",
+    },
     { icon: <BookOpen size={24} />, text: "Enroll", name: "enroll" },
     {
       icon: <BookOpen size={24} />,
@@ -80,7 +86,6 @@ const StudentSidebar = () => {
 
         <div className="bg-[#393af2] border-t p-4">
           <div className="flex items-center gap-4">
-            <img src="/default-avatar.png" className="w-10 h-10 rounded-full" />
             {open && (
               <div>
                 <h4 className="font-extrabold text-white">Faris</h4>
