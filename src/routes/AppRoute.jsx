@@ -16,6 +16,7 @@ import StudentInfo from "../pages/student/StudentInfo";
 import ClassSchedule from "../pages/student/ClassSchedule";
 import ExamSchedule from "../pages/student/ExamSchedule";
 import StudentPayment from "../pages/student/StudentPayment";
+import AcademicSchedule from "../pages/student/AcademicSchedule";
 
 const router = createBrowserRouter([
   {
@@ -50,8 +51,9 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <StudentInfo /> },
       { path: "enroll", element: <EnrollmentFlow /> },
-      { path: "class-schedule", element: <ClassSchedule /> },
-      { path: "exam-schedule", element: <ExamSchedule /> },
+      { path: "academic-schedule", element: <AcademicSchedule /> },
+      // { path: "class-schedule", element: <ClassSchedule /> },
+      // { path: "exam-schedule", element: <ExamSchedule /> },
       { path: "payment", element: <StudentPayment /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },

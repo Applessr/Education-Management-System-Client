@@ -6,14 +6,20 @@ import StudentSidebar from '../components/student/StudentSidebar';
 const StudentLayout = () => {
     return (
         <div className="flex h-screen">
+            {/* Fixed Sidebar */}
             <StudentSidebar />
-            <div className="flex-1">
-                <header className="h-16 border-b bg-white flex items-center justify-end px-4">
+            
+            {/* Main Content Area */}
+            <div className="flex-1 flex flex-col">
+                {/* Fixed Header */}
+                <header className="h-16 border-b bg-white flex items-center justify-end px-4 sticky top-0 z-10">
                     <button className="p-2 hover:bg-gray-100 rounded-full">
                         <Bell size={24} />
                     </button>
                 </header>
-                <main className="p-6 bg-gray-100 h-[calc(100vh-64px)]">
+                
+                {/* Scrollable Main Content */}
+                <main className="p-6 bg-gray-100 h-[calc(100vh-64px)] overflow-auto">
                     <Outlet />
                 </main>
             </div>

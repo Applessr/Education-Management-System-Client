@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { ChevronFirst, ChevronLast, UserCircle, CalendarDays, BookOpen, WalletCards, Bell } from 'lucide-react';
+import { ChevronFirst, ChevronLast, UserCircle, CalendarDays, BookOpen, WalletCards, Bell, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
-import { LogOut } from 'lucide-react';
 
 const StudentSidebar = () => {
     const [open, setOpen] = useState(true);
@@ -13,8 +12,7 @@ const StudentSidebar = () => {
         { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
         { icon: <BookOpen size={24} />, text: "Enroll", name: "enroll" },
         { icon: <WalletCards size={24} />, text: "Payment", name: "payment" },
-        { icon: <CalendarDays size={24} />, text: "Class schedule", name: "class-schedule" },
-        { icon: <CalendarDays size={24} />, text: "Exam schedule", name: "exam-schedule" }
+        { icon: <CalendarDays size={24} />, text: "Academic Schedule", name: "academic-schedule" }
     ];
 
     const handleClickMenu = (name) => {
