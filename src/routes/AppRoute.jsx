@@ -9,6 +9,8 @@ import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
 import Login from "../pages/auth/Login";
+import StudentEnroll from "../components/student/StudentEnroll";
+import EnrollmentFlow from "../components/student/CourseNode";
 import LoginEmployee from "../pages/auth/LoginEmployee";
 import { UserContextProvider } from "../contexts/UserContext";
 import EnrollmentFlow from "../components/student/CourseNode";
