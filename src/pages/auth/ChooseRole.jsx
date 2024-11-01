@@ -5,10 +5,12 @@ const ChooseRole = () => {
     const navigate = useNavigate();
 
     const handleRoleSelect = (role) => {
-        if (role === 'guest') {
-            navigate('/');  // Navigate to homepage
+        if (role === 'student') {
+            navigate('/authentication/login');
+        } else if (role === 'employee') {
+            navigate('/authentication/login-employee');
         } else {
-            navigate('/authentication/login');  // Navigate to login page
+            navigate('/');
         }
     }
 
@@ -19,19 +21,19 @@ const ChooseRole = () => {
                 <h1 className='text-4xl font-bold'>Welcome to MyPierreUT</h1>
                 <h1 className='text-3xl mt-9'>Choose your experience:</h1>
                 <div className='flex mt-6 space-x-4'>
-                    <button 
+                    <button
                         onClick={() => handleRoleSelect('student')}
                         className='border p-4 px-8 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold'
                     >
                         Student
                     </button>
-                    <button 
+                    <button
                         onClick={() => handleRoleSelect('employee')}
                         className='border p-4 px-8 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold'
                     >
                         Employee
                     </button>
-                    <button 
+                    <button
                         onClick={() => handleRoleSelect('guest')}
                         className='border p-4 px-8 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold'
                     >
