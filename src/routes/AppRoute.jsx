@@ -13,10 +13,19 @@ import EnrollmentFlow from "../components/student/CourseNode";
 import LoginEmployee from "../pages/auth/LoginEmployee";
 import { UserContextProvider } from "../contexts/UserContext";
 import StudentInfo from "../pages/student/StudentInfo";
-import ClassSchedule from "../pages/student/ClassSchedule";
-import ExamSchedule from "../pages/student/ExamSchedule";
 import StudentPayment from "../pages/student/StudentPayment";
 import AcademicSchedule from "../pages/student/AcademicSchedule";
+import StudentDashboard from "../pages/student/StudentDashbard";
+import TeacherInfo from "../pages/teacher/TeacherInfo";
+import TeacherDashboard from "../pages/teacher/TeacherDashboard";
+import TeacherSchedule from "../pages/teacher/TeacherSchedule";
+import TeacherCourse from "../pages/teacher/TeacherCourse";
+import TeacherRequestedCourse from "../pages/teacher/TeacherRequestedCourse";
+import TeacherAdvisors from "../pages/teacher/TeacherAdvisors";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminSchedule from "../pages/admin/AdminSchedule";
+import AdminProfessor from "../pages/admin/AdminProfessor";
+import AdminStudent from "../pages/admin/AdminStudent";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +37,7 @@ const router = createBrowserRouter([
       { path: "*", element: <NotFound /> },
     ],
   },
-    
+
   {
     path: "/authentication",
     element: (
@@ -51,20 +60,25 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <StudentInfo /> },
       { path: "enroll", element: <EnrollmentFlow /> },
+      { path: "dashboard", element: <StudentDashboard /> },
       { path: "academic-schedule", element: <AcademicSchedule /> },
-      // { path: "class-schedule", element: <ClassSchedule /> },
-      // { path: "exam-schedule", element: <ExamSchedule /> },
       { path: "payment", element: <StudentPayment /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
   },
-      
+
   {
     path: "/teacher",
     element: <TeacherLayout />,
     children: [
       { index: true, element: <LandingPage /> },
+      { path: "profile", element: <TeacherInfo /> },
+      { path: "dashboard", element: <TeacherDashboard /> },
+      { path: "schedule", element: <TeacherSchedule /> },
+      { path: "course", element: <TeacherCourse /> },
+      { path: "requested-course", element: <TeacherRequestedCourse />},
+      { path: "advisors", element: <TeacherAdvisors/>},
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
@@ -74,6 +88,10 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       { index: true, element: <LandingPage /> },
+      { path: "dashboard", element: <AdminDashboard /> },
+      { path: "schedule", element: <AdminSchedule /> },
+      { path: "professor", element: <AdminProfessor /> },
+      { path: "student", element: <AdminStudent /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
