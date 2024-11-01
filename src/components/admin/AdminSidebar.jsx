@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
-import { ChevronFirst, ChevronLast, UserCircle, CalendarDays, BookOpen, WalletCards, Bell, LogOut, LayoutDashboard } from 'lucide-react';
+import { ChevronFirst, ChevronLast, UserCircle,LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound, IdCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 
-const StudentSidebar = () => {
+const AdminSidebar = () => {
     const [open, setOpen] = useState(true);
     const [active, setActive] = useState("profile");
     const navigate = useNavigate();
 
     const sidebarItems = [
-        { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
-        {
-            icon: <LayoutDashboard size={24} />,
-            text: "Dashboard",
-            name: "dashboard"
-        },
-        { icon: <BookOpen size={24} />, text: "Enroll", name: "enroll" },
-        { icon: <WalletCards size={24} />, text: "Payment", name: "payment" },
-        { icon: <CalendarDays size={24} />, text: "Academic Schedule", name: "academic-schedule" }
+        { icon: <LayoutDashboard size={24} />,text: "Dashboard",name: "dashboard"},
+        { icon: <CalendarRange size={24} />, text: "Schedule", name: "schedule" },
+        { icon: <IdCard  size={24} />, text: "Professor", name: "professor" },
+        { icon: <IdCard size={24} />, text: "Students", name: "student" },
     ];
 
     const handleClickMenu = (name) => {
         setActive(name);
-        navigate(`/student/${name}`);
+        navigate(`/admin/${name}`);
     };
 
     const handleClickSidebar = () => {
@@ -65,8 +60,8 @@ const StudentSidebar = () => {
                     <div className="flex items-center gap-4">
                         {open && (
                             <div>
-                                <h4 className="font-extrabold text-white">Faris</h4>
-                                <p className="text-md text-white">Student</p>
+                                <h4 className="font-extrabold text-white">Bobby</h4>
+                                <p className="text-md text-white">Admin</p>
                             </div>
                         )}
                         <LogOut className={`text-white ${open ? 'ml-auto' : 'hidden'}`} />
@@ -77,4 +72,4 @@ const StudentSidebar = () => {
     );
 };
 
-export default StudentSidebar;
+export default AdminSidebar;
