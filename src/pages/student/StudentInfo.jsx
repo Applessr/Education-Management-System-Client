@@ -14,6 +14,7 @@ function StudentInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // State for password inputs and error message
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,6 +25,7 @@ function StudentInfo() {
   // Function to close the modal and reset fields
   const closeModal = () => {
     setIsModalOpen(false);
+    setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
     setErrorMessage("");
@@ -32,6 +34,8 @@ function StudentInfo() {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    //check current password from backend if does match return out
+
     if (newPassword === confirmPassword) {
       console.log("New Password:", newPassword);
       console.log("Confirm Password:", confirmPassword);
@@ -131,6 +135,15 @@ function StudentInfo() {
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
             <h2 className="text-xl font-bold mb-4">Password Change Request</h2>
             <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label>Current Password:</label>
+                <input
+                  className="border w-full p-2"
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+              </div>
               <div className="mb-4">
                 <label>New Password:</label>
                 <input
