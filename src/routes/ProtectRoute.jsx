@@ -1,51 +1,51 @@
-import { useEffect, useState } from "react"
-import {getUsers} from '../api/api'
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import useUser from "../hooks/useUser";
+import { currentUser } from "../api/auth";
 
+function ProtectRoute({ element, allow }) {
+    const [isAllowed, setIsAllowed] = useState(null);
+    const { setUser } = useUser();
 
-function ProtectRoute({element,allow}) {
-
-    const [isAllowed,setIsAllowed] = useState(null)
-    const {setIsUser} = useUser()
-
-
-    useEffect(()=>{
-        const token = localStorage.getItem('token')
-        if(token){
-            checkRole()
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            checkRole(token);
+        } else {
+            setIsAllowed(false);
         }
-    },[])
+    }, []);
 
-    const checkRole = async() =>{
+    const checkRole = async (token) => {
         try {
-            const storeToken = localStorage.getItem('token')
-            const response = await getUsers(storeToken)
-            setIsUser(response.data.member)
-            const role = response.data.member.role
-            const status = response.data.member.status
+            const response = await currentUser(token);
+            setUser(response.data);
+            const role = response.data.role || response.data.employeeRole;
+            console.log('response :>> ', response);
+            const status = response.data.status;
+            console.log('UserRole :>> ', role);
 
-            if(allow.includes(role) && status !== 'INACTIVE'){
-                setIsAllowed(true)
-            }else{
-                setIsAllowed(false)
+            if (allow.includes(role) && status !== 'INACTIVE') {
+                setIsAllowed(true);
+            } else {
+                setIsAllowed(false);
             }
         } catch (error) {
-            console.log(error);
-            setIsAllowed(false)
+            console.log('Error detail from protectRoute', error);
+            setIsAllowed(false);
         }
-        if(isAllowed === null){
-            return <div>Loading ......</div>
-        }
+    };
 
-        if(!isAllowed){
-            return <Navigate to={'/unauthorized'} />
-        }
+
+    if (isAllowed === null) {
+        return <span className="loading loading-dots loading-lg"></span>;
     }
 
-  return (
-    element
-  )
+    if (!isAllowed) {
+        return <Navigate to={'/unauthorization'} />;
+    }
+
+    return element;
 }
 
 export default ProtectRoute;

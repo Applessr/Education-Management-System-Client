@@ -25,6 +25,10 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminProfessor from "../pages/admin/AdminProfessor";
 import AdminStudent from "../pages/admin/AdminStudent";
 import StudentEnrollResult from "../pages/student/StudentEnrollResult";
+import ProtectRoute from "./ProtectRoute";
+import { StudentContextProvider } from "../contexts/StudentContext";
+import { TeacherContextProvider } from "../contexts/TeacherContext";
+import { AdminContextProvider } from "../contexts/AdminContext";
 import AdminCourse from "../pages/admin/AdminCourse";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
 
@@ -56,7 +60,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/student",
-    element: <StudentLayout />,
+    element: (
+      <UserContextProvider>
+        <StudentContextProvider>
+          <ProtectRoute element={<StudentLayout />} allow={["STUDENT"]} />
+        </StudentContextProvider>
+      </UserContextProvider>),
+
     children: [
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <StudentInfo /> },
@@ -72,7 +82,12 @@ const router = createBrowserRouter([
 
   {
     path: "/teacher",
-    element: <TeacherLayout />,
+    element: (
+      <UserContextProvider>
+        <TeacherContextProvider>
+          <ProtectRoute element={<TeacherLayout />} allow={["TEACHER"]} />
+        </TeacherContextProvider>
+      </UserContextProvider>),
     children: [
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <TeacherInfo /> },
@@ -87,7 +102,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <UserContextProvider>
+        <AdminContextProvider>
+          <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} />
+        </AdminContextProvider>
+      </UserContextProvider>),
     children: [
       { index: true, element: <LandingPage /> },
       { path: "dashboard", element: <AdminDashboard /> },

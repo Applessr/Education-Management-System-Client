@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserRound,
   School,
@@ -17,13 +17,22 @@ import {
   DialogTitle,
   DialogDescription,
 } from "../../../components/ui/dialog";
+import useStudent from "@/src/hooks/useStudent";
 
 function StudentInfo() {
+  const { getStudentProfile, studentInfo } = useStudent()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+
+    getStudentProfile()
+  }, [])
+
+  console.log(studentInfo)
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -52,7 +61,7 @@ function StudentInfo() {
           <div className="flex">
             Student Code <UserRound /> :
           </div>
-          <div>xxxxxxxx</div>
+          <div>{studentInfo?.studentId}</div>
         </div>
         <div>
           <div className="flex">
@@ -67,13 +76,13 @@ function StudentInfo() {
           <div className="flex">
             Name-Surname(English) <UserRound /> :
           </div>
-          <div>xxxxxxxx</div>
+          <div>{studentInfo?.firstName} {studentInfo?.lastName}</div>
         </div>
         <div>
           <div className="flex">
             Faculty <School /> :
           </div>
-          <div>xxxxxxxxxxxxx</div>
+          <div>{studentInfo?.major?.faculty?.name}</div>
         </div>
       </div>
 
@@ -82,13 +91,13 @@ function StudentInfo() {
           <div className="flex">
             Field Of Study <BookAudio /> :
           </div>
-          <div>xxxxxxxx</div>
+          <div>{studentInfo?.major?.name}</div>
         </div>
         <div>
           <div className="flex">
             Phone number <Smartphone /> :
           </div>
-          <div>xxxxxxxxxxxxx</div>
+          <div>{studentInfo?.phone}</div>
         </div>
       </div>
 
@@ -97,13 +106,13 @@ function StudentInfo() {
           <div className="flex">
             Email <Mail /> :
           </div>
-          <div>xxxxxxxx</div>
+          <div>{studentInfo?.email}</div>
         </div>
         <div>
           <div className="flex">
             Adviser <UserRoundSearch /> :
           </div>
-          <div>xxxxxxxxxxxxx</div>
+          <div>{studentInfo?.adviser?.firstName} {studentInfo?.adviser?.lastName}</div>
         </div>
       </div>
 
@@ -112,7 +121,7 @@ function StudentInfo() {
           <div className="flex">
             Status <ChartArea /> :
           </div>
-          <div>xxxxxxxx</div>
+          <div>{studentInfo?.status}</div>
         </div>
         <div>
           <div className="flex">
@@ -133,7 +142,7 @@ function StudentInfo() {
                 <div className="mb-4">
                   <label>Current Password:</label>
                   <input
-                    className="border w-full p-2"
+                    className="border w-full p-2 rounded-md"
                     type="password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
@@ -142,7 +151,7 @@ function StudentInfo() {
                 <div className="mb-4">
                   <label>New Password:</label>
                   <input
-                    className="border w-full p-2"
+                    className="border w-full p-2 rounded-md"
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
@@ -151,7 +160,7 @@ function StudentInfo() {
                 <div className="mb-4">
                   <label>Confirm New Password:</label>
                   <input
-                    className="border w-full p-2"
+                    className="border w-full p-2 rounded-md"
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}

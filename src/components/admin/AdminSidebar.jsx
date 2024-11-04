@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { ChevronFirst, ChevronLast, UserCircle,LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound, IdCard } from 'lucide-react';
+import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound, IdCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
+import useUser from '@/src/hooks/useUser';
 
 const AdminSidebar = () => {
+    const { logout, user } = useUser()
     const [open, setOpen] = useState(true);
     const [active, setActive] = useState("profile");
     const navigate = useNavigate();
@@ -22,6 +24,11 @@ const AdminSidebar = () => {
 
     const handleClickSidebar = () => {
         setOpen(!open);
+    };
+
+
+    const handleLogout = () => {
+        logout();
     };
 
     return (
@@ -60,11 +67,13 @@ const AdminSidebar = () => {
                     <div className="flex items-center gap-4">
                         {open && (
                             <div>
-                                <h4 className="font-extrabold text-white">Bobby</h4>
-                                <p className="text-md text-white">Admin</p>
+                                <h4 className="font-extrabold text-white">{user?.firstName} {user?.lastName}</h4>
+                                <p className="text-md text-white">{user?.employeeRole}</p>
                             </div>
                         )}
-                        <LogOut className={`text-white ${open ? 'ml-auto' : 'hidden'}`} />
+                        <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
+                            <LogOut className={`text-white `} />
+                        </div>
                     </div>
                 </div>
             </nav>

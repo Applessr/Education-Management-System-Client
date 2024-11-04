@@ -70,8 +70,20 @@ const UserContextProvider = (props) => {
             toast.error(error.response.data.message);
         }
     };
+    const logout = () => {
+        try {
+            setUser(null)
+            localStorage.removeItem('token');
+            toast.success('Log Out')
+            navigate('/')
+        } catch (error) {
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+        }
 
-    const values = { loginEmployee, loginStudent, loginWithGoogle, user };
+    };
+
+    const values = { loginEmployee, loginStudent, loginWithGoogle, user, setUser, logout };
 
     return (
         <UserContext.Provider value={values}>
