@@ -10,7 +10,7 @@ const AdminSidebar = () => {
 
     const sidebarItems = [
         { icon: <LayoutDashboard size={24} />,text: "Dashboard",name: "dashboard"},
-        { icon: <CalendarRange size={24} />, text: "Schedule", name: "schedule" },
+        { icon: <CalendarRange size={24} />, text: "Course", name: "course" },
         { icon: <IdCard  size={24} />, text: "Professor", name: "professor" },
         { icon: <IdCard size={24} />, text: "Students", name: "student" },
     ];

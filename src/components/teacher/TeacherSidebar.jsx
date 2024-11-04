@@ -37,10 +37,10 @@ const TeacherSidebar = () => {
                             alt="Pierre University"
                             className="h-8"
                         />
-                        <span className="font-semibold text-lg">Pierre University</span>
+                        <span className="font-semibold text-lg text-amber-700">Pierre University</span>
                     </div>
                     <button
-                        className="p-1.5 rounded-lg bg-gray-50 transition duration-500 hover:bg-gray-300"
+                        className="p-1.5 rounded-lg text-amber-700 bg-gray-50 transition duration-500 hover:bg-gray-300"
                         onClick={handleClickSidebar}
                     >
                         {open ? <ChevronFirst /> : <ChevronLast />}
@@ -59,12 +59,12 @@ const TeacherSidebar = () => {
                     ))}
                 </ul>
 
-                <div className="bg-[#393af2] border-t p-4">
+                <div className="bg-[#ab842e] border-t p-4">
                     <div className="flex items-center gap-4">
                         {open && (
                             <div>
                                 <h4 className="font-extrabold text-white">Bobby</h4>
-                                <p className="text-md text-white">Teacher</p>
+                                <p className="text-md text-white">Professor</p>
                             </div>
                         )}
                         <LogOut className={`text-white ${open ? 'ml-auto' : 'hidden'}`} />
