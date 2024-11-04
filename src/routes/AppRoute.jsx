@@ -64,6 +64,7 @@ const router = createBrowserRouter([
       <UserContextProvider>
         <StudentContextProvider>
           <ProtectRoute element={<StudentLayout />} allow={["STUDENT"]} />
+          {/* <StudentLayout /> */}
         </StudentContextProvider>
       </UserContextProvider>),
 
@@ -86,6 +87,7 @@ const router = createBrowserRouter([
       <UserContextProvider>
         <TeacherContextProvider>
           <ProtectRoute element={<TeacherLayout />} allow={["TEACHER"]} />
+          {/* <TeacherLayout /> */}
         </TeacherContextProvider>
       </UserContextProvider>),
     children: [

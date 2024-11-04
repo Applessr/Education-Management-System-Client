@@ -1,6 +1,7 @@
 import React from "react";
 import StudentSemesterGradeItem from "./StudentSemesterGradeItem";
 
+
 function StudentSemisterGrade() {
   //fetch data
   const semesters = [

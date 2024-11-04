@@ -73,7 +73,7 @@ const TeacherSidebar = () => {
                                 <p className="text-md text-white">{user?.employeeRole}</p>
                             </div>
                         )}
-                        <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
+                        <div onClick={handleLogout} className={`hover:bg-amber-900 w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
                             <LogOut className={`text-white `} />
                         </div>
                     </div>
