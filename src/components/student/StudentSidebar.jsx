@@ -12,11 +12,15 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
+import useUser from "@/src/hooks/useUser";
 
 const StudentSidebar = () => {
+  const { logout, user } = useUser()
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
   const navigate = useNavigate();
+
+  console.log('user :>> ', user);
 
   const sidebarItems = [
     { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
@@ -48,11 +52,14 @@ const StudentSidebar = () => {
     setOpen(!open);
   };
 
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <aside
-      className={`h-screen transition-width duration-300 ${
-        open ? "w-80" : "w-20"
-      }`}
+      className={`h-screen transition-width duration-300 ${open ? "w-80" : "w-20"
+        }`}
     >
       <nav className="h-full flex flex-col bg-white border-r">
         <div className="p-4 flex items-center justify-between">
@@ -88,11 +95,13 @@ const StudentSidebar = () => {
           <div className="flex items-center gap-4">
             {open && (
               <div>
-                <h4 className="font-extrabold text-white">Faris</h4>
-                <p className="text-md text-white">Student</p>
+                <h4 className="font-extrabold text-white">{user?.firstName} {user?.lastName}</h4>
+                <p className="text-md text-white">{user?.role}</p>
               </div>
             )}
-            <LogOut className={`text-white ${open ? "ml-auto" : "hidden"}`} />
+            <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
+              <LogOut className={`text-white `} />
+            </div>
           </div>
         </div>
       </nav>
