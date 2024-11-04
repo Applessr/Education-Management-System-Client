@@ -40,7 +40,7 @@ const times = Array.from({ length: 19 }, (_, i) => {
   return `${hour.toString().padStart(2, '0')}:${minutes}`;
 });
 
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday", "Sunday"];
 
 const isWithinClassTime = (classStartTime, classEndTime, slotTime) => {
   const [slotHour, slotMinute] = slotTime.split(":").map(Number);

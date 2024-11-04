@@ -18,12 +18,10 @@ import AcademicSchedule from "../pages/student/AcademicSchedule";
 import StudentDashboard from "../pages/student/StudentDashbard";
 import TeacherInfo from "../pages/teacher/TeacherInfo";
 import TeacherDashboard from "../pages/teacher/TeacherDashboard";
-import TeacherSchedule from "../pages/teacher/TeacherSchedule";
 import TeacherCourse from "../pages/teacher/TeacherCourse";
 import TeacherRequestedCourse from "../pages/teacher/TeacherRequestedCourse";
 import TeacherAdvisors from "../pages/teacher/TeacherAdvisors";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import AdminSchedule from "../pages/admin/AdminSchedule";
 import AdminProfessor from "../pages/admin/AdminProfessor";
 import AdminStudent from "../pages/admin/AdminStudent";
 import StudentEnrollResult from "../pages/student/StudentEnrollResult";
@@ -31,6 +29,8 @@ import ProtectRoute from "./ProtectRoute";
 import { StudentContextProvider } from "../contexts/StudentContext";
 import { TeacherContextProvider } from "../contexts/TeacherContext";
 import { AdminContextProvider } from "../contexts/AdminContext";
+import AdminCourse from "../pages/admin/AdminCourse";
+import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
 
 const router = createBrowserRouter([
   {
@@ -92,7 +92,7 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <TeacherInfo /> },
       { path: "dashboard", element: <TeacherDashboard /> },
-      { path: "schedule", element: <TeacherSchedule /> },
+      { path: "schedule", element: <TeacherAcademicSchedule /> },
       { path: "course", element: <TeacherCourse /> },
       { path: "requested-course", element: <TeacherRequestedCourse /> },
       { path: "advisors", element: <TeacherAdvisors /> },
@@ -111,7 +111,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: "dashboard", element: <AdminDashboard /> },
-      { path: "schedule", element: <AdminSchedule /> },
+      { path: "course", element: <AdminCourse /> },
       { path: "professor", element: <AdminProfessor /> },
       { path: "student", element: <AdminStudent /> },
       { path: "unauthorization", element: <Unauthorized /> },
