@@ -1,8 +1,9 @@
+
 import React from "react";
 
 function StudentSemesterGradeItem({ semester, courses, gpaInfo }) {
   return (
-    <div style={{ textAlign: "center", fontFamily: "Arial" }}>
+    <div className="semester-grade" style={{ textAlign: "center", fontFamily: "Arial" }}>
       <h3 style={{ color: "blue", textDecoration: "underline" }}>{semester}</h3>
       <table
         border="1"

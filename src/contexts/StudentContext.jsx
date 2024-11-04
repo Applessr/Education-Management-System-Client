@@ -14,7 +14,6 @@ const StudentContextProvider = (props) => {
         } catch (error) {
             console.log(error.response);
         }
-
     }
 
     const values = { getStudentProfile, studentInfo };

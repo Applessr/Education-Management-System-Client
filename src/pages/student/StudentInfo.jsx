@@ -28,7 +28,6 @@ function StudentInfo() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-
     getStudentProfile()
   }, [])
 

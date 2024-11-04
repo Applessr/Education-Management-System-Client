@@ -30,7 +30,7 @@ export const studentSendRequestSec = (token, body) => axios.post('/student/reque
     }
 });
 
-export const teacherChangePassword = (token, body) => axios.patch('/student/change-password', body, {
+export const studentChangePassword = (token, body) => axios.patch('/student/change-password', body, {
     headers: {
         Authorization: `Bearer ${token}`
     }
