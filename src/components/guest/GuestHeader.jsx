@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const GuestHeader = () => {
     return (
         <header>
-            <div className="bg-blue-600 text-white">
+            <div className="text-[#272988]">
                 <div className="gap-6s items-center container mx-auto flex justify-center space-x-8 py-3 text-lg font-semibold">
                     <div className="flex items-center space-x-4">
                         <img

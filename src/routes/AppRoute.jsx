@@ -31,6 +31,10 @@ import { TeacherContextProvider } from "../contexts/TeacherContext";
 import { AdminContextProvider } from "../contexts/AdminContext";
 import AdminCourse from "../pages/admin/AdminCourse";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
+import AboutPage from "../pages/guest/AboutPage";
+import AcademicPage from "../pages/guest/AcademicPage";
+import CampusPage from "../pages/guest/CampusPage";
+import ActivityPage from "../pages/guest/ActivityPage";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +44,11 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
+      
+      { path: "about", element: <AboutPage /> },
+      { path: "academic", element: <AcademicPage /> },
+      { path: "campus", element: <CampusPage /> },
+      { path: "activities", element: <ActivityPage /> },
     ],
   },
 
