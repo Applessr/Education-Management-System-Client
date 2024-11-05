@@ -1,5 +1,6 @@
 import React from "react";
 import StudentSemesterGradeItem from "./StudentSemesterGradeItem";
+import { View } from "@react-pdf/renderer";
 
 function StudentSemisterGrade() {
   //fetch data
