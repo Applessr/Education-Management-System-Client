@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import StudentSemesterGrade from "../../components/student/StudentSemisterGrade";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function StudentEnrollResult() {
   // State for student info and grades
@@ -15,7 +14,7 @@ function StudentEnrollResult() {
     fieldOfStudy: "",
     degreeConferred: "",
     dateOfAdmission: "",
-    dateOfGraduation: ""
+    dateOfGraduation: "",
   });
 
   const [semesters, setSemesters] = useState([]);
@@ -33,7 +32,7 @@ function StudentEnrollResult() {
       // In the future, replace these with actual API calls
       // const studentResponse = await fetch('/api/student/info');
       // const semestersResponse = await fetch('/api/student/grades');
-      
+
       // Temporary mock data
       const mockStudentInfo = {
         studentNo: "xxxxxxxxxx",
@@ -43,7 +42,7 @@ function StudentEnrollResult() {
         fieldOfStudy: "xxxxxxx",
         degreeConferred: "xxxxxx",
         dateOfAdmission: "xxxxxx",
-        dateOfGraduation: "xxxxxx"
+        dateOfGraduation: "xxxxxx",
       };
 
       const mockSemesters = [
@@ -71,8 +70,8 @@ function StudentEnrollResult() {
       setStudentInfo(mockStudentInfo);
       setSemesters(mockSemesters);
     } catch (err) {
-      setError('Failed to fetch student data');
-      console.error('Error fetching data:', err);
+      setError("Failed to fetch student data");
+      console.error("Error fetching data:", err);
     } finally {
       setLoading(false);
     }
@@ -81,13 +80,22 @@ function StudentEnrollResult() {
   const generatePDF = () => {
     try {
       const doc = new jsPDF();
-      
+
       // Add university header
       doc.setFontSize(20);
-      doc.text('Pierre University', doc.internal.pageSize.width / 2, 20, { align: 'center' });
+      doc.text("Pierre University", doc.internal.pageSize.width / 2, 20, {
+        align: "center",
+      });
       doc.setFontSize(12);
-      doc.text('OFFICE OF EDUCATIONAL ADMINISTRATION', doc.internal.pageSize.width / 2, 30, { align: 'center' });
-      doc.text('BANGKOK 10900, THAILAND', doc.internal.pageSize.width / 2, 40, { align: 'center' });
+      doc.text(
+        "OFFICE OF EDUCATIONAL ADMINISTRATION",
+        doc.internal.pageSize.width / 2,
+        30,
+        { align: "center" }
+      );
+      doc.text("BANGKOK 10900, THAILAND", doc.internal.pageSize.width / 2, 40, {
+        align: "center",
+      });
 
       // Add student information
       const startY = 60;
@@ -98,13 +106,29 @@ function StudentEnrollResult() {
       doc.text(`Student No: ${studentInfo.studentNo}`, leftX, startY);
       doc.text(`Name: ${studentInfo.name}`, leftX, startY + 10);
       doc.text(`Date of Birth: ${studentInfo.dateOfBirth}`, leftX, startY + 20);
-      doc.text(`Place Of Birth: ${studentInfo.placeOfBirth}`, leftX, startY + 30);
+      doc.text(
+        `Place Of Birth: ${studentInfo.placeOfBirth}`,
+        leftX,
+        startY + 30
+      );
 
       // Right column student info
       doc.text(`Field Of Study: ${studentInfo.fieldOfStudy}`, rightX, startY);
-      doc.text(`Degree Conferred: ${studentInfo.degreeConferred}`, rightX, startY + 10);
-      doc.text(`Date of Admission: ${studentInfo.dateOfAdmission}`, rightX, startY + 20);
-      doc.text(`Date Of Graduation: ${studentInfo.dateOfGraduation}`, rightX, startY + 30);
+      doc.text(
+        `Degree Conferred: ${studentInfo.degreeConferred}`,
+        rightX,
+        startY + 10
+      );
+      doc.text(
+        `Date of Admission: ${studentInfo.dateOfAdmission}`,
+        rightX,
+        startY + 20
+      );
+      doc.text(
+        `Date Of Graduation: ${studentInfo.dateOfGraduation}`,
+        rightX,
+        startY + 30
+      );
 
       // Add semester grades
       let yPosition = startY + 50;
@@ -112,30 +136,41 @@ function StudentEnrollResult() {
       semesters.forEach((semester) => {
         // Add semester header
         doc.setFontSize(14);
-        doc.text(semester.semester, doc.internal.pageSize.width / 2, yPosition, { align: 'center' });
-        
+        doc.text(
+          semester.semester,
+          doc.internal.pageSize.width / 2,
+          yPosition,
+          { align: "center" }
+        );
+
         // Add courses table
         doc.autoTable({
           startY: yPosition + 10,
-          head: [['Course Code', 'Course Title', 'Grade', 'Credit']],
-          body: semester.courses.map(course => [
+          head: [["Course Code", "Course Title", "Grade", "Credit"]],
+          body: semester.courses.map((course) => [
             course.code,
             course.title,
             course.grade,
-            course.credit
+            course.credit,
           ]),
-          theme: 'plain',
+          theme: "plain",
           styles: { fontSize: 10 },
-          headStyles: { fillColor: [200, 200, 200] }
+          headStyles: { fillColor: [200, 200, 200] },
         });
 
         // Add GPA information
         yPosition = doc.previousAutoTable.finalY + 10;
         doc.setFontSize(12);
-        doc.text(`sem. G.P.A. = ${semester.gpaInfo.semGpa} Credit = ${semester.gpaInfo.semCredit}`, 
-          leftX, yPosition);
-        doc.text(`cum. G.P.A. = ${semester.gpaInfo.cumGpa} Credit = ${semester.gpaInfo.cumCredit}`, 
-          leftX, yPosition + 10);
+        doc.text(
+          `sem. G.P.A. = ${semester.gpaInfo.semGpa} Credit = ${semester.gpaInfo.semCredit}`,
+          leftX,
+          yPosition
+        );
+        doc.text(
+          `cum. G.P.A. = ${semester.gpaInfo.cumGpa} Credit = ${semester.gpaInfo.cumCredit}`,
+          leftX,
+          yPosition + 10
+        );
 
         yPosition += 30;
 
@@ -145,10 +180,10 @@ function StudentEnrollResult() {
         }
       });
 
-      doc.save('transcript.pdf');
+      doc.save("transcript.pdf");
     } catch (error) {
-      console.error('Error generating PDF:', error);
-      alert('Error generating PDF. Please try again.');
+      console.error("Error generating PDF:", error);
+      alert("Error generating PDF. Please try again.");
     }
   };
 
@@ -169,7 +204,9 @@ function StudentEnrollResult() {
             <div className="w-24 h-24">logo</div>
             <div className="flex flex-col text-center">
               <p className="font-bold text-xl">Pierre University</p>
-              <p className="font-semibold">OFFICE OF EDUCATIONAL ADMINISTRATION</p>
+              <p className="font-semibold">
+                OFFICE OF EDUCATIONAL ADMINISTRATION
+              </p>
               <p>BANGKOK 10900, THAILAND</p>
             </div>
             <div className="w-24"></div>
