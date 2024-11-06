@@ -31,6 +31,9 @@ import { TeacherContextProvider } from "../contexts/TeacherContext";
 import { AdminContextProvider } from "../contexts/AdminContext";
 import AdminCourse from "../pages/admin/AdminCourse";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
+import StudentInCourse from "../pages/teacher/StudentInCourse";
+import CourseDetail from "../pages/teacher/CourseDetail";
+import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
 
 const router = createBrowserRouter([
   {
@@ -66,7 +69,8 @@ const router = createBrowserRouter([
           <ProtectRoute element={<StudentLayout />} allow={["STUDENT"]} />
           {/* <StudentLayout /> */}
         </StudentContextProvider>
-      </UserContextProvider>),
+      </UserContextProvider>
+    ),
 
     children: [
       { index: true, element: <LandingPage /> },
@@ -89,13 +93,15 @@ const router = createBrowserRouter([
           <ProtectRoute element={<TeacherLayout />} allow={["TEACHER"]} />
           {/* <TeacherLayout /> */}
         </TeacherContextProvider>
-      </UserContextProvider>),
+      </UserContextProvider>
+    ),
     children: [
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <TeacherInfo /> },
       { path: "dashboard", element: <TeacherDashboard /> },
       { path: "schedule", element: <TeacherAcademicSchedule /> },
       { path: "course", element: <TeacherCourse /> },
+      { path: "course/:courseCode/:section", element: <StudentInCourse /> },
       { path: "requested-course", element: <TeacherRequestedCourse /> },
       { path: "advisors", element: <TeacherAdvisors /> },
       { path: "unauthorization", element: <Unauthorized /> },
@@ -107,9 +113,11 @@ const router = createBrowserRouter([
     element: (
       <UserContextProvider>
         <AdminContextProvider>
-          <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} />
+          <AdminLayout />
+          {/* <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} /> */}
         </AdminContextProvider>
-      </UserContextProvider>),
+      </UserContextProvider>
+    ),
     children: [
       { index: true, element: <LandingPage /> },
       { path: "dashboard", element: <AdminDashboard /> },
