@@ -19,9 +19,12 @@ export const adminOverAll = (token) => axios.get('/admin/over-all', {
     }
 });
 
-export const adminGetCourseSyllabus = (token, majorId) => axios.get('/admin/course-syllabus' + majorId, {
+export const adminGetCourseSyllabus = (token, majorId, year) => axios.get('/admin/course-syllabus/' + majorId, {
     headers: {
         Authorization: `Bearer ${token}`
+    },
+    params: {
+        year: year // Send `year` as a query parameter
     }
 });
 
@@ -55,7 +58,7 @@ export const adminGetChangeRequestById = (token, requestId) => axios.get('/admin
     }
 });
 
-export const adminRegisterEmployee = (token, body) => axios.post('/admin/register-student', body, {
+export const adminRegisterStudent = (token, body) => axios.post('/admin/register-student', body, {
     headers: {
         Authorization: `Bearer ${token}`
     }

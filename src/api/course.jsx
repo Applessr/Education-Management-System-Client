@@ -2,6 +2,12 @@ import axios from "../configs/axios"
 
 export const getAllCourse = () => axios.get('/course/all-course');
 
+export const getAllMajor = () => axios.get('/course/all-major');
+
+export const getAllFaculty = () => axios.get('/course/all-faculty');
+
+export const getMajorById = (facultyId) => axios.get('/course/major/' + facultyId);
+
 export const getCourseBySearch = (searchQuery) => axios.get(`/course/all-course?searchTerm=${searchQuery}`);
 
 export const getCourseById = (courseId) => axios.get('/course/all-course/' + courseId);
