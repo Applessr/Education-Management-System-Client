@@ -5,7 +5,7 @@ import GuestFooter from "../components/guest/GuestFooter";
 
 const GuestLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       <GuestHeader />
       <Outlet />
       <GuestFooter />

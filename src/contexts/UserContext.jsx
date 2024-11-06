@@ -46,13 +46,12 @@ const UserContextProvider = (props) => {
             toast.error('Login Fail Try again');
         }
     };
-
     const loginWithGoogle = async (token) => {
         try {
             const response = await loginGoogle(token);
             setUser(response.data.user.employee);
             localStorage.setItem('token', response.data.token);
-            const role = response.data.user.employee.role;
+            const role = response.data.user.employeeRole;
             switch (role) {
                 case 'TEACHER':
                     toast.success('Login Success as teacher');

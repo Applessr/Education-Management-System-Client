@@ -5,7 +5,7 @@ import StudentSidebar from '../components/student/StudentSidebar';
 
 const StudentLayout = () => {
     return (
-        <div className="flex h-screen">
+        <div className="flex min-h-screen">
             {/* Fixed Sidebar */}
             <StudentSidebar />
             
