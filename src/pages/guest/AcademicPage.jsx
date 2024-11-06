@@ -2,10 +2,10 @@ import React from 'react'
 
 export default function AcademicPage() {
   return (
-    <div className='h-auto flex flex-col item gap-11'>
+    <div className='h-auto flex flex-col gap-11'>
 
       <div className='h-[550px] flex justify-end' style={{
-        backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730804841/academic1_zgdhfv.jpg)', // Replace with your direct image link
+        backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730804841/academic1_zgdhfv.jpg)', 
         backgroundSize: 'cover',
         backgroundPosition: '20% 25%',
       }}>

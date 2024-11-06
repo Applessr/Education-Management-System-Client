@@ -137,7 +137,7 @@ const Login = () => {
                             use the university's authentication system.
                         </p>
                         <p>
-                            Last Updated: 08/2023
+                            Last Updated: 08/2023 
                         </p>
                     </div>
                 </div>

@@ -62,3 +62,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* this is setting for video playing on landing page naja */
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Adjust duration  */
+}
+
+.fade-in-active {
+  opacity: 1;
+}

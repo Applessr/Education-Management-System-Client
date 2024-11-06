@@ -25,10 +25,10 @@ function LandingItem3() {
               Experience world-class education in the heart of Bangkok! At Pierre University, we offer a diverse, international community with cutting-edge programs, global connections, and hands-on learning. Discover your potential with access to top-tier research facilities, expert faculty, and vibrant student life. From career fairs to cultural festivals, every day here is a step toward your future.
             </p>
 
-            <div className="flex justify-around border text-xl font-bold text-[#272988] ">
+            <div className="flex justify-around border-2 border-[#AA852D] text-xl font-bold text-[#272988] ">
               <div className='flex flex-col justify-center items-center'>
                 <p>#1</p>
-                <p>PLIVATE UNIVERSITY</p>
+                <p>PRIVATE UNIVERSITY</p>
                 <p>IN BANGKOK</p>
               </div>
               <div className='flex flex-col justify-center items-center'>

@@ -35,6 +35,10 @@ import AboutPage from "../pages/guest/AboutPage";
 import AcademicPage from "../pages/guest/AcademicPage";
 import CampusPage from "../pages/guest/CampusPage";
 import ActivityPage from "../pages/guest/ActivityPage";
+import ContactPage from "../pages/guest/ContactPage";
+import CampusCarryPage from "../pages/guest/CampusCarryPage";
+import CounselingPage from "../pages/guest/CounselingPage";
+import ResearchPage from "../pages/guest/ResearchPage";
 
 const router = createBrowserRouter([
   {
@@ -44,11 +48,14 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
-      
       { path: "about", element: <AboutPage /> },
       { path: "academic", element: <AcademicPage /> },
       { path: "campus", element: <CampusPage /> },
       { path: "activities", element: <ActivityPage /> },
+      { path: "contact", element: <ContactPage /> },
+      { path: "campusCarry", element: <CampusCarryPage /> },
+      { path: "counsel", element: <CounselingPage /> },
+      { path: "research", element: <ResearchPage /> },
     ],
   },
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Instagram } from "lucide-react";
 
 function GuestFooter() {
@@ -58,10 +58,10 @@ function GuestFooter() {
 
         <nav>
           <h6 className="footer-title">More Info</h6>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Campus Carry</a>
-          <a className="link link-hover">Counseling and Mental Health</a>
-          <a className="link link-hover">Research Units & Centers</a>
+          <Link to="/contact" className="link-hover">Contact</Link>
+          <Link to="/campusCarry" className="link-hover">Campus Carry</Link>
+          <Link to="/counsel" className="link-hover">Counseling and Mental Health</Link>
+          <Link to="/research" className="link-hover">Research Units & Centers</Link>
         </nav>
 
       </footer >

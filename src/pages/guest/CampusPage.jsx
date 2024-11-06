@@ -5,7 +5,7 @@ export default function CampusPage() {
     <div className='h-auto flex flex-col item gap-11'>
 
       <div className='h-[550px] flex justify-center' style={{
-        backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730805820/campus1_mfechp.jpg)', // Replace with your direct image link
+        backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730805820/campus1_mfechp.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: '25% 90%',
       }}>
