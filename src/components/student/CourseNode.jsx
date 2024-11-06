@@ -232,7 +232,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213211",
       type: "courseNode",
-      position: createNodePosition(0, 0),
+      position: createNodePosition(0, 1),
       data: {
         code: "01213211",
         name: "Materials Science for Engineers",
@@ -244,7 +244,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213513",
       type: "courseNode",
-      position: createNodePosition(0, 1),
+      position: createNodePosition(0, 2),
       data: {
         code: "01213513",
         name: "Thermodynamics & Kinetics of Materials",
@@ -256,7 +256,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213591",
       type: "courseNode",
-      position: createNodePosition(0, 2),
+      position: createNodePosition(0, 3),
       data: {
         code: "01213591",
         name: "Research Methods in Materials Engineering",
@@ -268,7 +268,7 @@ export default function EnrollmentFlow() {
     {
       id: "01355501",
       type: "courseNode",
-      position: createNodePosition(0, 3),
+      position: createNodePosition(0, 4),
       data: {
         code: "01355501",
         name: "English Required by Graduate School",
@@ -318,7 +318,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213514",
       type: "courseNode",
-      position: createNodePosition(1, 0),
+      position: createNodePosition(1, 1),
       data: {
         code: "01213514",
         name: "Materials Characterization in Research",
@@ -330,7 +330,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213532",
       type: "courseNode",
-      position: createNodePosition(1, 1),
+      position: createNodePosition(1, 2),
       data: {
         code: "01213532",
         name: "Advanced Electroceramic Materials",
@@ -342,7 +342,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213597-1",
       type: "courseNode",
-      position: createNodePosition(1, 2),
+      position: createNodePosition(1, 3),
       data: {
         code: "01213597",
         name: "Seminar",
@@ -366,7 +366,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213529",
       type: "courseNode",
-      position: createNodePosition(2, 0),
+      position: createNodePosition(2, 1),
       data: {
         code: "01213529",
         name: "Advanced Mechanical Behavior of Materials",
@@ -378,7 +378,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213533",
       type: "courseNode",
-      position: createNodePosition(2, 1),
+      position: createNodePosition(2, 2),
       data: {
         code: "01213533",
         name: "Crystallography of Materials",
@@ -390,7 +390,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213597-2",
       type: "courseNode",
-      position: createNodePosition(2, 2),
+      position: createNodePosition(2, 3),
       data: {
         code: "01213597",
         name: "Seminar",
@@ -402,7 +402,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213599-1",
       type: "courseNode",
-      position: createNodePosition(2, 3),
+      position: createNodePosition(2, 4),
       data: {
         code: "01213599",
         name: "Thesis",
@@ -426,7 +426,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213552",
       type: "courseNode",
-      position: createNodePosition(3, 0),
+      position: createNodePosition(3, 1),
       data: {
         code: "01213552",
         name: "Nanoengineering",
@@ -438,7 +438,7 @@ export default function EnrollmentFlow() {
     {
       id: "01213599-2",
       type: "courseNode",
-      position: createNodePosition(3, 1),
+      position: createNodePosition(3, 2),
       data: {
         code: "01213599",
         name: "Thesis",
