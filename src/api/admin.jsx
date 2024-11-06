@@ -73,14 +73,23 @@ export const adminEditTeacherInfo = (token, employeeId, body) => axios.patch('/a
     }
 });
 
-export const adminActiveAccount = (token, employeeId) => axios.patch('/admin/employee-active/' + employeeId, {
-    headers: {
-        Authorization: `Bearer ${token}`
+export const adminInactiveAccount = (token, employeeId) => axios.patch(
+    `/admin/employee-inactive/` + employeeId,
+    {}, // empty object for request body
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
-});
+);
 
-export const adminInactiveAccount = (token, employeeId) => axios.patch('/admin/employee-inactive/' + employeeId, {
-    headers: {
-        Authorization: `Bearer ${token}`
+export const adminActiveAccount = (token, employeeId) => axios.patch(
+    `/admin/employee-active/` + employeeId,
+    {}, // empty object for request body
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
-});
+);
+
