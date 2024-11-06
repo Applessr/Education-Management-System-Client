@@ -114,8 +114,8 @@ const router = createBrowserRouter([
     element: (
       <UserContextProvider>
         <AdminContextProvider>
-          <AdminLayout />
-          {/* <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} /> */}
+          {/* <AdminLayout /> */}
+          <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} />
         </AdminContextProvider>
       </UserContextProvider>
     ),
