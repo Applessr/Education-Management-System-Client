@@ -3,7 +3,7 @@ import StudentSemesterGradeItem from "./StudentSemesterGradeItem";
 import { View } from "@react-pdf/renderer";
 
 function StudentSemisterGrade() {
-  //fetch data
+  //fetch enrollResult data
   const semesters = [
     {
       semester: "First Semester 2019",

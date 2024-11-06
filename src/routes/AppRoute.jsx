@@ -32,6 +32,8 @@ import { AdminContextProvider } from "../contexts/AdminContext";
 import AdminCourse from "../pages/admin/AdminCourse";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
 import StudentInCourse from "../pages/teacher/StudentInCourse";
+import CourseDetail from "../pages/teacher/CourseDetail";
+import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
 
 const router = createBrowserRouter([
   {

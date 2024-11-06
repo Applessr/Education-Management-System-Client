@@ -32,8 +32,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Link } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherViewStudentTranscript";
 
 //column
+
+const hdlViewTranscript = (student) => {
+  console.log("view transcript of studentId:", student);
+  // Implement your approve logic here
+};
 
 export const columns = [
   {
@@ -176,6 +191,35 @@ export const columns = [
       );
     },
     cell: ({ row }) => <div className="capitalize">{row.getValue("CPA")}</div>,
+  },
+  {
+    accessorKey: "action",
+    header: "Transcript",
+    cell: ({ row }) => (
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex space-x-2">
+            <Button
+              className="border"
+              variant="success"
+              size="sm"
+              onClick={() => hdlViewTranscript(row.original.studentId)}
+            >
+              view
+            </Button>
+          </div>
+        </DialogTrigger>
+        <DialogContent className="w-full lg:max-w-[800px] max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              view transcript of student id : {row.original.studentId}
+            </DialogTitle>
+            <DialogDescription>all enroll result</DialogDescription>
+          </DialogHeader>
+          <TeacherViewStudentTranscript />
+        </DialogContent>
+      </Dialog>
+    ),
   },
 ];
 

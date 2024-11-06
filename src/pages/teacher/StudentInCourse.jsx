@@ -31,7 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -45,8 +45,44 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import CourseScoreEdit from "@/src/components/teacher/CourseScoreEdit";
+import CourseDetail from "./CourseDetail";
 
 //fetch data
+
+//courseData
+const courseData = {
+  id: 1,
+  courseName: "Research Methods in Economics",
+  courseCode: "0110149",
+  credits: 3,
+  seat: 50,
+  teacherId: 2,
+
+  courseSyllabusId: 3,
+  section: 801,
+  classSchedule: {
+    id: 2,
+    day: "Monday",
+    startTime: "9.00",
+    endTime: "12.00",
+    room: 890,
+  },
+  examSchedule: {
+    id: 1,
+    examDate: "12/13/2025",
+    startTime: "9.00",
+    endTime: "12:00",
+    room: 890,
+    examType: "final",
+  },
+
+  employee: {
+    firstName: "Susan",
+    lastName: "Doe",
+  },
+};
+
+//student
 const data = [
   {
     id: "1",
@@ -525,9 +561,52 @@ function StudentInCourse() {
     <div>
       <div>
         {/* code - subject name -  sec  - studyTime  - room  */}
-        <p className="bg-orange-300">
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <p
+              to={`/teacher/course/${courseCode}`}
+              className="bg-orange-300 hover:underline cursor-pointer"
+            >
+              {courseData.courseCode} {courseData.courseName} ( Section{" "}
+              {courseData.section} : {courseData.classSchedule.day}{" "}
+              {courseData.classSchedule.startTime} -{" "}
+              {courseData.classSchedule.endTime} )
+            </p>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>
+                <p>
+                  {courseData.courseCode} {courseData.courseName}
+                </p>
+                <p>
+                  ( Section {courseData.section} :{" "}
+                  {courseData.classSchedule.day}{" "}
+                  {courseData.classSchedule.startTime} -{" "}
+                  {courseData.classSchedule.endTime} )
+                </p>
+              </DialogTitle>
+              <DialogDescription>
+                You can edit study day , exam day , room ,seat by click at Edit
+                button
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <CourseDetail courseData={courseData} />
+            </div>
+            {/* <DialogFooter>
+              <Button type="submit">Edit</Button>
+            </DialogFooter> */}
+          </DialogContent>
+        </Dialog>
+
+        {/* <Link
+          to={`/teacher/course/${courseCode}`}
+          className="bg-orange-300 hover:underline"
+        >
           01101491 Research Methods in Economics Sec.801 Mon 9:00 - 12:00 170102
-        </p>
+        </Link> */}
       </div>
 
       <div className="w-full">
