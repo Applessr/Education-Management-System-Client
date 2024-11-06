@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound, IdCard } from 'lucide-react';
+import { ChevronFirst, ChevronLast,LogOut, LayoutDashboard, CalendarRange,IdCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import useUser from '@/src/hooks/useUser';

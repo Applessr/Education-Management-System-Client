@@ -43,7 +43,7 @@ export const adminGetChangeRequestById = (token, requestId) => axios.get('/admin
     }
 });
 
-export const adminRegisterEmployee = (token, body) => axios.post('/admin/register-student', body, {
+export const adminRegisterStudent = (token, body) => axios.post('/admin/register-student', body, {
     headers: {
         Authorization: `Bearer ${token}`
     }
