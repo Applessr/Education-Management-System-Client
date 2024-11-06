@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound, IdCard } from 'lucide-react';
+import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound, IdCard, LibraryBig } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import useUser from '@/src/hooks/useUser';
@@ -15,6 +15,7 @@ const AdminSidebar = () => {
         { icon: <CalendarRange size={24} />, text: "Course", name: "course" },
         { icon: <IdCard  size={24} />, text: "Professor", name: "professor" },
         { icon: <IdCard size={24} />, text: "Students", name: "student" },
+        { icon: <LibraryBig size={24} />, text: "Course Syllabus", name: "course-syllabus" },
     ];
 
     const handleClickMenu = (name) => {

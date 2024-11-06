@@ -13,6 +13,18 @@ export const adminGetStudent = (token) => axios.get('/admin/student', {
     }
 });
 
+export const adminOverAll = (token) => axios.get('/admin/over-all', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
+export const adminGetCourseSyllabus = (token, majorId) => axios.get('/admin/course-syllabus' + majorId, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
 export const adminGetTeacher = (token) => axios.get('/admin/teacher', {
     headers: {
         Authorization: `Bearer ${token}`

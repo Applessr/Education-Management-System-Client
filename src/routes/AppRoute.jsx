@@ -31,6 +31,7 @@ import { TeacherContextProvider } from "../contexts/TeacherContext";
 import { AdminContextProvider } from "../contexts/AdminContext";
 import AdminCourse from "../pages/admin/AdminCourse";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
+import AdminCourseSyllabus from "../pages/admin/AdminCourseSyllabus";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,7 @@ const router = createBrowserRouter([
       { path: "course", element: <AdminCourse /> },
       { path: "professor", element: <AdminProfessor /> },
       { path: "student", element: <AdminStudent /> },
+      { path: "course-syllabus", element: <AdminCourseSyllabus /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
