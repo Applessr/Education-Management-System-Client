@@ -34,6 +34,7 @@ import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
 import StudentInCourse from "../pages/teacher/StudentInCourse";
 import CourseDetail from "../pages/teacher/CourseDetail";
 import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
+import AdminCourseSyllabus from "../pages/admin/AdminCourseSyllabus";
 
 const router = createBrowserRouter([
   {
@@ -113,8 +114,8 @@ const router = createBrowserRouter([
     element: (
       <UserContextProvider>
         <AdminContextProvider>
-          <AdminLayout />
-          {/* <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} /> */}
+          {/* <AdminLayout /> */}
+          <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} />
         </AdminContextProvider>
       </UserContextProvider>
     ),
@@ -124,6 +125,7 @@ const router = createBrowserRouter([
       { path: "course", element: <AdminCourse /> },
       { path: "professor", element: <AdminProfessor /> },
       { path: "student", element: <AdminStudent /> },
+      { path: "course-syllabus", element: <AdminCourseSyllabus /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
