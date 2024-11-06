@@ -1,9 +1,13 @@
-import React from 'react'
+// import DataTableDemo from "@/src/components/teacher/Table/TestTable";
+import DataTableCourse from "@/src/components/teacher/TeacherCourse";
+import React from "react";
 
-const TeacherCourse = () => {
-    return (
-        <div>TeacherCourse</div>
-    )
+function TeacherCourse() {
+  return (
+    <div>
+      <DataTableCourse />
+    </div>
+  );
 }
 
-export default TeacherCourse
+export default TeacherCourse;
