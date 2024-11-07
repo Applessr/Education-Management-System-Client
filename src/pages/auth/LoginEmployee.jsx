@@ -132,6 +132,7 @@ const LoginEmployee = () => {
                     <div className='mt-5 w-full border-none'>
                     <LoginGoogle />
                     </div>
+                    
                     <div className='mt-6 text-sm text-gray-600 space-y-4'>
                         <p>
                             Unauthorized use of university computer and networking resources is prohibited.
