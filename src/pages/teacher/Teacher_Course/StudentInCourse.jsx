@@ -48,6 +48,8 @@ import CourseScoreEdit from "@/src/components/teacher/CourseScoreEdit";
 import CourseDetail from "./CourseDetail";
 import useTeacher from "@/src/hooks/useTeacher";
 
+// import useTeacher from "@/src/hooks/useTeacher";
+
 export const columns = [
   {
     accessorKey: "id",
@@ -77,8 +79,13 @@ export const columns = [
   {
     accessorKey: "score",
     header: "Score",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("score")}</div>,
-  },
+    cell: ({ row }) => {
+        const score = row.getValue("score");
+        return <div className="capitalize">
+            {typeof score === 'object' ? score.totalPoint : score}
+        </div>;
+    },
+},
   {
     accessorKey: "actions",
     header: "Actions",

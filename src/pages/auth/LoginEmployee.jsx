@@ -7,7 +7,7 @@ import LoginGoogle from './LoginGoogle';
 import { Eye } from 'lucide-react';
 
 const LoginEmployee = () => {
-    const { loginEmployee } = useUser()
+    const { loginEmployee, errorLogin } = useUser()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -23,7 +23,9 @@ const LoginEmployee = () => {
     };
 
     const hdlSubmit = async (e) => {
+
         e.preventDefault();
+
         const validationErrors = validateEmployeeLogin(formData)
         if (validationErrors) {
             return setFormErrors(validationErrors);
@@ -33,6 +35,7 @@ const LoginEmployee = () => {
         } catch (error) {
             console.log(error)
         }
+        setFormErrors({});
     }
 
     return (
@@ -70,12 +73,20 @@ const LoginEmployee = () => {
                             </label>
                             <input
                                 type="text"
-                                name="identifier"
-                                value={formData.identifier}
+                                name="email"
+                                value={formData.email}
                                 onChange={hdlOnChange}
                                 className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                 placeholder='Email or phone number'
                             />
+                            {formErrors.email && (
+                                <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">{formErrors.email}</div>
+                            )}
+                            {errorLogin && !formErrors.email && !errorLogin.includes('Password') && (
+                                <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">
+                                    Email you entered was not found. Please try again.
+                                </div>
+                            )}
                         </div>
 
                         <div>
@@ -91,6 +102,14 @@ const LoginEmployee = () => {
                                     className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                     placeholder='Enter password'
                                 />
+                                {formErrors.password && (
+                                    <div className="text-left text-red-500 text-sm dark:text-[#DB5252]">{formErrors.password}</div>
+                                )}
+                                {typeof errorLogin === 'string' && errorLogin.includes('Password') && !formErrors.password && (
+                                    <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">
+                                        {errorLogin}
+                                    </div>
+                                )}
                                 <button
                                     type="button"
                                     className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl'
@@ -128,11 +147,11 @@ const LoginEmployee = () => {
                             Sign In
                         </button>
                     </form>
-                    
+
                     <div className='mt-5 w-full border-none'>
-                    <LoginGoogle />
+                        <LoginGoogle />
                     </div>
-                    
+
                     <div className='mt-6 text-sm text-gray-600 space-y-4'>
                         <p>
                             Unauthorized use of university computer and networking resources is prohibited.

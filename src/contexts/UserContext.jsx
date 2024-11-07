@@ -11,6 +11,7 @@ const UserContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [allFaculty, setAllFaculty] = useState(null);
     const [selectMajor, setSelectMajor] = useState(null);
+    const [errorLogin, setErrorLogin] = useState(null);
 
     const loginStudent = async (form) => {
         try {
@@ -23,6 +24,7 @@ const UserContextProvider = (props) => {
 
         } catch (error) {
             console.log(error.response);
+            setErrorLogin(error.response.data.message)
             toast.error('Login Fail Try again');
         }
     };
@@ -47,6 +49,7 @@ const UserContextProvider = (props) => {
             }
         } catch (error) {
             console.log(error.response);
+            setErrorLogin(error.response.data.message)
             toast.error('Login Fail Try again');
         }
     };
@@ -104,7 +107,7 @@ const UserContextProvider = (props) => {
         }
     }
 
-    const values = { loginEmployee, loginStudent, loginWithGoogle, user, setUser, logout, getFaculty, allFaculty, getMajorByFac, selectMajor };
+    const values = { loginEmployee, loginStudent, loginWithGoogle, user, setUser, logout, getFaculty, allFaculty, getMajorByFac, selectMajor, errorLogin };
 
     return (
         <UserContext.Provider value={values}>

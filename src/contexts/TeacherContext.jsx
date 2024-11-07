@@ -36,6 +36,7 @@ const TeacherContextProvider = (props) => {
     const teacherCourse = async (token) => {
         try {
             const response = await teacherGetCourse(token);
+            console.log(response.data)
             if (response?.data) {
                 setCourse(response.data);
             } else {

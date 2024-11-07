@@ -14,6 +14,7 @@ export default function DataTableCourse() {
   }, [token]);
 
   const memoizedOpenCourses = useMemo(() => openCourses, [openCourses]);
+  console.log(memoizedOpenCourses)
 
   const toggleCourse = (courseId) => {
     setOpenCourses((prev) => ({
@@ -44,6 +45,7 @@ export default function DataTableCourse() {
           ) : (
             <ChevronRightIcon className="h-5 w-5 mr-2" />
           )}
+          
           <span className="font-bold">
             {courseId} {course[courseId][0]?.courseName} ({course[courseId].length} Section{course[courseId].length > 1 ? "s" : ""})
           </span>

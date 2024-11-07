@@ -5,7 +5,8 @@ import useUser from '../../hooks/useUser';
 import { Eye } from 'lucide-react';
 
 const Login = () => {
-    const { loginStudent } = useUser()
+    const { loginStudent, errorLogin } = useUser()
+    const [formErrors, setFormErrors] = useState({});
     const [formData, setFormData] = useState({
         identifier: '',
         password: '',
@@ -73,6 +74,14 @@ const Login = () => {
                                 className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                 placeholder='Email or phone number'
                             />
+                            {formErrors.identifier && (
+                                <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">Student ID or Email is require</div>
+                            )}
+                            {errorLogin && !formErrors.identifier && !errorLogin.includes('Password') && (
+                                <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">
+                                    email or student ID you entered was not found. Please try again.
+                                </div>
+                            )}
                         </div>
 
                         <div>
@@ -87,12 +96,21 @@ const Login = () => {
                                     onChange={hdlOnChange}
                                     className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                     placeholder='Enter password'
+
                                 />
+                                {formErrors.password && (
+                                    <div className="text-left text-red-500 text-sm dark:text-[#DB5252]">{formErrors.password}</div>
+                                )}
+                                {typeof errorLogin === 'string' && errorLogin.includes('Password') && !formErrors.password && (
+                                    <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">
+                                        {errorLogin}
+                                    </div>
+                                )}
                                 <button
                                     type="button"
                                     className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl'
                                 >
-                                    <Eye size={25}/>
+                                    <Eye size={25} />
                                 </button>
                             </div>
                             <div className='text-end pr-4 mt-5 text-[#B1B4B9] font-semibold'>
@@ -135,7 +153,7 @@ const Login = () => {
                             computers and printers in this facility are for the use by patrons authorized to
                             use the university's authentication system.
                         </p>
-                       
+
                     </div>
                 </div>
             </div>

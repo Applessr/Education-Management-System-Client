@@ -3,6 +3,7 @@ import TeacherClassSchedule from './TeacherClassSchedule'
 import TeacherExamSchedule from './TeacherExamSchedule'
 
 
+
 const TeacherAcademicSchedule = () => {
     return (
         <div className="p-6">
