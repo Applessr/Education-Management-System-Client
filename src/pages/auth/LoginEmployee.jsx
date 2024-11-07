@@ -69,14 +69,15 @@ const LoginEmployee = () => {
                     <form onSubmit={hdlSubmit} className='space-y-8'>
                         <div>
                             <label className='block text-lg font-medium text-[#272988] mb-2'>
-                                PierreUT ID
+                                Email
                             </label>
                             <input
                                 type="text"
                                 name="email"
                                 value={formData.email}
                                 onChange={hdlOnChange}
-                                className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                                className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                                    ${formErrors.email || errorLogin && 'border-red-500'}`}
                                 placeholder='Email or phone number'
                             />
                             {formErrors.email && (
@@ -99,8 +100,9 @@ const LoginEmployee = () => {
                                     name="password"
                                     value={formData.password}
                                     onChange={hdlOnChange}
-                                    className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                     placeholder='Enter password'
+                                    className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                                        ${formErrors.password || errorLogin && 'border-red-500'}`}
                                 />
                                 {formErrors.password && (
                                     <div className="text-left text-red-500 text-sm dark:text-[#DB5252]">{formErrors.password}</div>
@@ -118,7 +120,7 @@ const LoginEmployee = () => {
                                 </button>
                             </div>
                             <div className='text-end pr-4 mt-5 text-[#B1B4B9] font-semibold'>
-                                <p>Forgot password?</p>
+                                <Link to={`forget-password`}>Forgot password?</Link>
                             </div>
                         </div>
 

@@ -9,8 +9,10 @@ const LoginGoogle = () => {
         const token = credentialResponse.credential;
         const decoded = jwtDecode(token);
 
-        await loginWithGoogle(token)
-        console.log(decoded);
+        console.log("Token:", token);
+        console.log("Decoded token:", decoded);
+
+        await loginWithGoogle(token);
     };
 
     return (

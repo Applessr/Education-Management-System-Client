@@ -163,21 +163,6 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "GPA",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "GPA")}
-        >
-          GPA
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("GPA")}</div>,
-  },
-  {
     accessorKey: "CPA",
     header: ({ column }) => {
       return (
