@@ -10,11 +10,11 @@ function GuestFooter() {
       <footer className="footer text-base-content p-10 bg-white">
         <nav className="w-[50%]">
           <h6 className="footer-title">Pierre University</h6>
-          <div>
+          <div className="mb-5">
             Join us at Pierre University,
-            where your journey to success begins!"
+            where your journey to success begins!
           </div>
-          <div className="grid grid-flow-col gap-4">
+          <div className="grid grid-flow-col">
             <div className="flex gap-8">
               <a>
                 <svg
@@ -66,7 +66,7 @@ function GuestFooter() {
 
       </footer >
 
-      <div className="flex justify-between bg-[#272988] text-white p-4">
+      <div className="flex justify-between bg-[#272988] text-white p-6">
 
         <div>
           <h1 className="text-2xl font-bold">Pierre</h1>

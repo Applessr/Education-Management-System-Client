@@ -1,11 +1,11 @@
 import React from 'react'
-import footerImage from '../../assets/footerImage.svg'
-import webpvideo from '../../assets/bg-bottom-landing.webp'
+import dotBackground from '../../assets/bg-dotDotdot.webp';
 
 export default function LandingItem4() {
     return (
-        <div className='flex h-auto mt-28'>
-            <img src={webpvideo} alt="footerImg" />
+        <div className='w-full bg-red-700'>
+            <img src={ dotBackground} alt="footerImg"
+            className='w-full object-cover h-52' />
         </div>
     )
 }

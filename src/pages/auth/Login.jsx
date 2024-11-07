@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import validateStudentLogin from '../../utils/loginStudentValidator';
 import useUser from '../../hooks/useUser';
+import { Eye } from 'lucide-react';
 
 const Login = () => {
     const { loginStudent } = useUser()
@@ -16,7 +17,6 @@ const Login = () => {
             [e.target.name]: e.target.value
         });
     };
-
 
     const hdlSubmit = async (e) => {
         e.preventDefault();
@@ -33,40 +33,36 @@ const Login = () => {
     }
 
     return (
-        <div className='min-h-screen flex'>
-            {/* Left side - Cat Image */}
-            <div className='hidden lg:block lg:w-1/2 relative'>
-                <img 
-                    src="/path-to-your-cat-image.jpg"
-                    alt="Decorative cat"
-                    className='w-full h-full object-cover'
-                />
-                <div className='absolute bottom-4 left-4 text-white text-sm'>
-                    Photo by alexei.potriveala
-                </div>
-            </div>
+        <div className='relative min-h-screen flex '
+            style={{
+                backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: '1px 1px',
+            }}>
+            <div className='absolute inset-0 bg-white bg-opacity-75'></div>
 
             {/* Right side - Login Form */}
-            <div className='w-full lg:w-1/2 flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white'>
-                <div className='w-full max-w-2xl'> 
-                    <div className='flex items-center justify-center gap-3 mb-12'> 
-                        <img 
+            <div className='relative w-full  m-36  flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl'>
+
+                <div className='w-full max-w-2xl px-14'>
+                    <div className='flex items-center justify-start gap-3 mb-12'>
+                        <img
                             src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
                             alt="PierreUT Logo"
-                            className='h-40 w-40'
+                            className='h-20 w-auto'
                         />
-                        <span className='text-3xl font-semibold text-blue-600 border-2 border-blue-300 rounded-lg px-4 py-1'>
+                        <span className='text-4xl font-bold text-[#272988] px-1 py-1'>
                             PierreUT
                         </span>
                     </div>
 
-                    <h2 className='text-4xl font-medium text-center mb-12'> 
+                    <h2 className='text-3xl font-medium text-start mb-6 text-[#272988]'>
                         Nice to see you again
                     </h2>
 
-                    <form onSubmit={hdlSubmit} className='space-y-8'> 
+                    <form onSubmit={hdlSubmit} className='space-y-8'>
                         <div>
-                            <label className='block text-lg font-medium text-gray-700 mb-2'> 
+                            <label className='block text-lg font-medium text-[#272988] mb-2'>
                                 PierreUT ID
                             </label>
                             <input
@@ -80,7 +76,7 @@ const Login = () => {
                         </div>
 
                         <div>
-                            <label className='block text-lg font-medium text-gray-700 mb-2'> 
+                            <label className='block text-lg font-medium text-[#272988] mb-2'>
                                 Password
                             </label>
                             <div className='relative'>
@@ -92,12 +88,15 @@ const Login = () => {
                                     className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                                     placeholder='Enter password'
                                 />
-                                <button 
+                                <button
                                     type="button"
                                     className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl'
                                 >
-                                    👁️
+                                    <Eye size={25}/>
                                 </button>
+                            </div>
+                            <div className='text-end pr-4 mt-5 text-[#B1B4B9] font-semibold'>
+                                <p>Forgot password?</p>
                             </div>
                         </div>
 
@@ -121,24 +120,22 @@ const Login = () => {
 
                         <button
                             type="submit"
-                            className='w-full bg-blue-600 text-white rounded-lg py-4 px-6 text-xl hover:bg-blue-700 transition-colors font-medium mt-6'
+                            className='w-full bg-[#272988] text-white rounded-lg py-4 px-6 text-xl hover:bg-blue-700 transition-colors font-semibold mt-4'
                         >
                             Sign In
                         </button>
                     </form>
 
-                    <div className='mt-12 text-sm text-gray-600 space-y-4'>
+                    <div className='mt-6 text-sm text-gray-600 space-y-4'>
                         <p>
-                            Unauthorized use of university computer and networking resources is prohibited. 
-                            If you log in, you acknowledge your awareness of and consent to the 
-                            university's policies on acceptable computer system use, found in the 
-                            Rules. The university will prosecute violators to the full extent of the law. The 
-                            computers and printers in this facility are for the use by patrons authorized to 
+                            Unauthorized use of university computer and networking resources is prohibited.
+                            If you log in, you acknowledge your awareness of and consent to the
+                            university's policies on acceptable computer system use, found in the
+                            Rules. The university will prosecute violators to the full extent of the law. The
+                            computers and printers in this facility are for the use by patrons authorized to
                             use the university's authentication system.
                         </p>
-                        <p>
-                            Last Updated: 08/2023 
-                        </p>
+                       
                     </div>
                 </div>
             </div>
