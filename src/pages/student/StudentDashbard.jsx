@@ -40,10 +40,10 @@ const StudentDashboard = () => {
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-2xl font-bold">Academic Progress</CardTitle>
-                        <GraduationCap className="w-8 h-8 text-blue-600" />
+                        <GraduationCap className="w-8 h-8 text-[#272988]" />
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-4">
+                        <div className="space-y-4 ">
                             <div>
                                 <div className="flex justify-between mb-1">
                                     <p className="text-sm font-medium">Credits Progress</p>

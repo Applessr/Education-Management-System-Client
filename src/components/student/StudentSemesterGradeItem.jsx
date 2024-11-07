@@ -4,7 +4,7 @@ import React from "react";
 function StudentSemesterGradeItem({ semester, courses, gpaInfo }) {
   return (
     <div className="semester-grade" style={{ textAlign: "center", fontFamily: "Arial" }} >
-      <h3 style={{ color: "blue", textDecoration: "underline" }} className="bg-[#F0F9FF]">{semester}</h3>
+      <h3 style={{ color: "blue", textDecoration: "underline" }} className="bg-[#eedcb5] h-8">{semester}</h3>
       <table
         border="1"
         style={{ width: "80%", margin: "0 auto", borderCollapse: "collapse" }}

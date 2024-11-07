@@ -37,12 +37,12 @@ function StudentEnrollResult() {
       const mockStudentInfo = {
         studentNo: "mock123456",
         name: "Yui Gahama",
-        dateOfBirth: "test dof",
-        placeOfBirth: "test pob",
-        fieldOfStudy: "fieldos",
-        degreeConferred: "dconferred",
-        dateOfAdmission: "doa",
-        dateOfGraduation: "dog",
+        dateOfBirth: "18 November 1998",
+        placeOfBirth: "198/5 Bangkok, Thailand",
+        fieldOfStudy: "Business Administration",
+        degreeConferred: "Logistics and Supply Chain Mgn",
+        dateOfAdmission: "15 January 2017",
+        dateOfGraduation: "25 December 2021",
       };
 
       const mockSemesters = [
@@ -241,11 +241,11 @@ function StudentEnrollResult() {
               <div className="space-y-4 w-1/2 ">
                 <div className="flex gap-3">
                   <p className="font-semibold">Faculty</p>
-                  <span>{studentInfo.degreeConferred}</span>
+                  <span>{studentInfo.fieldOfStudy}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Field of Study</p>
-                  <span>{studentInfo.fieldOfStudy}</span>
+                  <span>{studentInfo.degreeConferred}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Date of Admission</p>
