@@ -79,8 +79,8 @@ function StudentInfo() {
           </div>
 
           <div className="flex w-full gap-5 ">
-            <InfoBox title={<span className="flex gap-3"><UserRound /> Name-Surname(English)  </span>} detail={studentInfo?.studentId} />
-            <InfoBox title={<span className="flex gap-3"> <UserRound /> Name-Surname(Thai) </span>} detail={studentInfo?.studentId} />
+            <InfoBox title={<span className="flex gap-3"><UserRound /> First Name</span>} detail={studentInfo?.studentId} />
+            <InfoBox title={<span className="flex gap-3"> <UserRound />Last Name </span>} detail={studentInfo?.studentId} />
           </div>
 
           <div className="flex w-full gap-5">
