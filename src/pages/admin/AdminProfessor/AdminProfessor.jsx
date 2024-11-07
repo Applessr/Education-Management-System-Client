@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { adminActiveAccount, adminGetTeacher, adminInactiveAccount } from '@/src/api/admin';
 import { toast } from 'react-toastify';
 import { Edit, X } from 'lucide-react';
-import EditProfessorForm from './EditProfessorForm';
 import AddEmployeeForm from './AddEmployeeForm';
+import EditProfessorForm from './EditProfessorForm';
+import { adminActiveAccount, adminGetTeacher, adminInactiveAccount } from '@/src/api/admin';
 
 const AdminProfessor = () => {
     // State management

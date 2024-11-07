@@ -361,11 +361,6 @@ data.forEach((student) => {
   }
 });
 
-console.log("Freshmen:", freshmenList);
-console.log("Sophomores:", sophomoreList);
-console.log("Juniors:", juniorList);
-console.log("Seniors:", seniorList);
-
 const TeacherAdvisors = () => {
   return (
     <div>

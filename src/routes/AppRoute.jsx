@@ -21,9 +21,8 @@ import TeacherDashboard from "../pages/teacher/TeacherDashboard";
 import TeacherCourse from "../pages/teacher/TeacherCourse";
 import TeacherRequestedCourse from "../pages/teacher/TeacherRequestedCourse";
 import TeacherAdvisors from "../pages/teacher/TeacherAdvisors";
-import AdminDashboard from "../pages/admin/AdminDashboard";
-import AdminProfessor from "../pages/admin/AdminProfessor";
-import AdminStudent from "../pages/admin/AdminStudent";
+import AdminDashboard from "../pages/admin/AdminDashboard/AdminDashboard";
+import AdminStudent from "../pages/admin/AdminStudent/AdminStudent";
 import StudentEnrollResult from "../pages/student/StudentEnrollResult";
 import ProtectRoute from "./ProtectRoute";
 import { StudentContextProvider } from "../contexts/StudentContext";
@@ -42,6 +41,7 @@ import ResearchPage from "../pages/guest/ResearchPage";
 import StudentInCourse from "../pages/teacher/StudentInCourse";
 import CourseDetail from "../pages/teacher/CourseDetail";
 import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
+import AdminProfessor from "../pages/admin/AdminProfessor/AdminProfessor";
 import AdminCourseSyllabus from "../pages/admin/AdminCourseSyllabus";
 
 const router = createBrowserRouter([

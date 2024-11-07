@@ -1,94 +1,19 @@
-import * as React from "react";
-import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons"; // You can use different icons if needed.
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Link } from "react-router-dom";
-
-const courseData = [
-  {
-    courseId: "01101491",
-    courseName: "Research Methods in Economics",
-    sections: [
-      {
-        id: 1,
-        code: 316,
-        name: "Research Methods in Economics",
-        credit: 3,
-        section: 801,
-        studyDay: "Mon 9:00 - 12:00",
-        room: "170102",
-        examDate: "Mon 30/02/2025 9:00 - 12:00",
-        seat: 50,
-        enroll: 20,
-        add: "-",
-      },
-      {
-        id: 2,
-        code: 316,
-        name: "Research Methods in Economics",
-        credit: 3,
-        section: 802,
-        studyDay: "Mon 13:00 - 16:00",
-        room: "170102",
-        examDate: "Mon 30/02/2025 13:00 - 16:00",
-        seat: 50,
-        enroll: 50,
-        add: "-",
-      },
-    ],
-  },
-  {
-    courseId: "01101281",
-    courseName: "Microeconomics I",
-    sections: [
-      {
-        id: 1,
-        code: 242,
-        name: "Microeconomics I",
-        credit: 3,
-        section: 809,
-        studyDay: "Mon 9:00 - 12:00",
-        room: "140102",
-        examDate: "Tue 31/01/2025 9:00 - 12:00",
-        seat: 50,
-        enroll: 50,
-        add: "3",
-      },
-      {
-        id: 2,
-        code: 242,
-        name: "Microeconomics I",
-        credit: 3,
-        section: 810,
-        studyDay: "Mon 13:00 - 16:00",
-        room: "140102",
-        examDate: "Tue 31/01/2025 13:00 - 16:00",
-        seat: 50,
-        enroll: 50,
-        add: "-",
-      },
-    ],
-  },
-];
+import { useEffect, useState, useMemo } from "react";
+import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Link, useNavigate } from "react-router-dom";
+import useTeacher from "@/src/hooks/useTeacher";
 
 export default function DataTableCourse() {
-  const [openCourses, setOpenCourses] = React.useState({});
+  const [openCourses, setOpenCourses] = useState({});
+  const { teacherCourse, course, setSelectCourse } = useTeacher();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    teacherCourse(token);
+  }, [token]);
+
+  const memoizedOpenCourses = useMemo(() => openCourses, [openCourses]);
 
   const toggleCourse = (courseId) => {
     setOpenCourses((prev) => ({
@@ -97,109 +22,88 @@ export default function DataTableCourse() {
     }));
   };
 
+  const courseSelect = (courseId) => {
+    setSelectCourse(courseId);
+  };
+
+  console.log('course :>> ', course);
+
+
+  const memoizedCourse = useMemo(() => {
+    if (!course || Object.keys(course).length === 0) {
+      return null;
+    }
+    return Object.keys(course).map((courseId) => (
+      <div key={courseId} className="rounded-md shadow border mb-4">
+        <div
+          className="flex items-center bg-[#AB842E] rounded-md text-white p-4 cursor-pointer"
+          onClick={() => toggleCourse(courseId)}
+        >
+          {memoizedOpenCourses[courseId] ? (
+            <ChevronDownIcon className="h-5 w-5 mr-2" />
+          ) : (
+            <ChevronRightIcon className="h-5 w-5 mr-2" />
+          )}
+          <span className="font-bold">
+            {courseId} {course[courseId][0]?.courseName} ({course[courseId].length} Section{course[courseId].length > 1 ? "s" : ""})
+          </span>
+        </div>
+        {memoizedOpenCourses[courseId] && (
+          <div className="p-4 text-[#041942]">
+            <Table>
+              <TableHeader >
+                <TableRow className="text-[#041942]" >
+                  <TableHead>#</TableHead>
+                  <TableHead>Code</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Cr.</TableHead>
+                  <TableHead>Sec.</TableHead>
+                  <TableHead>Study Day</TableHead>
+                  <TableHead>Room</TableHead>
+                  <TableHead>Exam Day</TableHead>
+                  <TableHead>Seat</TableHead>
+                  <TableHead>Enroll</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {course[courseId].map((section, index) => (
+                  <TableRow key={section.id} className='hover:bg-slate-200' onClick={() => courseSelect(section.id)}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>
+                      <Link to={`${section.courseCode}/${section.section}`}>
+                        {section.courseCode}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Link to={`${section.courseCode}/${section.section}`}>
+                        {section.courseName}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{section.credits}</TableCell>
+                    <TableCell>{section.section}</TableCell>
+                    <TableCell>{section.classSchedules.length > 0 ? section.classSchedules[0].studyDay : "N/A"}</TableCell>
+                    <TableCell>{section.classSchedules.length > 0 ? section.classSchedules[0].room : "N/A"}</TableCell>
+                    <TableCell>{section.examSchedule.length > 0 ? section.examSchedule[0].examDay : "N/A"}</TableCell>
+                    <TableCell>{section.seat}</TableCell>
+                    <TableCell>{section.enrollments.length}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </div>
+    ));
+  }, [course, memoizedOpenCourses]);
+
+  if (!course || Object.keys(course).length === 0) {
+    return <p>No courses available at the moment.</p>;
+  }
+
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold text-amber-700 mb-4">Course</h1>
-      {courseData.map((course) => (
-        <div key={course.courseId} className="rounded-md shadow border mb-4">
-          <div
-            className="flex items-center bg-amber-600 text-white p-4 cursor-pointer"
-            onClick={() => toggleCourse(course.courseId)}
-          >
-            {openCourses[course.courseId] ? (
-              <ChevronDownIcon className="h-5 w-5 mr-2" />
-            ) : (
-              <ChevronRightIcon className="h-5 w-5 mr-2" />
-            )}
-            <span className="font-bold">
-              {course.courseId} {course.courseName} ({course.sections.length}{" "}
-              Section)
-            </span>
-          </div>
-          {openCourses[course.courseId] && (
-            <div className="p-4">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>#</TableHead>
-                    <TableHead>Code</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Cr.</TableHead>
-                    <TableHead>Sec.</TableHead>
-                    <TableHead>Study Day</TableHead>
-                    <TableHead>Room</TableHead>
-                    <TableHead>Exam Day</TableHead>
-                    <TableHead>Seat</TableHead>
-                    <TableHead>Enroll</TableHead>
-                    <TableHead>Add</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {course.sections.map((section) => (
-                    <TableRow key={section.id}>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.id}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.code}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.name}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.credit}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.section}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.studyDay}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.room}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.examDate}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.seat}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.enroll}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Link to={`${section.code}/${section.section}`}>
-                          {section.add}
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </div>
-      ))}
+      {memoizedCourse}
     </div>
   );
 }

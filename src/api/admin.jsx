@@ -7,6 +7,13 @@ export const adminGetProfile = (token) => axios.get('/admin/profile', {
     }
 });
 
+export const adminGetOverall = (token) => axios.get('/admin/over-all', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
+
 export const adminGetStudent = (token) => axios.get('/admin/student', {
     headers: {
         Authorization: `Bearer ${token}`
