@@ -11,6 +11,7 @@ const UserContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [allFaculty, setAllFaculty] = useState(null);
     const [selectMajor, setSelectMajor] = useState(null);
+    const [errorLogin, setErrorLogin] = useState(null);
 
     const loginStudent = async (form) => {
         try {
@@ -23,6 +24,7 @@ const UserContextProvider = (props) => {
 
         } catch (error) {
             console.log(error.response);
+            setErrorLogin(error.response.data.message)
             toast.error('Login Fail Try again');
         }
     };
@@ -47,30 +49,38 @@ const UserContextProvider = (props) => {
             }
         } catch (error) {
             console.log(error.response);
+            setErrorLogin(error.response.data.message)
             toast.error('Login Fail Try again');
         }
     };
     const loginWithGoogle = async (token) => {
         try {
             const response = await loginGoogle(token);
+            if (!response?.data?.user?.employee?.role) {
+                throw new Error("Role information is missing from the response");
+            }
+
+            const role = response.data.user.employee.role;
+
             setUser(response.data.user.employee);
             localStorage.setItem('token', response.data.token);
-            const role = response.data.user.employeeRole;
+
             switch (role) {
                 case 'TEACHER':
                     toast.success('Login Success as teacher');
-                    navigate('/teacher');
+                    navigate('/teacher', { replace: true });
                     break;
                 case 'ADMIN':
                     toast.success('Login Success as Admin');
-                    navigate('/admin');
+                    navigate('/admin', { replace: true });
                     break;
                 default:
                     toast.success('Login Success');
+                    navigate('/');
             }
         } catch (error) {
-            console.log(error.response.data.message);
-            toast.error(error.response.data.message);
+            console.error("Error logging in with Google:", error);
+            toast.error(error.response?.data?.message || "Login failed. Please try again.");
         }
     };
     const logout = () => {
@@ -104,7 +114,7 @@ const UserContextProvider = (props) => {
         }
     }
 
-    const values = { loginEmployee, loginStudent, loginWithGoogle, user, setUser, logout, getFaculty, allFaculty, getMajorByFac, selectMajor };
+    const values = { loginEmployee, loginStudent, loginWithGoogle, user, setUser, logout, getFaculty, allFaculty, getMajorByFac, selectMajor, errorLogin };
 
     return (
         <UserContext.Provider value={values}>
