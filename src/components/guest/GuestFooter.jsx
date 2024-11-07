@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Instagram } from "lucide-react";
 
 function GuestFooter() {
@@ -7,17 +7,15 @@ function GuestFooter() {
 
   return (
     <div>
-      <footer className="footer bg-base-300 text-base-content p-10">
+      <footer className="footer text-base-content p-10 bg-white">
         <nav className="w-[50%]">
           <h6 className="footer-title">Pierre University</h6>
-          <div>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam
-            quas adipisci ullam accusamus aut nulla blanditiis. Incidunt,
-            perferendis. Laborum est expedita corporis? Molestiae aspernatur est
-            quibusdam voluptate, ad incidunt dicta!
+          <div className="mb-5">
+            Join us at Pierre University,
+            where your journey to success begins!
           </div>
-          <div className="grid grid-flow-col gap-4">
-            <div className="flex">
+          <div className="grid grid-flow-col">
+            <div className="flex gap-8">
               <a>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,20 +57,26 @@ function GuestFooter() {
         </nav>
 
         <nav>
-          <h6 className="footer-title">More Info.</h6>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Campus Carry</a>
-          <a className="link link-hover">Counseling and Mental Health</a>
-          <a className="link link-hover">Research Units & Centers</a>
+          <h6 className="footer-title">More Info</h6>
+          <Link to="/contact" className="link-hover">Contact</Link>
+          <Link to="/campusCarry" className="link-hover">Campus Carry</Link>
+          <Link to="/counsel" className="link-hover">Counseling and Mental Health</Link>
+          <Link to="/research" className="link-hover">Research Units & Centers</Link>
         </nav>
-      </footer>
-      <div className="flex justify-between">
-        <div>Logo</div>
+
+      </footer >
+
+      <div className="flex justify-between bg-[#272988] text-white p-6">
 
         <div>
-          <p>2023 Lorem ipsum.All Rights Reserved.</p>
+          <h1 className="text-2xl font-bold">Pierre</h1>
+        </div>
+
+        <div>
+          <p>© The Pierre University at All Rights Reserved</p>
         </div>
       </div>
+
     </div>
   );
 }

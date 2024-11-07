@@ -18,6 +18,12 @@ export const teacherGetStudentInCourse = (token) => axios.get('/teacher/student-
     }
 });
 
+export const teacherGetStudentInCourseById = (token, courseId) => axios.get('/teacher/student-course/' + courseId, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
 export const teacherGetConsultedStudent = (token) => axios.get('/teacher/consulted-student', {
     headers: {
         Authorization: `Bearer ${token}`
