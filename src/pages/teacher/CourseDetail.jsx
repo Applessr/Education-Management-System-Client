@@ -14,16 +14,16 @@ import {
 function CourseDetail({ courseData }) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    seat: courseData.seat,
-    teacherId: courseData.teacherId,
-    studyDay: courseData.classSchedule.day,
-    studyStartTime: courseData.classSchedule.startTime,
-    studyEndTime: courseData.classSchedule.endTime,
-    studyRoom: courseData.classSchedule.room,
-    examDate: courseData.examSchedule.examDate,
-    examStartTime: courseData.examSchedule.startTime,
-    examEndTime: courseData.examSchedule.endTime,
-    examRoom: courseData.examSchedule.room,
+    seat: courseData.seat || '',
+    teacherId: courseData.teacherId || "",
+    studyDay: courseData.classSchedule.day || "",
+    studyStartTime: courseData.classSchedule.startTime || "",
+    studyEndTime: courseData.classSchedule.endTime || '',
+    studyRoom: courseData.classSchedule.room || "",
+    examDate: courseData.examSchedule.examDate || '',
+    examStartTime: courseData.examSchedule.startTime || '',
+    examEndTime: courseData.examSchedule.endTime || '',
+    examRoom: courseData.examSchedule.room || '',
   });
 
   const handleInputChange = (e) => {
@@ -35,7 +35,7 @@ function CourseDetail({ courseData }) {
   };
 
   const handleSave = () => {
-    console.log("Edited data:", formData); // Console the edited data
+    console.log("Edited data:", formData); 
     setIsEditing(false);
   };
 
