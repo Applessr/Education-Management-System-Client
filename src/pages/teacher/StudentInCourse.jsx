@@ -320,7 +320,7 @@ const data = [
   },
 ];
 
-console.log(data);
+// console.log(data);
 
 const handleAdd = (student) => {
   console.log("Add score studentId:", student.studentId);
