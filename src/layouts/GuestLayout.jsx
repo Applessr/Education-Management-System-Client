@@ -7,7 +7,7 @@ import ScrollTop from "../components/guest/ScrollTop";
 
 const GuestLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       <GuestHeader />
       <ScrollTop />
       <Outlet />

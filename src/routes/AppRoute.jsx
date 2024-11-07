@@ -39,6 +39,10 @@ import ContactPage from "../pages/guest/ContactPage";
 import CampusCarryPage from "../pages/guest/CampusCarryPage";
 import CounselingPage from "../pages/guest/CounselingPage";
 import ResearchPage from "../pages/guest/ResearchPage";
+import StudentInCourse from "../pages/teacher/StudentInCourse";
+import CourseDetail from "../pages/teacher/CourseDetail";
+import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
+import AdminCourseSyllabus from "../pages/admin/AdminCourseSyllabus";
 
 const router = createBrowserRouter([
   {
@@ -82,7 +86,8 @@ const router = createBrowserRouter([
           <ProtectRoute element={<StudentLayout />} allow={["STUDENT"]} />
           {/* <StudentLayout /> */}
         </StudentContextProvider>
-      </UserContextProvider>),
+      </UserContextProvider>
+    ),
 
     children: [
       { index: true, element: <LandingPage /> },
@@ -105,13 +110,15 @@ const router = createBrowserRouter([
           <ProtectRoute element={<TeacherLayout />} allow={["TEACHER"]} />
           {/* <TeacherLayout /> */}
         </TeacherContextProvider>
-      </UserContextProvider>),
+      </UserContextProvider>
+    ),
     children: [
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <TeacherInfo /> },
       { path: "dashboard", element: <TeacherDashboard /> },
       { path: "schedule", element: <TeacherAcademicSchedule /> },
       { path: "course", element: <TeacherCourse /> },
+      { path: "course/:courseCode/:section", element: <StudentInCourse /> },
       { path: "requested-course", element: <TeacherRequestedCourse /> },
       { path: "advisors", element: <TeacherAdvisors /> },
       { path: "unauthorization", element: <Unauthorized /> },
@@ -123,15 +130,18 @@ const router = createBrowserRouter([
     element: (
       <UserContextProvider>
         <AdminContextProvider>
+          {/* <AdminLayout /> */}
           <ProtectRoute element={<AdminLayout />} allow={["ADMIN"]} />
         </AdminContextProvider>
-      </UserContextProvider>),
+      </UserContextProvider>
+    ),
     children: [
       { index: true, element: <LandingPage /> },
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "course", element: <AdminCourse /> },
       { path: "professor", element: <AdminProfessor /> },
       { path: "student", element: <AdminStudent /> },
+      { path: "course-syllabus", element: <AdminCourseSyllabus /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],

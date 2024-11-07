@@ -13,6 +13,21 @@ export const adminGetStudent = (token) => axios.get('/admin/student', {
     }
 });
 
+export const adminOverAll = (token) => axios.get('/admin/over-all', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
+export const adminGetCourseSyllabus = (token, majorId, year) => axios.get('/admin/course-syllabus/' + majorId, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    },
+    params: {
+        year: year // Send `year` as a query parameter
+    }
+});
+
 export const adminGetTeacher = (token) => axios.get('/admin/teacher', {
     headers: {
         Authorization: `Bearer ${token}`
@@ -73,14 +88,23 @@ export const adminEditTeacherInfo = (token, employeeId, body) => axios.patch('/a
     }
 });
 
-export const adminActiveAccount = (token, employeeId) => axios.patch('/admin/employee-active/' + employeeId, {
-    headers: {
-        Authorization: `Bearer ${token}`
+export const adminInactiveAccount = (token, employeeId) => axios.patch(
+    `/admin/employee-inactive/` + employeeId,
+    {}, // empty object for request body
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
-});
+);
 
-export const adminInactiveAccount = (token, employeeId) => axios.patch('/admin/employee-inactive/' + employeeId, {
-    headers: {
-        Authorization: `Bearer ${token}`
+export const adminActiveAccount = (token, employeeId) => axios.patch(
+    `/admin/employee-active/` + employeeId,
+    {}, // empty object for request body
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
-});
+);
+

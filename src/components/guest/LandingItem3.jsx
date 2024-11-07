@@ -37,12 +37,15 @@ function LandingItem3() {
                 <p>FIELDS OF STUDY</p>
               </div>
             </div>
+
           </div>
 
         </div>
-      </div>
-    </div>
-  );
+
+      </div>  
+
+    </div>  
+  )      
 }
 
 export default LandingItem3;
