@@ -8,7 +8,7 @@ const loginEmployeeSchema = Joi.object({
                 .email({ tlds: false })
                 .messages({
                     "string.email": "Please enter a valid email address",
-                    "string.empty": "Email is required if username is not provided"
+                    "string.empty": "Email is require"
                 }),
         )
         .required(),
