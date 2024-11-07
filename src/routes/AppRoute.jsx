@@ -43,6 +43,8 @@ import CourseDetail from "../pages/teacher/CourseDetail";
 import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
 import AdminProfessor from "../pages/admin/AdminProfessor/AdminProfessor";
 import AdminCourseSyllabus from "../pages/admin/AdminCourseSyllabus";
+import ForgetPassword from "../pages/auth/ForgetPassword";
+import ResetPassword from "../pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -50,8 +52,6 @@ const router = createBrowserRouter([
     element: <GuestLayout />,
     children: [
       { index: true, element: <LandingPage /> },
-      { path: "unauthorization", element: <Unauthorized /> },
-      { path: "*", element: <NotFound /> },
       { path: "about", element: <AboutPage /> },
       { path: "academic", element: <AcademicPage /> },
       { path: "campus", element: <CampusPage /> },
@@ -59,7 +59,9 @@ const router = createBrowserRouter([
       { path: "contact", element: <ContactPage /> },
       { path: "campusCarry", element: <CampusCarryPage /> },
       { path: "counsel", element: <CounselingPage /> },
-      { path: "research", element: <ResearchPage /> },
+      { path: "counsel", element: <CounselingPage /> },
+      { path: "unauthorization", element: <Unauthorized /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 
@@ -74,6 +76,9 @@ const router = createBrowserRouter([
       { index: true, element: <ChooseRole /> },
       { path: "login", element: <Login /> },
       { path: "login-employee", element: <LoginEmployee /> },
+      { path: "login/forget-password", element: <ForgetPassword /> },
+      { path: "login-employee/forget-password", element: <ForgetPassword /> },
+      { path: "reset-password", element: <ResetPassword /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
@@ -90,7 +95,7 @@ const router = createBrowserRouter([
     ),
 
     children: [
-      { index: true, element: <LandingPage /> },
+      { index: true, element: <StudentDashboard /> },
       { path: "profile", element: <StudentInfo /> },
       { path: "enroll", element: <EnrollmentFlow /> },
       { path: "dashboard", element: <StudentDashboard /> },
@@ -113,7 +118,7 @@ const router = createBrowserRouter([
       </UserContextProvider>
     ),
     children: [
-      { index: true, element: <LandingPage /> },
+      { index: true, element: <TeacherDashboard /> },
       { path: "profile", element: <TeacherInfo /> },
       { path: "dashboard", element: <TeacherDashboard /> },
       { path: "schedule", element: <TeacherAcademicSchedule /> },
@@ -136,7 +141,7 @@ const router = createBrowserRouter([
       </UserContextProvider>
     ),
     children: [
-      { index: true, element: <LandingPage /> },
+      { index: true, element: <AdminDashboard /> },
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "course", element: <AdminCourse /> },
       { path: "professor", element: <AdminProfessor /> },

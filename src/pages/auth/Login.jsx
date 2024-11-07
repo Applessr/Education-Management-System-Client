@@ -71,7 +71,8 @@ const Login = () => {
                                 name="identifier"
                                 value={formData.identifier}
                                 onChange={hdlOnChange}
-                                className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                                className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                                    ${formErrors.identifier || errorLogin && 'border-red-500'}`}
                                 placeholder='Email or phone number'
                             />
                             {formErrors.identifier && (
@@ -94,7 +95,8 @@ const Login = () => {
                                     name="password"
                                     value={formData.password}
                                     onChange={hdlOnChange}
-                                    className='w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                                    className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                                         ${formErrors.password || errorLogin && 'border-red-500'}`}
                                     placeholder='Enter password'
 
                                 />
@@ -114,7 +116,7 @@ const Login = () => {
                                 </button>
                             </div>
                             <div className='text-end pr-4 mt-5 text-[#B1B4B9] font-semibold'>
-                                <p>Forgot password?</p>
+                                <Link to={`forget-password`}>Forgot password?</Link>
                             </div>
                         </div>
 
