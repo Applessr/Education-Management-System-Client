@@ -27,6 +27,7 @@ const UserContextProvider = (props) => {
         try {
             const response = await loginAsEmployee(form);
             setUser(response.data.user.user);
+            console.log(response.data)
             localStorage.setItem('token', response.data.token);
             const role = response.data.user.user.role;
             switch (role) {

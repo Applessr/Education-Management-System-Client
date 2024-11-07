@@ -6,6 +6,7 @@ import useUser from '@/src/hooks/useUser';
 
 const AdminSidebar = () => {
     const { logout, user } = useUser()
+    console.log(user)
     const [open, setOpen] = useState(true);
     const [active, setActive] = useState("profile");
     const navigate = useNavigate();
@@ -68,7 +69,7 @@ const AdminSidebar = () => {
                         {open && (
                             <div>
                                 <h4 className="font-extrabold text-white">{user?.firstName} {user?.lastName}</h4>
-                                <p className="text-md text-white">{user?.employeeRole}</p>
+                                <p className="text-md text-white">{user?.role}</p>
                             </div>
                         )}
                         <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
