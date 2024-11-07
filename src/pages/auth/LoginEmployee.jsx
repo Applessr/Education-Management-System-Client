@@ -95,7 +95,7 @@ const LoginEmployee = () => {
                                     type="button"
                                     className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl'
                                 >
-                                    <Eye size={25}/>
+                                    <Eye size={25} />
                                 </button>
                             </div>
                             <div className='text-end pr-4 mt-5 text-[#B1B4B9] font-semibold'>
@@ -128,7 +128,10 @@ const LoginEmployee = () => {
                             Sign In
                         </button>
                     </form>
-
+                    
+                    <div className='mt-5 w-full border-none'>
+                    <LoginGoogle />
+                    </div>
                     <div className='mt-6 text-sm text-gray-600 space-y-4'>
                         <p>
                             Unauthorized use of university computer and networking resources is prohibited.
@@ -138,7 +141,7 @@ const LoginEmployee = () => {
                             computers and printers in this facility are for the use by patrons authorized to
                             use the university's authentication system.
                         </p>
-                       
+
                     </div>
                 </div>
             </div>
