@@ -2,12 +2,15 @@ import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginAsEmployee, loginAsStudent, loginGoogle } from "../api/auth";
 import { toast } from "react-toastify";
+import { getAllFaculty, getMajorById } from "../api/course";
 
 const UserContext = createContext();
 
 const UserContextProvider = (props) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [allFaculty, setAllFaculty] = useState(null);
+    const [selectMajor, setSelectMajor] = useState(null);
 
     const loginStudent = async (form) => {
         try {
@@ -47,13 +50,12 @@ const UserContextProvider = (props) => {
             toast.error('Login Fail Try again');
         }
     };
-
     const loginWithGoogle = async (token) => {
         try {
             const response = await loginGoogle(token);
             setUser(response.data.user.employee);
             localStorage.setItem('token', response.data.token);
-            const role = response.data.user.employee.role;
+            const role = response.data.user.employeeRole;
             switch (role) {
                 case 'TEACHER':
                     toast.success('Login Success as teacher');
@@ -83,8 +85,26 @@ const UserContextProvider = (props) => {
         }
 
     };
+    const getFaculty = async () => {
+        try {
+            const response = await getAllFaculty();
+            setAllFaculty(response.data)
+        } catch (error) {
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+        }
+    }
+    const getMajorByFac = async (facultyId) => {
+        try {
+            const response = await getMajorById(facultyId);
+            setSelectMajor(response.data)
+        } catch (error) {
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+        }
+    }
 
-    const values = { loginEmployee, loginStudent, loginWithGoogle, user, setUser, logout };
+    const values = { loginEmployee, loginStudent, loginWithGoogle, user, setUser, logout, getFaculty, allFaculty, getMajorByFac, selectMajor };
 
     return (
         <UserContext.Provider value={values}>
