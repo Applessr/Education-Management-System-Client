@@ -24,6 +24,12 @@ export const studentGetEnrollCourse = (token) => axios.get('/course/student/enro
     }
 });
 
+export const teacherGetCourse = (token) => axios.get('/course/teacher', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
 export const studentGetEnrollCourseBySemester = (token, body) => axios.get('/course/student/enroll-course-semester', body, {
     headers: {
         Authorization: `Bearer ${token}`
