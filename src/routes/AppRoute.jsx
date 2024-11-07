@@ -33,11 +33,8 @@ import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
 import StudentInCourse from "../pages/teacher/StudentInCourse";
 import CourseDetail from "../pages/teacher/CourseDetail";
 import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
-<<<<<<< HEAD
 import AdminProfessor from "../pages/admin/AdminProfessor/AdminProfessor";
-=======
 import AdminCourseSyllabus from "../pages/admin/AdminCourseSyllabus";
->>>>>>> dev
 
 const router = createBrowserRouter([
   {
