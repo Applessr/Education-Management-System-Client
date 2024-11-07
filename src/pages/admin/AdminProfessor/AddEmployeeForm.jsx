@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { adminRegisterTeacher } from '@/src/api/admin';
+
 import { toast } from 'react-toastify';
 import { X } from 'lucide-react';
+import { adminRegisterTeacher } from '@/src/api/admin';
 
 const AddEmployeeForm = ({ onClose, onSuccess }) => {
     const [formData, setFormData] = useState({
