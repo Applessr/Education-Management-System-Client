@@ -41,7 +41,7 @@ const TeacherSidebar = () => {
                         <img
                             src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
                             alt="Pierre University"
-                            className="h-8"
+                            className="h-16"
                         />
                         <span className="font-semibold text-lg text-amber-700">Pierre University</span>
                     </div>

@@ -4,13 +4,16 @@ import GuestHeader from "../components/guest/GuestHeader";
 import GuestFooter from "../components/guest/GuestFooter";
 import { Scroll } from "lucide-react";
 import ScrollTop from "../components/guest/ScrollTop";
+import Transition from "../components/box-tools/Transition";
 
 const GuestLayout = () => {
   return (
     <div className="min-h-screen">
       <GuestHeader />
-      <ScrollTop />
-      <Outlet />
+      <Transition>
+        <ScrollTop />
+        <Outlet />
+      </Transition>
       <GuestFooter />
     </div>
   );
