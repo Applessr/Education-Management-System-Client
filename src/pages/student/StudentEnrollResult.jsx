@@ -35,14 +35,14 @@ function StudentEnrollResult() {
 
       // Temporary mock data
       const mockStudentInfo = {
-        studentNo: "xxxxxxxxxx",
-        name: "xxxxxxxxxx",
-        dateOfBirth: "xxxxxxxx",
-        placeOfBirth: "xxxxxxxxxx",
-        fieldOfStudy: "xxxxxxx",
-        degreeConferred: "xxxxxx",
-        dateOfAdmission: "xxxxxx",
-        dateOfGraduation: "xxxxxx",
+        studentNo: "mock123456",
+        name: "Yui Gahama",
+        dateOfBirth: "18 November 1998",
+        placeOfBirth: "198/5 Bangkok, Thailand",
+        fieldOfStudy: "Business Administration",
+        degreeConferred: "Logistics and Supply Chain Mgn",
+        dateOfAdmission: "15 January 2017",
+        dateOfGraduation: "25 December 2021",
       };
 
       const mockSemesters = [
@@ -197,11 +197,13 @@ function StudentEnrollResult() {
 
   return (
     <div>
-      <Card className="w-[50%] mx-auto p-8 bg-white mb-8">
-        <div className="flex flex-col gap-5">
+      <Card className="w-[85%] mx-auto p-8 bg-white mb-8  ">
+        <div className="flex flex-col gap-5 mx-8">
           {/* University Header */}
           <div className="flex justify-between items-center">
-            <div className="w-24 h-24">logo</div>
+            <div className="w-28 h-auto">
+              <img src="https://res.cloudinary.com/djudr1vzc/image/upload/v1730788865/Pierre_LOGO_rgsgob.png" alt="logo" />
+            </div>
             <div className="flex flex-col text-center">
               <p className="font-bold text-xl">Pierre University</p>
               <p className="font-semibold">
@@ -214,11 +216,44 @@ function StudentEnrollResult() {
 
           {/* Student Information */}
           <div className="mt-8">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-4">
+            <div className="flex justify-between gap-4  ">
+              
+              <div className="space-y-4 w-1/2">
                 <div className="flex gap-3">
-                  <p className="font-semibold">Student No:</p>
+                  <p className="font-semibold">Student ID</p>
                   <span>{studentInfo.studentNo}</span>
+                </div>
+                <div className="flex gap-3">
+                  <p className="font-semibold">Name </p>
+                  <span>{studentInfo.name}</span>
+                </div>
+                <div className="flex gap-3">
+                  <p className="font-semibold">Date of Birth</p>
+                  <span>{studentInfo.dateOfBirth}</span>
+                </div>
+                <div className="flex gap-3">
+                  <p className="font-semibold">Address</p>
+                  <span>{studentInfo.placeOfBirth}</span>
+                </div>
+                {/* ... other student info fields */}
+              </div>
+
+              <div className="space-y-4 w-1/2 ">
+                <div className="flex gap-3">
+                  <p className="font-semibold">Faculty</p>
+                  <span>{studentInfo.fieldOfStudy}</span>
+                </div>
+                <div className="flex gap-3">
+                  <p className="font-semibold">Field of Study</p>
+                  <span>{studentInfo.degreeConferred}</span>
+                </div>
+                <div className="flex gap-3">
+                  <p className="font-semibold">Date of Admission</p>
+                  <span>{studentInfo.dateOfAdmission}</span>
+                </div>
+                <div className="flex gap-3">
+                  <p className="font-semibold">Date of Graduation</p>
+                  <span>{studentInfo.dateOfGraduation}</span>
                 </div>
                 {/* ... other student info fields */}
               </div>
@@ -226,7 +261,7 @@ function StudentEnrollResult() {
           </div>
 
           {/* Semester Grades */}
-          <div className="mt-4">
+          <div className="mt-4 ">
             <StudentSemesterGrade semesters={semesters} />
           </div>
         </div>
