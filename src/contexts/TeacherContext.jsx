@@ -48,6 +48,7 @@ const TeacherContextProvider = (props) => {
     const getStudentIdCourseById = async (token, courseId) => {
         try {
             const response = await teacherGetStudentInCourseById(token, courseId);
+            console.log("Data from getStudentIdCourseById:", response.data);
             if (response?.data) {
                 setStudentInCourse(response.data);
             } else {
@@ -58,7 +59,7 @@ const TeacherContextProvider = (props) => {
         }
     };
 
-    const values = { getTeacherProfile, teacherInfo, teacherGetConsulted, consulted, teacherCourse, course, setSelectCourse, selectCourse, getStudentIdCourseById,studentInCourse };
+    const values = { getTeacherProfile, teacherInfo, teacherGetConsulted, consulted, teacherCourse, course, setSelectCourse, selectCourse, getStudentIdCourseById, studentInCourse };
 
     return (
         <TeacherContext.Provider value={values}>

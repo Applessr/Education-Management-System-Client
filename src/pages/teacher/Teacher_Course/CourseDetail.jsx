@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -12,18 +11,20 @@ import {
 } from "@/components/ui/dialog";
 
 function CourseDetail({ courseData }) {
+  console.log("CourseData received:", courseData); // Debug log
+  
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    seat: courseData.seat || '',
-    teacherId: courseData.teacherId || "",
-    studyDay: courseData.classSchedule.day || "",
-    studyStartTime: courseData.classSchedule.startTime || "",
-    studyEndTime: courseData.classSchedule.endTime || '',
-    studyRoom: courseData.classSchedule.room || "",
-    examDate: courseData.examSchedule.examDate || '',
-    examStartTime: courseData.examSchedule.startTime || '',
-    examEndTime: courseData.examSchedule.endTime || '',
-    examRoom: courseData.examSchedule.room || '',
+    seat: courseData?.seat || '',
+    teacherId: courseData?.teacherId || "",
+    studyDay: courseData?.classSchedules?.[0]?.day || "",
+    studyStartTime: courseData?.classSchedules?.[0]?.startTime || "",
+    studyEndTime: courseData?.classSchedules?.[0]?.endTime || '',
+    studyRoom: courseData?.classSchedules?.[0]?.room || "",
+    examDate: courseData?.examSchedule?.examDate || '',
+    examStartTime: courseData?.examSchedule?.startTime || '',
+    examEndTime: courseData?.examSchedule?.endTime || '',
+    examRoom: courseData?.examSchedule?.room || '',
   });
 
   const handleInputChange = (e) => {
@@ -42,35 +43,47 @@ function CourseDetail({ courseData }) {
   return (
     <div className="flex flex-col mx-auto items-start justify-center text-gray-600 space-y-2">
       <p>
-        <span className="font-semibold">Credits:</span> {courseData.credits}
+        <span className="font-semibold">Credits:</span> {courseData?.credits || 'N/A'}
       </p>
       <p>
         <span className="font-semibold">Seats Available:</span>{" "}
-        {courseData.seat}
+        {courseData?.seat || 'N/A'}
       </p>
       <p>
         <span className="font-semibold">Teacher ID:</span>{" "}
-        {courseData.teacherId} ({courseData.employee.firstName}{" "}
-        {courseData.employee.lastName})
+        {courseData?.teacherId || 'N/A'} 
+        {courseData?.employee && `(${courseData.employee.firstName} ${courseData.employee.lastName})`}
       </p>
-      <p>
-        <span className="font-semibold">Study day:</span>{" "}
-        {courseData.classSchedule.day} {courseData.classSchedule.startTime} -{" "}
-        {courseData.classSchedule.endTime}
-      </p>
-      <p>
-        <span className="font-semibold">Study room:</span>{" "}
-        {courseData.classSchedule.room}
-      </p>
-      <p>
-        <span className="font-semibold">Exam day:</span>{" "}
-        {courseData.examSchedule.examDate} {courseData.examSchedule.startTime} -{" "}
-        {courseData.examSchedule.endTime}
-      </p>
-      <p>
-        <span className="font-semibold">Exam room:</span>{" "}
-        {courseData.examSchedule.room}
-      </p>
+      
+      {courseData?.classSchedules?.[0] && (
+        <>
+          <p>
+            <span className="font-semibold">Study day:</span>{" "}
+            {courseData.classSchedules[0].day}{" "}
+            {courseData.classSchedules[0].startTime} -{" "}
+            {courseData.classSchedules[0].endTime}
+          </p>
+          <p>
+            <span className="font-semibold">Study room:</span>{" "}
+            {courseData.classSchedules[0].room}
+          </p>
+        </>
+      )}
+      
+      {courseData?.examSchedule && (
+        <>
+          <p>
+            <span className="font-semibold">Exam day:</span>{" "}
+            {courseData.examSchedule.examDate}{" "}
+            {courseData.examSchedule.startTime} -{" "}
+            {courseData.examSchedule.endTime}
+          </p>
+          <p>
+            <span className="font-semibold">Exam room:</span>{" "}
+            {courseData.examSchedule.room}
+          </p>
+        </>
+      )}
 
       <Button onClick={() => setIsEditing(true)}>Edit</Button>
 

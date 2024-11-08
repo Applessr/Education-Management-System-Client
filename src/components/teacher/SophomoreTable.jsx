@@ -41,7 +41,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherViewStudentTranscript";
+import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherAdvisors/TeacherViewStudentTranscript";
 
 //column
 
