@@ -67,7 +67,7 @@ const MajorSelection = ({ data }) => {
       const newSubject = {
         subject: subject.subject,
         code: subject.code,
-        time: selectedSectionData.time,
+        section: selectedSectionData.id,
       };
 
       console.log("Adding subject:", newSubject);
