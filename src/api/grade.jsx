@@ -20,13 +20,13 @@ export const studentViewScorePerSub = (token, courseId) => axios.get('/grade/stu
     }
 });
 
-export const studentGetGPABySemester = (token, body) => axios.get('/grade/student/GPA/semester', body, {
+export const studentGetGPABySemester = (token) => axios.get('/grade/student/GPA/semester', {
     headers: {
         Authorization: `Bearer ${token}`
     }
 });
 
-export const studentGetGPA = (token) => axios.get('/grade/grade/student/GPA/all', {
+export const studentGetGPA = (token) => axios.get('/grade/student/GPA/all', {
     headers: {
         Authorization: `Bearer ${token}`
     }

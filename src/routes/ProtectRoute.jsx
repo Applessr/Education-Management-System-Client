@@ -32,7 +32,7 @@ function ProtectRoute({ element, allow }) {
                 } else {
                     setIsAllowed(false);
                 }
-            }, 2500);
+            }, 1500);
 
         } catch (error) {
             console.log('Error detail from protectRoute', error);
