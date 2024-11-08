@@ -18,13 +18,13 @@ const Transition = ({ children }) => {
         // add opacity 
         const timer = setTimeout(() => {
             container.classList.remove('opacity-0');
-            container.classList.add('opacity-100', 'transition-opacity', 'duration-300' );
+            container.classList.add('opacity-100', 'transition-opacity', 'duration-300', 'slide-top' );
         }, 100);
 
         return () => {
             clearTimeout(timer);
             if (container) {
-                container.classList.remove('opacity-100', 'transition-opacity', 'duration-300');
+                container.classList.remove('opacity-100', 'transition-opacity', 'duration-300', 'slide-top');
             }
         };
 

@@ -9,13 +9,12 @@ const TransitionOutletContent = ({ children }) => {
     useEffect(() => {
         const container = containerRef.current;
 
-        console.log("current container =", container)
+        // console.log("current container =", container)
         if (!container) return;
 
-        // add opacity 
         const timer = setTimeout(() => {
             container.classList.add( 'scale-up-tl');
-        }, 100);
+        }, 0);
 
         return () => {
             clearTimeout(timer);

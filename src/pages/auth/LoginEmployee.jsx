@@ -40,7 +40,7 @@ const LoginEmployee = () => {
 
     return (
         <div className='relative min-h-screen flex '>
-            <div className='absolute inset-0 top-[-10%] left-[-10%] slide-br'
+            <div className='absolute inset-0 slide-br'
                 style={{
                     backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
                     backgroundSize: 'cover',
@@ -49,7 +49,7 @@ const LoginEmployee = () => {
                 <div className='absolute inset-0 bg-white bg-opacity-75'></div>
             </div>
             {/* Right side - Login Form */}
-            <div className='absolute w-3/5 left-[20%] m-36 flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl slide-tl'>
+            <div className='relative w-full m-36 flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl slide-tl'>
 
                 <div className='flex flex-col w-full max-w-2xl px-14'>
                     <div className='flex items-center justify-start gap-3 mb-12'>
