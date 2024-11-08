@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   ChevronFirst,
   ChevronLast,
@@ -6,7 +6,6 @@ import {
   CalendarDays,
   BookOpen,
   WalletCards,
-  Bell,
   LogOut,
   LayoutDashboard,
 } from "lucide-react";
@@ -15,33 +14,31 @@ import SidebarItem from "./SidebarItem";
 import useUser from "@/src/hooks/useUser";
 
 const StudentSidebar = () => {
-  const { logout, user } = useUser()
+  const { logout, user } = useUser();
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
   const navigate = useNavigate();
 
-  console.log('user :>> ', user);
-
-  const sidebarItems = [
-    { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
+  const sidebarItems = useMemo(() => [
     {
       icon: <LayoutDashboard size={24} />,
       text: "Dashboard",
       name: "dashboard",
     },
+    { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
     { icon: <BookOpen size={24} />, text: "Enroll", name: "enroll" },
-    {
-      icon: <BookOpen size={24} />,
-      text: "Enroll Result",
-      name: "enrollResult",
-    },
     { icon: <WalletCards size={24} />, text: "Payment", name: "payment" },
     {
       icon: <CalendarDays size={24} />,
-      text: "Academic Schedule",
+      text: "Schedule",
       name: "academic-schedule",
     },
-  ];
+    {
+      icon: <BookOpen size={24} />,
+      text: "Grade Report",
+      name: "enrollResult",
+    }
+  ], []); // `[]` เพื่อให้สร้าง `sidebarItems` แค่ครั้งเดียว
 
   const handleClickMenu = (name) => {
     setActive(name);
@@ -57,19 +54,16 @@ const StudentSidebar = () => {
   };
 
   return (
-    <aside
-      className={`h-screen transition-width duration-300 ${open ? "w-80" : "w-20"
-        }`}
-    >
+    <aside className={`h-screen transition-width duration-300 ${open ? "w-80" : "w-20"}`}>
       <nav className="h-full flex flex-col bg-white border-r">
-        <div className="p-4 flex items-center justify-between">
+        <div className="p-4 flex items-center justify-between border-b-2 mx-3 pb-12">
           <div className={`flex items-center gap-4 ${!open && "hidden"}`}>
             <img
               src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
               alt="Pierre University"
               className="h-8"
             />
-            <span className="font-semibold text-lg">Pierre University</span>
+            <span className="font-bold text-xl">Pierre University</span>
           </div>
           <button
             className="p-1.5 rounded-lg bg-gray-50 transition duration-500 hover:bg-gray-300"
@@ -91,16 +85,16 @@ const StudentSidebar = () => {
           ))}
         </ul>
 
-        <div className="bg-[#393af2] border-t p-4">
+        <div className="bg-[#272988] border-t p-4">
           <div className="flex items-center gap-4">
             {open && (
               <div>
-                <h4 className="font-extrabold text-white">{user?.firstName} {user?.lastName}</h4>
-                <p className="text-md text-white">{user?.role}</p>
+                <h4 className="font-bold text-white text-xl">{user?.firstName} {user?.lastName}</h4>
+                <p className="text-[1rem] font-light text-white">{user?.role}</p>
               </div>
             )}
             <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
-              <LogOut className={`text-white `} />
+              <LogOut className="text-white" />
             </div>
           </div>
         </div>

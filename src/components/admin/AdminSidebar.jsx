@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ChevronFirst,
   ChevronLast,
+  UserCircle,
   LogOut,
   LayoutDashboard,
   CalendarRange,
+  Notebook,
+  Mail,
+  ContactRound,
   IdCard,
+  LibraryBig,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
@@ -13,20 +18,29 @@ import useUser from "@/src/hooks/useUser";
 
 const AdminSidebar = () => {
   const { logout, user } = useUser();
+  console.log(user);
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
   const navigate = useNavigate();
 
-  const sidebarItems = [
-    {
-      icon: <LayoutDashboard size={24} />,
-      text: "Dashboard",
-      name: "dashboard",
-    },
-    { icon: <CalendarRange size={24} />, text: "Course", name: "course" },
-    { icon: <IdCard size={24} />, text: "Professor", name: "professor" },
-    { icon: <IdCard size={24} />, text: "Students", name: "student" },
-  ];
+  const sidebarItems = useMemo(
+    () => [
+      {
+        icon: <LayoutDashboard size={24} />,
+        text: "Dashboard",
+        name: "dashboard",
+      },
+      { icon: <CalendarRange size={24} />, text: "Course", name: "course" },
+      { icon: <IdCard size={24} />, text: "Professor", name: "professor" },
+      { icon: <IdCard size={24} />, text: "Students", name: "student" },
+      {
+        icon: <LibraryBig size={24} />,
+        text: "Course Syllabus",
+        name: "course-syllabus",
+      },
+    ],
+    []
+  );
 
   const handleClickMenu = (name) => {
     setActive(name);
@@ -64,6 +78,18 @@ const AdminSidebar = () => {
             {open ? <ChevronFirst /> : <ChevronLast />}
           </button>
         </div>
+
+        <ul className="flex-1 px-3">
+          {sidebarItems.map((item) => (
+            <SidebarItem
+              key={item.name}
+              icon={() => item.icon}
+              text={open ? item.text : ""}
+              active={item.name === active}
+              onClick={() => handleClickMenu(item.name)}
+            />
+          ))}
+        </ul>
 
         <ul className="flex-1 px-3">
           {sidebarItems.map((item) => (

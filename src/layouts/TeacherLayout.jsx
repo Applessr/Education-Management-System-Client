@@ -6,7 +6,7 @@ import { Bell } from 'lucide-react'
 const TeacherLayout = () => {
   return (
     <div>
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
             {/* Fixed Sidebar */}
             <TeacherSidebar />
             

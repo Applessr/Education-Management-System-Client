@@ -1,13 +1,14 @@
 import React, { createContext, useState } from "react";
-import { adminGetProfile } from "../api/admin";
+import { adminGetCourseSyllabus, adminGetProfile } from "../api/admin";
 
 const AdminContext = createContext();
 
 const AdminContextProvider = (props) => {
     const [adminInfo, setAdminInfo] = useState(null);
-    const token = localStorage.getItem('token');
+    const [courseSyllabus, setCourseSyllabus] = useState(null);
+    const [year, setYear] = useState(null);
 
-    const getAdminProfile = async () => {
+    const getAdminProfile = async (token) => {
         try {
             const response = await adminGetProfile(token);
             setAdminInfo(response.data)
@@ -16,8 +17,17 @@ const AdminContextProvider = (props) => {
         }
 
     }
+    const getCourseSyllabus = async (token, majorId, year) => {
+        try {
+            const response = await adminGetCourseSyllabus(token, majorId, year);
+            setCourseSyllabus(response.data)
+        } catch (error) {
+            console.log(error.response);
+        }
 
-    const values = { getAdminProfile, adminInfo };
+    }
+
+    const values = { getAdminProfile, adminInfo, getCourseSyllabus, courseSyllabus, setYear, year };
 
     return (
         <AdminContext.Provider value={values}>

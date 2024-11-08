@@ -16,7 +16,7 @@ function StudentEnrollment() {
     <div className="flex flex-col gap-2">
       <EnrollmentFlow />
       <CurrentSemesterEnrollment />
-      {/* <StudentRegisterSearch studentInfo={studentInfo} /> */}
+      <StudentRegisterSearch studentInfo={studentInfo} />
     </div>
   );
 }

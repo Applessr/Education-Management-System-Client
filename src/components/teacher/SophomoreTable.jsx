@@ -41,7 +41,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherViewStudentTranscript";
+import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherAdvisors/TeacherViewStudentTranscript";
 
 //column
 
@@ -161,21 +161,6 @@ export const columns = [
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("mobile")}</div>
     ),
-  },
-  {
-    accessorKey: "GPA",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "GPA")}
-        >
-          GPA
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("GPA")}</div>,
   },
   {
     accessorKey: "CPA",

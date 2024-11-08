@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,8 +58,19 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: "Open Sans", sans-serif;
   }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* this is setting for video playing on landing page naja */
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Adjust duration  */
+}
+
+.fade-in-active {
+  opacity: 1;
 }

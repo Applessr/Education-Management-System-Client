@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import useUser from "../hooks/useUser";
 import { currentUser } from "../api/auth";
+import Loading from "../components/animations/Loading";
+
 
 function ProtectRoute({ element, allow }) {
     const [isAllowed, setIsAllowed] = useState(null);
     const { setUser } = useUser();
-
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
+
             checkRole(token);
         } else {
             setIsAllowed(false);
@@ -20,16 +22,18 @@ function ProtectRoute({ element, allow }) {
         try {
             const response = await currentUser(token);
             setUser(response.data);
-            const role = response.data.role || response.data.employeeRole;
+            const role = response.data.employeeRole || response.data.role;
             console.log('response :>> ', response);
             const status = response.data.status;
             console.log('UserRole :>> ', role);
+            setTimeout(() => {
+                if (allow.includes(role) && status !== 'INACTIVE') {
+                    setIsAllowed(true);
+                } else {
+                    setIsAllowed(false);
+                }
+            }, 1500);
 
-            if (allow.includes(role) && status !== 'INACTIVE') {
-                setIsAllowed(true);
-            } else {
-                setIsAllowed(false);
-            }
         } catch (error) {
             console.log('Error detail from protectRoute', error);
             setIsAllowed(false);
@@ -38,7 +42,11 @@ function ProtectRoute({ element, allow }) {
 
 
     if (isAllowed === null) {
-        return <span className="loading loading-dots loading-lg"></span>;
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <Loading />
+            </div>
+        );
     }
 
     if (!isAllowed) {

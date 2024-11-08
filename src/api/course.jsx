@@ -2,6 +2,12 @@ import axios from "../configs/axios"
 
 export const getAllCourse = () => axios.get('/course/all-course');
 
+export const getAllMajor = () => axios.get('/course/all-major');
+
+export const getAllFaculty = () => axios.get('/course/all-faculty');
+
+export const getMajorById = (facultyId) => axios.get('/course/major/' + facultyId);
+
 export const getCourseBySearch = (searchQuery) => axios.get(`/course/all-course?searchTerm=${searchQuery}`);
 
 export const getCourseById = (courseId) => axios.get('/course/all-course/' + courseId);
@@ -13,6 +19,12 @@ export const studentGetCourseSyllabus = (token) => axios.get('/course/student/co
 });
 
 export const studentGetEnrollCourse = (token) => axios.get('/course/student/enroll-course', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
+export const teacherGetCourse = (token) => axios.get('/course/teacher', {
     headers: {
         Authorization: `Bearer ${token}`
     }
@@ -48,7 +60,7 @@ export const employeeCreateCourse = (token, body) => axios.post('/course/employe
     }
 });
 
-export const employeeEditCourse = (token, courseId, body) => axios.patch('/course/employee/create-course/' + courseId, body, {
+export const employeeEditCourse = (token, courseId, body) => axios.patch(`/course/employee/edit-course/${courseId}`, body, {
     headers: {
         Authorization: `Bearer ${token}`
     }

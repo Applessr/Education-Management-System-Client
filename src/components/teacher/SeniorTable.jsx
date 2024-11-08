@@ -41,7 +41,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherViewStudentTranscript";
+import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherAdvisors/TeacherViewStudentTranscript";
 
 //column
 
@@ -163,21 +163,6 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "GPA",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "GPA")}
-        >
-          GPA
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("GPA")}</div>,
-  },
-  {
     accessorKey: "CPA",
     header: ({ column }) => {
       return (
@@ -252,7 +237,7 @@ function SeniorTable({ data }) {
     <div>
       <div>
         {/* code - subject name -  sec  - studyTime  - room  */}
-        <p className="bg-orange-300">Junior</p>
+        <p className="bg-orange-300">Senior</p>
       </div>
 
       <div className="w-full">
@@ -315,9 +300,9 @@ function SeniorTable({ data }) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>
