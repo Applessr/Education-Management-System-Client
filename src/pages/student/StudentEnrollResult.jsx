@@ -1,74 +1,83 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import StudentSemesterGrade from "../../components/student/StudentSemisterGrade";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import useStudent from "@/src/hooks/useStudent";
 
 function StudentEnrollResult() {
   // State for student info and grades
-  const [studentInfo, setStudentInfo] = useState({
-    studentNo: "",
-    name: "",
-    dateOfBirth: "",
-    placeOfBirth: "",
-    fieldOfStudy: "",
-    degreeConferred: "",
-    dateOfAdmission: "",
-    dateOfGraduation: "",
-  });
+  const {
+    getStudentProfile,
+    studentInfo,
+    studentGrade,
+    getStudentGetGrade,
+    studentCredit,
+    getStudentGetCredit,
+    getStudentGetCPA,
+    getStudentGetGPA,
+    studentGPA,
+    studentCPA
+  } = useStudent()
+  const token = localStorage.getItem('token');
 
-  const [semesters, setSemesters] = useState([]);
+  const [semesters, setSemesters] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+
 
   // Fetch data when component mounts
   useEffect(() => {
     fetchStudentData();
+    getStudentProfile(token);
+    getStudentGetGrade(token);
+    getStudentGetCredit(token);
+    getStudentGetCPA(token);
+    getStudentGetGPA(token);
   }, []);
+
+  useEffect(() => {
+    if (studentGrade && studentGPA && studentCPA) {
+      fetchStudentData();
+    }
+  }, [studentGrade, studentGPA, studentCPA]);
+
+  const mockStudentInfo = {
+    studentNo: studentInfo?.studentId,
+    name: `${studentInfo?.firstName} ${studentInfo?.lastName}`,
+    dateOfBirth: new Date(studentInfo?.dateOfBirth).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
+    placeOfBirth: studentInfo?.address || "N/A",
+    fieldOfStudy: studentInfo?.major?.faculty?.name || "N/A",
+    degreeConferred: studentInfo?.major?.name || "N/A",
+    dateOfAdmission: new Date(studentInfo?.admitDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
+    dateOfGraduation: "N/A"
+  };
 
   const fetchStudentData = async () => {
     try {
       setLoading(true);
-      // In the future, replace these with actual API calls
-      // const studentResponse = await fetch('/api/student/info');
-      // const semestersResponse = await fetch('/api/student/grades');
 
-      // Temporary mock data
-      const mockStudentInfo = {
-        studentNo: "mock123456",
-        name: "Yui Gahama",
-        dateOfBirth: "18 November 1998",
-        placeOfBirth: "198/5 Bangkok, Thailand",
-        fieldOfStudy: "Business Administration",
-        degreeConferred: "Logistics and Supply Chain Mgn",
-        dateOfAdmission: "15 January 2017",
-        dateOfGraduation: "25 December 2021",
-      };
-
-      const mockSemesters = [
-        {
-          semester: "First Semester 2019",
-          courses: [
-            {
-              code: "01213211",
-              title: "Materials Science for Engineers",
-              grade: "S",
-              credit: 3,
-            },
-            // ... other courses
-          ],
-          gpaInfo: {
-            semGpa: 3.43,
-            semCredit: 7,
-            cumGpa: 3.43,
-            cumCredit: 7,
+      const semesterData = studentGrade?.map((grade) => ({
+        semester: grade.semester,
+        courses: [
+          {
+            code: grade.course?.courseCode || "N/A",
+            title: grade.course?.courseName || "N/A",
+            grade: grade.letterGrade || "N/A",
+            credit: grade.course?.credits || 0,
           },
+        ],
+        gpaInfo: {
+          semGpa: studentGPA?.GPA?.find((g) => g.semester === grade.semester)?.gpa || 0,
+          semCredit: studentGPA?.GPA?.find((g) => g.semester === grade.semester)?.credits || 0,
+          cumGpa: studentCPA?.AllTermGPA || 0,
+          cumCredit: studentGPA?.GPA?.reduce((total, g) => total + (g?.credits || 0), 0),
         },
-        // ... other semesters
-      ];
+      })) || [];
 
-      setStudentInfo(mockStudentInfo);
-      setSemesters(mockSemesters);
+      setSemesters(semesterData);
+      console.log('semesters :>> ', semesterData);
     } catch (err) {
       setError("Failed to fetch student data");
       console.error("Error fetching data:", err);
@@ -81,69 +90,47 @@ function StudentEnrollResult() {
     try {
       const doc = new jsPDF();
 
-      // Add university header
-      doc.setFontSize(20);
-      doc.text("Pierre University", doc.internal.pageSize.width / 2, 20, {
-        align: "center",
-      });
-      doc.setFontSize(12);
-      doc.text(
-        "OFFICE OF EDUCATIONAL ADMINISTRATION",
-        doc.internal.pageSize.width / 2,
-        30,
-        { align: "center" }
-      );
-      doc.text("BANGKOK 10900, THAILAND", doc.internal.pageSize.width / 2, 40, {
-        align: "center",
-      });
+      const logoURL = "https://res.cloudinary.com/djudr1vzc/image/upload/v1730788865/Pierre_LOGO_rgsgob.png";
+      const imageWidth = 25;
+      const imageHeight = 25;
 
-      // Add student information
-      const startY = 60;
+      // Add logo on the left side
+      doc.addImage(logoURL, "PNG", 20, 10, imageWidth, imageHeight);
+
+      // Add header text in the center
+      doc.setFontSize(16);
+      doc.text("Pierre University", doc.internal.pageSize.width / 2, 30, { align: "center" });
+      doc.setFontSize(12);
+      doc.text("OFFICE OF EDUCATIONAL ADMINISTRATION", doc.internal.pageSize.width / 2, 40, { align: "center" });
+      doc.text("BANGKOK 10900, THAILAND", doc.internal.pageSize.width / 2, 50, { align: "center" });
+
+      const startY = 70;
       const leftX = 20;
       const rightX = doc.internal.pageSize.width / 2 + 10;
 
-      // Left column student info
-      doc.text(`Student No: ${studentInfo.studentNo}`, leftX, startY);
-      doc.text(`Name: ${studentInfo.name}`, leftX, startY + 10);
-      doc.text(`Date of Birth: ${studentInfo.dateOfBirth}`, leftX, startY + 20);
-      doc.text(
-        `Place Of Birth: ${studentInfo.placeOfBirth}`,
-        leftX,
-        startY + 30
-      );
+      doc.setFontSize(10);
 
-      // Right column student info
-      doc.text(`Field Of Study: ${studentInfo.fieldOfStudy}`, rightX, startY);
-      doc.text(
-        `Degree Conferred: ${studentInfo.degreeConferred}`,
-        rightX,
-        startY + 10
-      );
-      doc.text(
-        `Date of Admission: ${studentInfo.dateOfAdmission}`,
-        rightX,
-        startY + 20
-      );
-      doc.text(
-        `Date Of Graduation: ${studentInfo.dateOfGraduation}`,
-        rightX,
-        startY + 30
-      );
+      // Left column
+      doc.text(`Student No: ${mockStudentInfo.studentNo}`, leftX, startY);
+      doc.text(`Name: ${mockStudentInfo.name}`, leftX, startY + 10);
+      doc.text(`Date of Birth: ${mockStudentInfo.dateOfBirth}`, leftX, startY + 20);
 
-      // Add semester grades
+      const addressText = mockStudentInfo.placeOfBirth.length > 20
+        ? `${mockStudentInfo.placeOfBirth.slice(0, 20)}...`
+        : mockStudentInfo.placeOfBirth;
+      doc.text(`Address: ${addressText}`, leftX, startY + 30);
+
+      // Right column
+      doc.text(`Field Of Study: ${mockStudentInfo.fieldOfStudy}`, rightX, startY);
+      doc.text(`Degree Conferred: ${mockStudentInfo.degreeConferred}`, rightX, startY + 10);
+      doc.text(`Date of Admission: ${mockStudentInfo.dateOfAdmission}`, rightX, startY + 20);
+      doc.text(`Date Of Graduation: ${mockStudentInfo.dateOfGraduation}`, rightX, startY + 30);
+
       let yPosition = startY + 50;
-
       semesters.forEach((semester) => {
-        // Add semester header
         doc.setFontSize(14);
-        doc.text(
-          semester.semester,
-          doc.internal.pageSize.width / 2,
-          yPosition,
-          { align: "center" }
-        );
+        doc.text(semester.semester, doc.internal.pageSize.width / 2, yPosition, { align: "center" });
 
-        // Add courses table
         doc.autoTable({
           startY: yPosition + 10,
           head: [["Course Code", "Course Title", "Grade", "Credit"]],
@@ -153,27 +140,25 @@ function StudentEnrollResult() {
             course.grade,
             course.credit,
           ]),
-          theme: "plain",
+          theme: "grid",
           styles: { fontSize: 10 },
-          headStyles: { fillColor: [200, 200, 200] },
+          headStyles: { fillColor: [238, 220, 181] },
         });
 
-        // Add GPA information
         yPosition = doc.previousAutoTable.finalY + 10;
         doc.setFontSize(12);
         doc.text(
-          `sem. G.P.A. = ${semester.gpaInfo.semGpa} Credit = ${semester.gpaInfo.semCredit}`,
+          `Semester GPA = ${semester.gpaInfo.semGpa} | Semester Credits = ${semester.gpaInfo.semCredit}`,
           leftX,
           yPosition
         );
         doc.text(
-          `cum. G.P.A. = ${semester.gpaInfo.cumGpa} Credit = ${semester.gpaInfo.cumCredit}`,
+          `Cumulative GPA = ${semester.gpaInfo.cumGpa} | Cumulative Credits = ${semester.gpaInfo.cumCredit}`,
           leftX,
           yPosition + 10
         );
 
         yPosition += 30;
-
         if (yPosition > doc.internal.pageSize.height - 40) {
           doc.addPage();
           yPosition = 20;
@@ -217,23 +202,23 @@ function StudentEnrollResult() {
           {/* Student Information */}
           <div className="mt-8">
             <div className="flex justify-between gap-4  ">
-              
+
               <div className="space-y-4 w-1/2">
                 <div className="flex gap-3">
                   <p className="font-semibold">Student ID</p>
-                  <span>{studentInfo.studentNo}</span>
+                  <span>{mockStudentInfo.studentNo}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Name </p>
-                  <span>{studentInfo.name}</span>
+                  <span>{mockStudentInfo.name}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Date of Birth</p>
-                  <span>{studentInfo.dateOfBirth}</span>
+                  <span>{mockStudentInfo.dateOfBirth}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Address</p>
-                  <span>{studentInfo.placeOfBirth}</span>
+                  <span>{mockStudentInfo.placeOfBirth}</span>
                 </div>
                 {/* ... other student info fields */}
               </div>
@@ -241,19 +226,19 @@ function StudentEnrollResult() {
               <div className="space-y-4 w-1/2 ">
                 <div className="flex gap-3">
                   <p className="font-semibold">Faculty</p>
-                  <span>{studentInfo.fieldOfStudy}</span>
+                  <span>{mockStudentInfo.fieldOfStudy}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Field of Study</p>
-                  <span>{studentInfo.degreeConferred}</span>
+                  <span>{mockStudentInfo.degreeConferred}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Date of Admission</p>
-                  <span>{studentInfo.dateOfAdmission}</span>
+                  <span>{mockStudentInfo.dateOfAdmission}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Date of Graduation</p>
-                  <span>{studentInfo.dateOfGraduation}</span>
+                  <span>{mockStudentInfo.dateOfGraduation}</span>
                 </div>
                 {/* ... other student info fields */}
               </div>
@@ -262,7 +247,7 @@ function StudentEnrollResult() {
 
           {/* Semester Grades */}
           <div className="mt-4 ">
-            <StudentSemesterGrade semesters={semesters} />
+            <StudentSemesterGrade semester={semesters} />
           </div>
         </div>
       </Card>
