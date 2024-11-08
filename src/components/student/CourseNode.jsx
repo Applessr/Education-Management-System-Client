@@ -24,494 +24,13 @@ import {
 } from "@/components/ui/dialog";
 import { alternatives } from "joi";
 import SubjectReport from "./SubjectReport";
-import MajorRegisNodeItem from "./MajorRegisNodeItem";
 
-const MajorRegisNode = ({ data }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  return (
-    <Dialog>
-      <DialogTrigger>
-        <div
-          className="relative "
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          <Handle
-            type="target"
-            position={Position.Top}
-            className="w-3 h-3 bg-blue-500"
-            id={`target-top-${data.code}`}
-          />
-
-          <Handle
-            type="target"
-            position={Position.Bottom}
-            className="w-3 h-3 bg-blue-500"
-            id={`target-bottom-${data.code}`}
-          />
-          <Handle
-            type="target"
-            position={Position.Left}
-            className="w-3 h-3 bg-blue-500"
-            id={`target-left-${data.code}`}
-          />
-          <Handle
-            type="source"
-            position={Position.Right}
-            className="w-3 h-3 bg-blue-500"
-            id={`source-right-${data.code}`}
-          />
-
-          <Handle
-            type="source"
-            position={Position.Top}
-            className="w-3 h-3 bg-blue-500"
-            id={`source-top-${data.code}`}
-          />
-
-          <Handle
-            type="source"
-            position={Position.Bottom}
-            className="w-3 h-3 bg-blue-500"
-            id={`source-bottom-${data.code}`}
-          />
-
-          <div className=" flex items-center gap-4 bg-white rounded-xl border-3 border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 w-[700px]">
-            <div className="`w-48 h-full py-12 flex items-center justify-center text-white bg-gray-300">
-              <div className="text-center">
-                <span className="font-bold text-6xl">{data.grade}</span>
-                <div className="text-6xl mt-2">({data.credits} cr)</div>
-              </div>
-            </div>
-            <div className="p-12 flex-1">
-              <p className="text-7xl font-mono text-gray-600 mb-4">
-                {data.code}
-              </p>
-              <p className="text-6xl font-medium text-gray-900">{data.name}</p>
-            </div>
-          </div>
-
-          {showTooltip && data.prerequisites && (
-            <div className="absolute z-10 bg-black bg-opacity-75 text-white p-4 rounded text-lg -top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-              Prerequisites: {data.prerequisites.join(", ")}
-            </div>
-          )}
-        </div>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Register form</DialogTitle>
-        </DialogHeader>
-        <MajorRegisNodeItem courseId={data.code} />
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-const PastSubject = ({ data }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  return (
-    <Dialog>
-      <DialogTrigger>
-        <div
-          className="relative "
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          <Handle
-            type="target"
-            position={Position.Top}
-            className="w-3 h-3 bg-blue-500"
-            id={`target-top-${data.code}`}
-          />
-
-          <Handle
-            type="target"
-            position={Position.Bottom}
-            className="w-3 h-3 bg-blue-500"
-            id={`target-bottom-${data.code}`}
-          />
-          <Handle
-            type="target"
-            position={Position.Left}
-            className="w-3 h-3 bg-blue-500"
-            id={`target-left-${data.code}`}
-          />
-          <Handle
-            type="source"
-            position={Position.Right}
-            className="w-3 h-3 bg-blue-500"
-            id={`source-right-${data.code}`}
-          />
-
-          <Handle
-            type="source"
-            position={Position.Top}
-            className="w-3 h-3 bg-blue-500"
-            id={`source-top-${data.code}`}
-          />
-
-          <Handle
-            type="source"
-            position={Position.Bottom}
-            className="w-3 h-3 bg-blue-500"
-            id={`source-bottom-${data.code}`}
-          />
-
-          <div className=" flex items-center gap-4 bg-white rounded-xl border-3 border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 w-[700px]">
-            <div
-              className={`w-48 h-full py-12 flex items-center justify-center text-white ${
-                data.grade === "A"
-                  ? "bg-green-500"
-                  : data.grade === "B"
-                  ? "bg-blue-600"
-                  : data.grade === "C"
-                  ? "bg-blue-500"
-                  : data.grade === "D"
-                  ? "bg-purple-500"
-                  : "bg-gray-400"
-              }`}
-            >
-              <div className="text-center">
-                <span className="font-bold text-6xl">{data.grade}</span>
-                <div className="text-6xl mt-2">({data.credits} cr)</div>
-              </div>
-            </div>
-            <div className="p-12 flex-1">
-              <p className="text-7xl font-mono text-gray-600 mb-4">
-                {data.code}
-              </p>
-              <p className="text-6xl font-medium text-gray-900">{data.name}</p>
-            </div>
-          </div>
-
-          {showTooltip && data.prerequisites && (
-            <div className="absolute z-10 bg-black bg-opacity-75 text-white p-4 rounded text-lg -top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-              Prerequisites: {data.prerequisites.join(", ")}
-            </div>
-          )}
-        </div>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Score Report</DialogTitle>
-        </DialogHeader>
-        <SubjectReport courseId={data.code} />
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-const OptionalCourseNode = ({ data }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false); // Control dialog open state
-  const [selectedSubject, setSelectedSubject] = useState(""); // Track selected subject
-  const [selectedSection, setSelectedSection] = useState(""); // Track selected section
-  const [alternativeSubjects, setAlternativeSubjects] = useState([]); // Store the list of alternative subjects
-
-  // Example subject data
-  //have to  fetch new to check is it already register
-  const subjectDetails = [
-    {
-      subject: "Math 1",
-      code: "123456",
-      sections: [
-        { time: "9:00-12:00", availability: "18/50", id: "section1" },
-        { time: "13:00-16:00", availability: "18/50", id: "section2" },
-      ],
-    },
-    {
-      subject: "Phy 1",
-      code: "123457",
-      sections: [
-        { time: "9:00-12:00", availability: "28/50", id: "section1" },
-        { time: "13:00-16:00", availability: "38/50", id: "section2" },
-      ],
-    },
-    {
-      subject: "Chem 1",
-      code: "123451",
-      sections: [
-        { time: "9:00-12:00", availability: "8/50", id: "section1" },
-        { time: "13:00-16:00", availability: "18/50", id: "section2" },
-      ],
-    },
-  ];
-
-  const handleAddSubject = () => {
-    if (selectedSubject && selectedSection) {
-      const subject = subjectDetails.find((s) => s.code === selectedSubject);
-      const selectedSectionData = subject.sections.find(
-        (section) => section.id === selectedSection
-      );
-
-      const newSubject = {
-        subject: subject.subject,
-        code: subject.code,
-        time: selectedSectionData.time,
-      };
-
-      console.log("Adding subject:", newSubject);
-      setAlternativeSubjects([...alternativeSubjects, newSubject]); // Add the new subject to the list
-      setSelectedSubject(""); // Clear selected subject
-      setSelectedSection(""); // Clear selected section
-      setDialogOpen(false); // Close dialog
-    }
-  };
-
-  const handleCancel = () => {
-    setSelectedSubject("");
-    setSelectedSection("");
-    setDialogOpen(false); // Close dialog
-  };
-
-  return (
-    <div
-      className="relative"
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
-    >
-      <div className="flex items-center justify-center p-12 gap-2 bg-white rounded-lg border-2 border-gray-200 shadow-sm hover:shadow-md transition-shadow w-[700px]">
-        <div className="p-3">
-          <p className="text-6xl font-medium text-gray-900">
-            Add optional subject
-          </p>
-        </div>
-
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <button className="bg-blue-500 text-white  py-8 px-12 rounded-lg hover:bg-blue-600 transition-colors">
-              <CirclePlus size={100} />
-            </button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add optional Subject</DialogTitle>
-              <DialogDescription>
-                Search for an optional subject and select the section you want,
-                then press OK.
-              </DialogDescription>
-            </DialogHeader>
-
-            {/* Subject selection */}
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="border border-gray-300 rounded p-2 w-full mb-4"
-            >
-              <option value="" disabled>
-                Select a subject
-              </option>
-              {subjectDetails.map((subject) => (
-                <option key={subject.code} value={subject.code}>
-                  {subject.subject} ({subject.code})
-                </option>
-              ))}
-            </select>
-
-            {/* Section selection */}
-            {selectedSubject && (
-              <select
-                value={selectedSection}
-                onChange={(e) => setSelectedSection(e.target.value)}
-                className="border border-gray-300 rounded p-2 w-full mt-2"
-              >
-                <option value="" disabled>
-                  Select a section
-                </option>
-                {subjectDetails
-                  .find((s) => s.code === selectedSubject)
-                  .sections.map((section) => (
-                    <option key={section.id} value={section.id}>
-                      Section {section.id.split("section")[1]} - {section.time}{" "}
-                      ({section.availability})
-                    </option>
-                  ))}
-              </select>
-            )}
-
-            <DialogFooter>
-              <button
-                onClick={handleAddSubject}
-                className="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-600 transition-colors"
-              >
-                Add Subject
-              </button>
-
-              <button
-                onClick={handleCancel}
-                className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-600 transition-colors ml-2"
-              >
-                Cancel
-              </button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
-    </div>
-  );
-};
-
-const MajorSelection = ({ data }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false); // Control dialog open state
-  const [selectedSubject, setSelectedSubject] = useState(""); // Track selected subject
-  const [selectedSection, setSelectedSection] = useState(""); // Track selected section
-  const [alternativeSubjects, setAlternativeSubjects] = useState([]); // Store the list of alternative subjects
-
-  // Example subject data
-  const subjectDetails = [
-    {
-      subject: "Math 1",
-      code: "123456",
-      sections: [
-        { time: "9:00-12:00", availability: "18/50", id: "section1" },
-        { time: "13:00-16:00", availability: "18/50", id: "section2" },
-      ],
-    },
-    {
-      subject: "Phy 1",
-      code: "123457",
-      sections: [
-        { time: "9:00-12:00", availability: "28/50", id: "section1" },
-        { time: "13:00-16:00", availability: "38/50", id: "section2" },
-      ],
-    },
-    {
-      subject: "Chem 1",
-      code: "123451",
-      sections: [
-        { time: "9:00-12:00", availability: "8/50", id: "section1" },
-        { time: "13:00-16:00", availability: "18/50", id: "section2" },
-      ],
-    },
-  ];
-
-  const handleAddSubject = () => {
-    if (selectedSubject && selectedSection) {
-      const subject = subjectDetails.find((s) => s.code === selectedSubject);
-      const selectedSectionData = subject.sections.find(
-        (section) => section.id === selectedSection
-      );
-
-      const newSubject = {
-        subject: subject.subject,
-        code: subject.code,
-        time: selectedSectionData.time,
-      };
-
-      console.log("Adding subject:", newSubject);
-      setAlternativeSubjects([...alternativeSubjects, newSubject]); // Add the new subject to the list
-      setSelectedSubject(""); // Clear selected subject
-      setSelectedSection(""); // Clear selected section
-      setDialogOpen(false); // Close dialog
-    }
-  };
-
-  const handleCancel = () => {
-    setSelectedSubject("");
-    setSelectedSection("");
-    setDialogOpen(false); // Close dialog
-  };
-
-  return (
-    <div
-      className="relative"
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
-    >
-      <div className="flex items-center justify-center p-12 gap-2 bg-white rounded-lg border-2 border-gray-200 shadow-sm hover:shadow-md transition-shadow w-[700px]">
-        <div className="p-3">
-          <p className="text-6xl font-medium text-gray-900">
-            Add Major Selection
-          </p>
-        </div>
-
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <button
-              className="bg-red-500 text-white py-8 px-12 rounded-lg hover:bg-red-600 transition-colors"
-              onClick={() => setDialogOpen(true)}
-            >
-              <CirclePlus size={100} />
-            </button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add Major Selection Subject</DialogTitle>
-              <DialogDescription>
-                Select a subject and section, then press OK.
-              </DialogDescription>
-            </DialogHeader>
-
-            {/* Subject selection */}
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="border border-gray-300 rounded p-2 w-full mb-4"
-            >
-              <option value="" disabled>
-                Select a subject
-              </option>
-              {subjectDetails.map((subject) => (
-                <option key={subject.code} value={subject.code}>
-                  {subject.subject} ({subject.code})
-                </option>
-              ))}
-            </select>
-
-            {/* Section selection */}
-            {selectedSubject && (
-              <select
-                value={selectedSection}
-                onChange={(e) => setSelectedSection(e.target.value)}
-                className="border border-gray-300 rounded p-2 w-full mt-2"
-              >
-                <option value="" disabled>
-                  Select a section
-                </option>
-                {subjectDetails
-                  .find((s) => s.code === selectedSubject)
-                  .sections.map((section) => (
-                    <option key={section.id} value={section.id}>
-                      Section {section.id.split("section")[1]} - {section.time}{" "}
-                      ({section.availability})
-                    </option>
-                  ))}
-              </select>
-            )}
-
-            <DialogFooter>
-              <button
-                onClick={handleAddSubject}
-                className="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-600 transition-colors"
-              >
-                Add Subject
-              </button>
-              <button
-                onClick={handleCancel}
-                className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-600 transition-colors ml-2"
-              >
-                Cancel
-              </button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
-    </div>
-  );
-};
-
-const SemesterHeader = ({ data }) => (
-  <div className="bg-blue-100 p-3 rounded-lg border-2 border-blue-200 shadow-sm w-[725px]">
-    <h3 className="font-bold text-7xl text-blue-800">{data.label}</h3>
-    <div className="text-7xl text-blue-600">
-      GPA: {data.gpa} | Credits: {data.credits}
-    </div>
-  </div>
-);
+//node type
+import MajorRegisNode from "./Enroll/MajorRegisNode";
+import OptionalCourseNode from "./Enroll/OptionalCourseNode";
+import PastSubject from "./Enroll/PastSubject";
+import MajorSelection from "./Enroll/MajorSelection";
+import SemesterHeader from "./Enroll/SemesterHeader";
 
 const nodeTypes = {
   majorRegisNode: MajorRegisNode,
@@ -523,7 +42,7 @@ const nodeTypes = {
 
 const SEMESTER_SPACING = 800;
 const VERTICAL_SPACING = 300;
-const HEADER_SPACING = 5;
+const HEADER_SPACING = 10;
 
 export default function EnrollmentFlow() {
   const createNodePosition = (semester, index, isHeader = false) => ({
@@ -583,9 +102,9 @@ export default function EnrollmentFlow() {
       },
     },
     {
-      id: "alternativeCourse1",
+      id: "optionnalCourseNode1-1",
       type: "optionalCourseNode",
-      position: createNodePosition(0, 6),
+      position: createNodePosition(0, 7),
       data: {
         // code: "alternativeCourse1",
         // name: "Alternative",
@@ -596,9 +115,9 @@ export default function EnrollmentFlow() {
     },
 
     {
-      id: "alternativeCourse2",
+      id: "optionnalCourseNode1-2",
       type: "optionalCourseNode",
-      position: createNodePosition(0, 7),
+      position: createNodePosition(0, 8),
       data: {
         // code: "alternativeCourse2",
         // name: "Alternative",
@@ -609,9 +128,9 @@ export default function EnrollmentFlow() {
     },
 
     {
-      id: "alternativeCourse3",
+      id: "majorSelectionNode1-1",
       type: "majorSelection",
-      position: createNodePosition(0, 8),
+      position: createNodePosition(0, 9),
       data: {
         // code: "alternativeCourse3",
         // name: "Alternative",
@@ -668,6 +187,44 @@ export default function EnrollmentFlow() {
         prerequisites: ["003"],
       },
     },
+    {
+      id: "optionnalCourseNode2-1",
+      type: "optionalCourseNode",
+      position: createNodePosition(1, 7),
+      data: {
+        // code: "alternativeCourse1",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "optionnalCourseNode2-2",
+      type: "optionalCourseNode",
+      position: createNodePosition(1, 8),
+      data: {
+        // code: "alternativeCourse2",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "majorSelectionNode-2",
+      type: "majorSelection",
+      position: createNodePosition(1, 9),
+      data: {
+        // code: "alternativeCourse3",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
     // First Semester 2020 Header
     {
       id: "header-3",
@@ -714,6 +271,44 @@ export default function EnrollmentFlow() {
         grade: "A",
         credits: "1",
         prerequisites: ["004", "005"],
+      },
+    },
+    {
+      id: "optionnalCourseNode3-1",
+      type: "optionalCourseNode",
+      position: createNodePosition(2, 7),
+      data: {
+        // code: "alternativeCourse1",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "optionnalCourseNode3-2",
+      type: "optionalCourseNode",
+      position: createNodePosition(2, 8),
+      data: {
+        // code: "alternativeCourse2",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "majorSelectionNode-3",
+      type: "majorSelection",
+      position: createNodePosition(2, 9),
+      data: {
+        // code: "alternativeCourse3",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
       },
     },
 
@@ -777,6 +372,44 @@ export default function EnrollmentFlow() {
         prerequisites: ["009"],
       },
     },
+    {
+      id: "optionnalCourseNode4-1",
+      type: "optionalCourseNode",
+      position: createNodePosition(3, 7),
+      data: {
+        // code: "alternativeCourse1",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "optionnalCourseNode4-2",
+      type: "optionalCourseNode",
+      position: createNodePosition(3, 8),
+      data: {
+        // code: "alternativeCourse2",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "majorSelectionNode-4",
+      type: "majorSelection",
+      position: createNodePosition(3, 9),
+      data: {
+        // code: "alternativeCourse3",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
 
     {
       id: "header-5",
@@ -827,6 +460,45 @@ export default function EnrollmentFlow() {
     },
 
     {
+      id: "optionnalCourseNode5-1",
+      type: "optionalCourseNode",
+      position: createNodePosition(4, 7),
+      data: {
+        // code: "alternativeCourse1",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "optionnalCourseNode5-2",
+      type: "optionalCourseNode",
+      position: createNodePosition(4, 8),
+      data: {
+        // code: "alternativeCourse2",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "majorSelectionNode-5",
+      type: "majorSelection",
+      position: createNodePosition(4, 9),
+      data: {
+        // code: "alternativeCourse3",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
       id: "header-6",
       type: "semesterHeader",
       position: createNodePosition(5, 0, true),
@@ -873,7 +545,44 @@ export default function EnrollmentFlow() {
         prerequisites: ["011"],
       },
     },
+    {
+      id: "optionnalCourseNode6-1",
+      type: "optionalCourseNode",
+      position: createNodePosition(5, 7),
+      data: {
+        // code: "alternativeCourse1",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
 
+    {
+      id: "optionnalCourseNode6-2",
+      type: "optionalCourseNode",
+      position: createNodePosition(5, 8),
+      data: {
+        // code: "alternativeCourse2",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "majorSelectionNode-6",
+      type: "majorSelection",
+      position: createNodePosition(5, 9),
+      data: {
+        // code: "alternativeCourse3",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
     {
       id: "header-7",
       type: "semesterHeader",
@@ -919,6 +628,44 @@ export default function EnrollmentFlow() {
         grade: "S",
         credits: "6",
         prerequisites: ["016"],
+      },
+    },
+    {
+      id: "optionnalCourseNode7-1",
+      type: "optionalCourseNode",
+      position: createNodePosition(6, 7),
+      data: {
+        // code: "alternativeCourse1",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "optionnalCourseNode7-2",
+      type: "optionalCourseNode",
+      position: createNodePosition(6, 8),
+      data: {
+        // code: "alternativeCourse2",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "majorSelectionNode-7",
+      type: "majorSelection",
+      position: createNodePosition(6, 9),
+      data: {
+        // code: "alternativeCourse3",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
       },
     },
 
@@ -967,6 +714,44 @@ export default function EnrollmentFlow() {
         grade: "S",
         credits: "6",
         prerequisites: [],
+      },
+    },
+    {
+      id: "optionnalCourseNode8-1",
+      type: "optionalCourseNode",
+      position: createNodePosition(7, 7),
+      data: {
+        // code: "alternativeCourse1",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "optionnalCourseNode8-2",
+      type: "optionalCourseNode",
+      position: createNodePosition(7, 8),
+      data: {
+        // code: "alternativeCourse2",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
+      },
+    },
+
+    {
+      id: "majorSelectionNode-8",
+      type: "majorSelection",
+      position: createNodePosition(7, 9),
+      data: {
+        // code: "alternativeCourse3",
+        // name: "Alternative",
+        // grade: "alternativeCourse",
+        // credits: "alternativeCourse",
+        // prerequisites: [],
       },
     },
   ];
@@ -1306,7 +1091,7 @@ export default function EnrollmentFlow() {
           Graduate School, Kasetsart University
         </p>
 
-        <div className="flex gap-4 mt-4 text-sm">
+        {/* <div className="flex gap-4 mt-4 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-green-500 rounded"></div>
             <span>Grade A</span>
@@ -1323,7 +1108,7 @@ export default function EnrollmentFlow() {
             <div className="w-4 h-4 bg-purple-500 rounded"></div>
             <span>Grade S</span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full h-[calc(100%-theme(spacing.24))] bg-gray-50 rounded-lg shadow overflow-hidden">
