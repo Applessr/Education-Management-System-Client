@@ -9,7 +9,7 @@ const Transition = ({ children }) => {
     useEffect(() => {
         const container = containerRef.current;
 
-        console.log("current container =", container)
+        // console.log("current container =", container)
         if (!container) return;
 
         // Add initial opacity start with opacity = 0

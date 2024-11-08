@@ -15,7 +15,7 @@ const ChooseRole = () => {
     }
 
     return (
-        <div className='min-h-screen  bg-white'>
+        <div className='min-h-screen  bg-white '>
 
             <div className='min-w-screen h-[7rem] flex items-center gap-6 ml-8'>
                 <div>
