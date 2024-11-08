@@ -23,21 +23,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { alternatives } from "joi";
-import SubjectReport from "./SubjectReport";
+import SubjectReport from "../SubjectReport";
 
 //node type
-import MajorRegisNode from "./Enroll/MajorRegisNode";
-import OptionalCourseNode from "./Enroll/OptionalCourseNode";
-import PastSubject from "./Enroll/PastSubject";
-import MajorSelection from "./Enroll/MajorSelection";
-import SemesterHeader from "./Enroll/SemesterHeader";
+// import MajorRegisNode from "./Enroll/MajorRegisNode";
+// import OptionalCourseNode from "./Enroll/OptionalCourseNode";
+// import PastSubject from "./Enroll/PastSubject";
+// import MajorSelection from "./Enroll/MajorSelection";
+import SemesterHeader from "./SemesterHeader";
+import MajorNormalNode from "./MajorNormalNode";
 
 const nodeTypes = {
-  majorRegisNode: MajorRegisNode,
-  pastSubject: PastSubject,
+  majorNormalNode: MajorNormalNode,
   semesterHeader: SemesterHeader,
-  optionalCourseNode: OptionalCourseNode,
-  majorSelection: MajorSelection,
 };
 
 const SEMESTER_SPACING = 800;
@@ -67,7 +65,7 @@ export default function EnrollmentFlow() {
     // First Semester 2019 Courses
     {
       id: "001",
-      type: "pastSubject",
+      type: "majorNormalNode",
       position: createNodePosition(0, 0),
       data: {
         code: "001",
@@ -79,7 +77,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "002",
-      type: "pastSubject",
+      type: "majorNormalNode",
       position: createNodePosition(0, 2),
       data: {
         code: "002",
@@ -91,7 +89,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "003",
-      type: "pastSubject",
+      type: "majorNormalNode",
       position: createNodePosition(0, 4),
       data: {
         code: "003",
@@ -101,44 +99,7 @@ export default function EnrollmentFlow() {
         prerequisites: [],
       },
     },
-    {
-      id: "optionnalCourseNode1-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(0, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
 
-    {
-      id: "optionnalCourseNode1-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(0, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode1-1",
-      type: "majorSelection",
-      position: createNodePosition(0, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
     // Second Semester 2019 Header
     {
       id: "header-2",
@@ -153,7 +114,7 @@ export default function EnrollmentFlow() {
     // Second Semester 2019 Courses
     {
       id: "004",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(1, 0),
       data: {
         code: "004",
@@ -165,7 +126,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "005",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(1, 2),
       data: {
         code: "005",
@@ -177,7 +138,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "006",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(1, 4),
       data: {
         code: "006",
@@ -187,44 +148,7 @@ export default function EnrollmentFlow() {
         prerequisites: ["003"],
       },
     },
-    {
-      id: "optionnalCourseNode2-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(1, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
 
-    {
-      id: "optionnalCourseNode2-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(1, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode-2",
-      type: "majorSelection",
-      position: createNodePosition(1, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
     // First Semester 2020 Header
     {
       id: "header-3",
@@ -239,7 +163,7 @@ export default function EnrollmentFlow() {
     // First Semester 2020 Courses
     {
       id: "007",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(2, 0),
       data: {
         code: "007",
@@ -251,7 +175,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "008",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(2, 2),
       data: {
         code: "008",
@@ -263,7 +187,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "009",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(2, 4),
       data: {
         code: "009",
@@ -271,44 +195,6 @@ export default function EnrollmentFlow() {
         grade: "A",
         credits: "1",
         prerequisites: ["004", "005"],
-      },
-    },
-    {
-      id: "optionnalCourseNode3-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(2, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "optionnalCourseNode3-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(2, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode-3",
-      type: "majorSelection",
-      position: createNodePosition(2, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
       },
     },
 
@@ -326,7 +212,7 @@ export default function EnrollmentFlow() {
     // Second Semester 2020 Courses
     {
       id: "010",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(3, 0),
       data: {
         code: "010",
@@ -338,7 +224,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "011",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(3, 2),
       data: {
         code: "011",
@@ -350,7 +236,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "012",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(3, 4),
       data: {
         code: "012",
@@ -362,7 +248,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "013",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(3, 6),
       data: {
         code: "013",
@@ -370,44 +256,6 @@ export default function EnrollmentFlow() {
         grade: "S",
         credits: "6",
         prerequisites: ["009"],
-      },
-    },
-    {
-      id: "optionnalCourseNode4-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(3, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "optionnalCourseNode4-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(3, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode-4",
-      type: "majorSelection",
-      position: createNodePosition(3, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
       },
     },
 
@@ -424,7 +272,7 @@ export default function EnrollmentFlow() {
     // Second Semester 2020 Courses
     {
       id: "014",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(4, 0),
       data: {
         code: "014",
@@ -436,7 +284,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "015",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(4, 2),
       data: {
         code: "015",
@@ -448,7 +296,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "016",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(4, 4),
       data: {
         code: "016",
@@ -456,45 +304,6 @@ export default function EnrollmentFlow() {
         grade: "S",
         credits: "6",
         prerequisites: ["012"],
-      },
-    },
-
-    {
-      id: "optionnalCourseNode5-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(4, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "optionnalCourseNode5-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(4, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode-5",
-      type: "majorSelection",
-      position: createNodePosition(4, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
       },
     },
 
@@ -511,7 +320,7 @@ export default function EnrollmentFlow() {
     // Second Semester 2020 Courses
     {
       id: "017",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(5, 0),
       data: {
         code: "017",
@@ -523,7 +332,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "018",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(5, 6),
       data: {
         code: "018",
@@ -535,7 +344,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "019",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(5, 4),
       data: {
         code: "019",
@@ -545,44 +354,7 @@ export default function EnrollmentFlow() {
         prerequisites: ["011"],
       },
     },
-    {
-      id: "optionnalCourseNode6-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(5, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
 
-    {
-      id: "optionnalCourseNode6-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(5, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode-6",
-      type: "majorSelection",
-      position: createNodePosition(5, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
     {
       id: "header-7",
       type: "semesterHeader",
@@ -596,7 +368,7 @@ export default function EnrollmentFlow() {
     // Second Semester 2020 Courses
     {
       id: "020",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(6, 0),
       data: {
         code: "020",
@@ -608,7 +380,7 @@ export default function EnrollmentFlow() {
     },
     {
       id: "021",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(6, 2),
       data: {
         code: "021",
@@ -620,52 +392,14 @@ export default function EnrollmentFlow() {
     },
     {
       id: "022",
-      type: "majorRegisNode",
-      position: createNodePosition(6, 4),
+      type: "majorNormalNode",
+      position: createNodePosition(6, 5),
       data: {
         code: "022",
         name: "Physical Chemistry IV",
         grade: "S",
         credits: "6",
         prerequisites: ["016"],
-      },
-    },
-    {
-      id: "optionnalCourseNode7-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(6, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "optionnalCourseNode7-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(6, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode-7",
-      type: "majorSelection",
-      position: createNodePosition(6, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
       },
     },
 
@@ -682,7 +416,7 @@ export default function EnrollmentFlow() {
     // Second Semester 2020 Courses
     {
       id: "023",
-      type: "majorRegisNode",
+      type: "majorNormalNode",
       position: createNodePosition(7, 0),
       data: {
         code: "023",
@@ -694,8 +428,8 @@ export default function EnrollmentFlow() {
     },
     {
       id: "024",
-      type: "majorRegisNode",
-      position: createNodePosition(7, 2),
+      type: "majorNormalNode",
+      position: createNodePosition(7, 4),
       data: {
         code: "024",
         name: "Advanced Analytical Chemistry",
@@ -706,52 +440,14 @@ export default function EnrollmentFlow() {
     },
     {
       id: "025",
-      type: "majorRegisNode",
-      position: createNodePosition(7, 4),
+      type: "majorNormalNode",
+      position: createNodePosition(7, 2),
       data: {
         code: "025",
         name: "Special Topics in Chemistry",
         grade: "S",
         credits: "6",
         prerequisites: [],
-      },
-    },
-    {
-      id: "optionnalCourseNode8-1",
-      type: "optionalCourseNode",
-      position: createNodePosition(7, 7),
-      data: {
-        // code: "alternativeCourse1",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "optionnalCourseNode8-2",
-      type: "optionalCourseNode",
-      position: createNodePosition(7, 8),
-      data: {
-        // code: "alternativeCourse2",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
-      },
-    },
-
-    {
-      id: "majorSelectionNode-8",
-      type: "majorSelection",
-      position: createNodePosition(7, 9),
-      data: {
-        // code: "alternativeCourse3",
-        // name: "Alternative",
-        // grade: "alternativeCourse",
-        // credits: "alternativeCourse",
-        // prerequisites: [],
       },
     },
   ];
@@ -994,7 +690,7 @@ export default function EnrollmentFlow() {
         color: "#3b82f6",
       },
       sourceHandle: "source-bottom-011",
-      targetHandle: "target-left-019",
+      targetHandle: "target-top-019",
     },
 
     {
@@ -1038,7 +734,7 @@ export default function EnrollmentFlow() {
         type: MarkerType.ArrowClosed,
         color: "#3b82f6",
       },
-      sourceHandle: "source-right-016",
+      sourceHandle: "source-bottom-016",
       targetHandle: "target-left-022",
     },
 
@@ -1053,8 +749,8 @@ export default function EnrollmentFlow() {
         type: MarkerType.ArrowClosed,
         color: "#3b82f6",
       },
-      sourceHandle: "source-top-019",
-      targetHandle: "target-bottom-024",
+      sourceHandle: "source-right-019",
+      targetHandle: "target-left-024",
     },
   ];
 
@@ -1082,7 +778,7 @@ export default function EnrollmentFlow() {
   );
 
   return (
-    <div className="w-full h-[calc(100vh-theme(spacing.16))]">
+    <div className="w-full h-[70vh]">
       <div className="bg-white p-4 mb-4 rounded-lg shadow">
         <h2 className="text-xl font-bold text-gray-800">
           Course Prerequisites - Materials Engineering
@@ -1111,7 +807,7 @@ export default function EnrollmentFlow() {
         </div> */}
       </div>
 
-      <div className="w-full h-[calc(100%-theme(spacing.24))] bg-gray-50 rounded-lg shadow overflow-hidden">
+      <div className=" w-full h-[80%] bg-gray-50 rounded-lg shadow overflow-hidden">
         <ReactFlow
           nodes={nodes}
           edges={edges}

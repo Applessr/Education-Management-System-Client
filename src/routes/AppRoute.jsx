@@ -9,7 +9,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
 import Login from "../pages/auth/Login";
-import EnrollmentFlow from "../components/student/CourseNode";
+import EnrollmentFlow from "../components/student/Enroll/CourseNode";
 import LoginEmployee from "../pages/auth/LoginEmployee";
 import { UserContextProvider } from "../contexts/UserContext";
 import StudentInfo from "../pages/student/StudentInfo";
@@ -34,6 +34,7 @@ import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
 import StudentInCourse from "../pages/teacher/StudentInCourse";
 import CourseDetail from "../pages/teacher/CourseDetail";
 import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
+import StudentEnrollment from "../pages/student/StudentEnrollment";
 
 const router = createBrowserRouter([
   {
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: "profile", element: <StudentInfo /> },
-      { path: "enroll", element: <EnrollmentFlow /> },
+      { path: "enroll", element: <StudentEnrollment /> },
       { path: "dashboard", element: <StudentDashboard /> },
       { path: "enrollResult", element: <StudentEnrollResult /> },
       { path: "academic-schedule", element: <AcademicSchedule /> },
