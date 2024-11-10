@@ -29,13 +29,6 @@ import { StudentContextProvider } from "../contexts/StudentContext";
 import { TeacherContextProvider } from "../contexts/TeacherContext";
 import { AdminContextProvider } from "../contexts/AdminContext";
 import AdminCourse from "../pages/admin/AdminCourse";
-<<<<<<< HEAD
-import TeacherAcademicSchedule from "../pages/teacher/TeacherAcademicSchedule";
-import StudentInCourse from "../pages/teacher/StudentInCourse";
-import CourseDetail from "../pages/teacher/CourseDetail";
-import TeacherViewStudentTranscript from "../pages/teacher/TeacherViewStudentTranscript";
-import StudentEnrollment from "../pages/student/StudentEnrollment";
-=======
 import AboutPage from "../pages/guest/AboutPage";
 import AcademicPage from "../pages/guest/AcademicPage";
 import CampusPage from "../pages/guest/CampusPage";
@@ -53,7 +46,7 @@ import AdminProfessor from "../pages/admin/AdminProfessor/AdminProfessor";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherSchedule/TeacherAcademicSchedule";
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
->>>>>>> dev
+import StudentEnrollment from "../pages/student/StudentEnrollment";
 
 const router = createBrowserRouter([
   {

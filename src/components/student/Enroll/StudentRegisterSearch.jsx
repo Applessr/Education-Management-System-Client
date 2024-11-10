@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
+import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   flexRender,
   getCoreRowModel,
@@ -12,15 +8,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -32,22 +24,199 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Link } from "react-router-dom";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import TeacherViewStudentTranscript from "@/src/pages/teacher/TeacherViewStudentTranscript";
+import { format } from "date-fns"; // Import for formatting dates
 
-// fetch data enrollable course this semester :  data have to include course / course schedule / courseSylebus
-// find many form syllabus include course and schedule
-//column
+// Column definitions
+export const columns = [
+  {
+    accessorKey: "id",
+    header: "#",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
+  },
+  {
+    accessorKey: "courseCode",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() =>
+          column.toggleSorting(column.getIsSorted() === "courseCode")
+        }
+      >
+        Course Code
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("courseCode")}</div>
+    ),
+  },
+  {
+    accessorKey: "courseName",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() =>
+          column.toggleSorting(column.getIsSorted() === "courseName")
+        }
+      >
+        Subject Name
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("courseName")}</div>
+    ),
+  },
+  {
+    accessorKey: "credits",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "credits")}
+      >
+        Credits
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("credits")}</div>
+    ),
+  },
+  {
+    accessorKey: "seat",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "seat")}
+      >
+        Seat
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue("seat")}</div>,
+  },
+  {
+    accessorKey: "section",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "section")}
+      >
+        Section
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("section")}</div>
+    ),
+  },
+  {
+    accessorKey: "teacherId",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() =>
+          column.toggleSorting(column.getIsSorted() === "teacherId")
+        }
+      >
+        Teacher ID
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("teacherId")}</div>
+    ),
+  },
+  {
+    accessorKey: "day",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "day")}
+      >
+        Study day
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => {
+      const dayNumber = row.getValue("day");
 
-function StudentRegisterSearch({ studentInfo }) {
+      // Map the day number (1 to 5) to the day name
+      const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+      const dayName = dayNames[dayNumber - 1]; // Adjust for 0-indexing
+
+      return <div className="capitalize">{dayName}</div>;
+    },
+  },
+  {
+    accessorKey: "startTime",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() =>
+          column.toggleSorting(column.getIsSorted() === "startTime")
+        }
+      >
+        Start Time
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => {
+      const startTime = row.getValue("startTime");
+      return (
+        <div className="capitalize">{format(new Date(startTime), "HH:mm")}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "endTime",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "endTime")}
+      >
+        End Time
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => {
+      const endTime = row.getValue("endTime");
+      return (
+        <div className="capitalize">{format(new Date(endTime), "HH:mm")}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "room",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "room")}
+      >
+        Room
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue("room")}</div>,
+  },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: ({ row }) => (
+      <div className="flex space-x-2">
+        <Button
+          variant="success"
+          size="sm"
+          onClick={() => handleApprove(row.original)} // Assuming `handleApprove` is defined
+        >
+          Enroll
+        </Button>
+      </div>
+    ),
+  },
+];
+
+function StudentRegisterSearch({ data }) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -75,33 +244,17 @@ function StudentRegisterSearch({ studentInfo }) {
   return (
     <div>
       <div>
-        {/* code - subject name -  sec  - studyTime  - room  */}
-        <p className="bg-orange-300">Junior</p>
+        <p className="bg-orange-300">Prerequisite Subjects</p>
       </div>
 
       <div className="w-full">
         <div className="flex items-center py-4">
-          {/* search by name */}
-
-          {/* <Input
-            placeholder="Filter name of student..."
-            value={table.getColumn("name")?.getFilterValue() ?? ""}
-            onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          /> */}
-
-          {/* seach by name and student Id */}
           <Input
-            placeholder="Filter by name or student ID..."
+            placeholder="Filter by course name..."
             value={table.getState().globalFilter || ""}
-            onChange={(event) => {
-              table.setGlobalFilter(event.target.value);
-            }}
+            onChange={(event) => table.setGlobalFilter(event.target.value)}
             className="max-w-sm"
           />
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -112,23 +265,21 @@ function StudentRegisterSearch({ studentInfo }) {
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
+                .map((column) => (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                ))}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -177,13 +328,8 @@ function StudentRegisterSearch({ studentInfo }) {
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
-          {/* show select row */}
 
-          {/* <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div> */}
+        <div className="flex items-center justify-end space-x-2 py-4">
           <div className="space-x-2">
             <Button
               variant="outline"
