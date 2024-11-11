@@ -7,7 +7,7 @@ import FadeInUpComponent from "@/src/components/guest/FadeInUpComponent";
 import LandingItem5 from "@/src/components/guest/LandingItem5";
 import LandingItem6 from "@/src/components/guest/LandingItem6";
 import LandingItem7 from "@/src/components/guest/LandingItem7";
-import LandingItem8 from "@/src/components/guest/LandingItem8";
+ 
 
 const LandingPage = () => {
   return (
