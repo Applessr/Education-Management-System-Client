@@ -7,15 +7,14 @@ export default function LandingItem7() {
             <div class="slider-container mb-4">
                 <div class="slider flex gap-5 ">
 
-                    <div class='text-5xl font-bold flex gap-8 whitespace-nowrap'>
+                    <div class='text-6xl font-bold flex gap-8 whitespace-nowrap'>
                         <span class='p-5 w-auto  bg-white'>From classrooms to boardrooms… we’ll get you there!</span>
                         <span class='p-5 w-auto  bg-white'>Join a community that believes in your potential</span>
               
                     </div>
-                    <div class='text-5xl font-bold flex gap-8 whitespace-nowrap'>
+                    <div class='text-6xl font-bold flex gap-8 whitespace-nowrap'>
                         <span class='p-5 w-auto  bg-white'>From classrooms to boardrooms… we’ll get you there!</span>
                         <span class='p-5 w-auto  bg-white'>Join a community that believes in your potential</span>
-                       
                     </div>
                 </div>
             </div>
