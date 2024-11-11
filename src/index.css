@@ -242,4 +242,97 @@
   }
 }
 
+.clip-custom {
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
 
+.clip-custom-second {
+  clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%);
+}
+
+.slide-media {
+	-webkit-animation: slide-tl 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-tl 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+ @-webkit-keyframes slide-media {
+  0% {
+    -webkit-transform: translateY(100px) translateX(100px);
+            transform: translateY(100px) translateX(100px);
+   
+  }
+  100% {
+    -webkit-transform: translateY(0) translateX(0);
+            transform: translateY(0) translateX(0);
+  }
+}
+@keyframes slide-media {
+  0% {
+    -webkit-transform: translateY(100px) translateX(100px);
+            transform: translateY(100px) translateX(100px);
+  }
+  100% {
+    -webkit-transform: translateY(0) translateX(0);
+            transform: translateY(0) translateX(0);
+   
+  }
+}
+
+.scale-up-center-BBA {
+	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.550, 0.055, 0.675, 0.190) both;
+	        animation: scale-up-center 0.4s cubic-bezier(0.550, 0.055, 0.675, 0.190) both;
+}
+
+ @-webkit-keyframes scale-up-center-BBA {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes scale-up-center-BBA {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50%));
+  }
+}
+
+.slider-container {
+  overflow: hidden;
+}
+
+.slider {
+  width: fit-content;
+  animation: scroll 25s linear infinite;
+}
+
+/* ---revert----- */
+@keyframes scrollRevert {
+  from {
+    transform: translateX(calc(-50%));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.slider-revert {
+  width: fit-content;
+  animation: scrollRevert 20s linear infinite;
+}
