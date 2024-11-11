@@ -252,7 +252,7 @@ export const columns = [
   },
 ];
 
-function StudentRegisterPrerequisitesCourses({ data }) {
+function StudentRegisterOptionalCourses({ data }) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -276,10 +276,9 @@ function StudentRegisterPrerequisitesCourses({ data }) {
       rowSelection,
     },
   });
-
   return (
     <div className="flex flex-col p-2 border">
-      <div className="bg bg-yellow-300">prerequisites course</div>
+      <div className="bg bg-yellow-300">optional courses</div>
       <div>
         <div className="w-full">
           <div className="flex items-center py-4">
@@ -387,4 +386,4 @@ function StudentRegisterPrerequisitesCourses({ data }) {
   );
 }
 
-export default StudentRegisterPrerequisitesCourses;
+export default StudentRegisterOptionalCourses;

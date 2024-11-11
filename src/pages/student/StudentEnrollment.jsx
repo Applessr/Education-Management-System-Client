@@ -7,6 +7,8 @@ import {
   studentGetClassScheduleByCourseId,
   studentGetCourseSyllabus,
 } from "@/src/api/course";
+import StudentRegisterPrerequisitesCourses from "@/src/components/student/Enroll/StudentRegisterSearch";
+import StudentRegisterOptionalCourses from "@/src/components/student/Enroll/StudentRegisterOptionalCourses";
 
 function StudentEnrollment() {
   const { getStudentProfile, studentInfo } = useStudent();
@@ -27,17 +29,43 @@ function StudentEnrollment() {
 
   useEffect(() => {
     const fetchStudentCourse = async () => {
-      if (token) {
+      const studentId = studentInfo?.studentId;
+      console.log(studentId, "00000000");
+      const currentYear = new Date().getFullYear() + 543;
+      const entryYear = parseInt(studentId.toString().substring(0, 2), 10);
+      const yearDifference = currentYear - (2500 + entryYear);
+      console.log(yearDifference);
+
+      if (token && studentId) {
         const resp = await studentGetCourseSyllabus(token);
         const syllabusData = resp.data?.major?.courseRecommendation["1/1"];
+        // switch (yearDifference) {
+        //   case 0:
+        //     syllabusData = resp.data?.major?.courseRecommendation["1/1"];
+        //     break;
+        //   case 1:
+        //     syllabusData = resp.data?.major?.courseRecommendation["1/2"];
+        //     break;
+        //   case 2:
+        //     syllabusData = resp.data?.major?.courseRecommendation["1/3"];
+        //     break;
+
+        //   default:
+        //     syllabusData = resp.data?.major?.courseRecommendation["1/1"];
+
+        //     break;
+        // }
+
         setSyllabus(syllabusData || []); // Set the fetched syllabus data
       }
     };
+
     fetchStudentCourse();
-  }, [token]);
+  }, [token, studentInfo]);
 
   // This useEffect will run when syllabus data changes
   useEffect(() => {
+    console.log(syllabus);
     if (syllabus) {
       // Extract courseCode values only if syllabus is available
       setOptionalCourses(
@@ -69,7 +97,11 @@ function StudentEnrollment() {
                 course
               );
               console.log(`Schedule for ${course}:`, resp); // Log the response for each course
-              schedules.push(resp.data); // Store the response for each course
+              console.log(resp.data);
+              // console.log(studentInfo.majorId);
+              schedules.push(
+                resp.data.filter((item) => item.majorId == studentInfo.majorId)
+              ); // Store the response for each course
             } catch (error) {
               console.error(`Error fetching schedule for ${course}:`, error);
             }
@@ -93,12 +125,15 @@ function StudentEnrollment() {
   console.log(courseSchedules.prerequisites);
   console.log(courseSchedules.optional);
   console.log(courseSchedules.selection);
-
+  // console.log(studentInfo);
   return (
     <div className="flex flex-col gap-2">
       <EnrollmentFlow />
       <CurrentSemesterEnrollment />
-      <StudentRegisterSearch data={courseSchedules.prerequisites.flat()} />
+      <StudentRegisterPrerequisitesCourses
+        data={courseSchedules.prerequisites.flat()}
+      />
+      <StudentRegisterOptionalCourses data={courseSchedules.optional.flat()} />
     </div>
   );
 }
