@@ -1,12 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { GraduationCap } from 'lucide-react';
 import useStudent from '@/src/hooks/useStudent';
 
 const StudentDashboard = () => {
-    const { getStudentProfile, studentInfo, studentGrade, getStudentGetGrade, studentCredit, getStudentGetCredit } = useStudent()
+    const { getStudentProfile, studentInfo, studentGrade, getStudentGetGrade, studentCredit, getStudentGetCredit, studentScore, getStudentScore, } = useStudent();
     const token = localStorage.getItem('token');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+
     const student = {
         name: `${studentInfo?.firstName} ${studentInfo?.lastName}`,
         id: studentInfo?.studentId,
@@ -30,23 +33,42 @@ const StudentDashboard = () => {
         }
     };
 
-
     useEffect(() => {
         getStudentProfile(token);
         getStudentGetGrade(token);
         getStudentGetCredit(token);
-    }, [])
-
+    }, []);
 
     const completedCourses = useMemo(() => {
         if (!studentGrade) return [];
         return studentGrade.map((grade) => ({
+            id: grade?.course?.id,
             code: grade?.course?.courseCode,
             title: grade?.course?.courseName,
             credit: 3,
             grade: grade?.letterGrade,
         }));
     }, [studentGrade]);
+
+    const fetchStudentScore = async (token, courseId) => {
+        try {
+            await getStudentScore(token, courseId);
+        } catch (error) {
+            console.error("Failed to fetch score:", error);
+        }
+    };
+
+    const handleModalOpen = (course) => {
+        setSelectedCourse(course);
+        setIsModalOpen(true);
+        fetchStudentScore(token, course.id);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+        setSelectedCourse(null);
+    };
+    console.log('studentScore :>> ', studentScore);
 
     const progressPercentage = (student.credits.completed / student.credits.total) * 100;
 
@@ -134,19 +156,84 @@ const StudentDashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {completedCourses.map((course, index) => (
-                                    <tr key={index} className="border-b">
-                                        <td className="py-3 px-4">{course.code}</td>
-                                        <td className="py-3 px-4">{course.title}</td>
-                                        <td className="py-3 px-4">{course.credit}</td>
-                                        <td className="py-3 px-4">{course.grade}</td>
+                                {completedCourses.length > 0 ? (
+                                    completedCourses.map((course, index) => (
+                                        <tr key={index} className="border-b">
+                                            <td className="py-3 px-4">{course.code}</td>
+                                            <td className="py-3 px-4">{course.title}</td>
+                                            <td className="py-3 px-4">{course.credit}</td>
+                                            <td className="py-3 px-4">{course.grade}</td>
+                                            <td>
+                                                <button
+                                                    className='btn bg-[#272988] text-white my-2'
+                                                    onClick={() => handleModalOpen(course)}
+                                                >
+                                                    View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="4" className="text-center py-4">No completed courses available</td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
                 </CardContent>
             </Card>
+
+            {/* Modal */}
+            {isModalOpen && selectedCourse && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg flex flex-col">
+                        <h2 className="text-2xl font-bold mb-4 text-center">Course Details</h2>
+                        <p><strong>Code:</strong> {selectedCourse?.code}</p>
+                        <p><strong>Title:</strong> {selectedCourse?.title}</p>
+                        <p><strong>Grade:</strong> {selectedCourse?.grade}</p>
+                        {/* Components Detail */}
+                        <div className="mt-4">
+                            <div className="mt-4">
+                                <h3 className="text-lg font-semibold">Score </h3>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full table-auto">
+                                        <thead>
+                                            <tr className="bg-[#272988] text-white">
+                                                <th className="px-4 py-2 text-left">Type</th>
+                                                <th className="px-4 py-2 text-left">Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {studentScore?.length > 0 ? (
+                                                studentScore.map((score) => (
+                                                    score?.components?.map((component) => (
+                                                        <tr key={component?.id}>
+                                                            <td className="px-4 py-2">{component?.type}</td>
+                                                            <td className="px-4 py-2">{component?.point}</td>
+                                                        </tr>
+                                                    ))
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="2" className="px-4 py-2 text-center">No components available</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            className="mt-6 px-4 py-2 bg-[#272988] text-white rounded-lg"
+                            onClick={handleModalClose}
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

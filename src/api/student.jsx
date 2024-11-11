@@ -48,7 +48,20 @@ export const studentFetchPublishableKey = (token) => axios.get('/student/config'
     }
 });
 
+export const studentCheckPayMent = (token, body) => axios.get('/student/check-payment', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    },
+    params: body
+});
+
 export const studentCreatePaymentIntent = (token, body) => axios.post('/student/create-payment-intent', body, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
+export const studentPayTuition = (token, body) => axios.post('/student/pay-tuition-fee', body, {
     headers: {
         Authorization: `Bearer ${token}`
     }

@@ -4,6 +4,7 @@ import StudentSemesterGrade from "../../components/student/StudentSemisterGrade"
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import useStudent from "@/src/hooks/useStudent";
+import { Printer } from "lucide-react";
 
 function StudentEnrollResult() {
   // State for student info and grades
@@ -255,8 +256,9 @@ function StudentEnrollResult() {
       <div className="flex justify-center mb-8">
         <button
           onClick={generatePDF}
-          className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+          className="flex gap-3 px-6 py-3 bg-[#272988] text-white rounded  hover:bg-[#20216d] transition-colors duration-200"
         >
+            <Printer />
           Download Transcript
         </button>
       </div>

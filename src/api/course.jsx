@@ -36,9 +36,10 @@ export const studentGetEnrollCourseBySemester = (token, body) => axios.get('/cou
     }
 });
 
-export const studentGetClassSchedule = (token, body) => axios.get('/course/student/class-schedule', body, {
+export const studentGetClassSchedule = (token, semester) => axios.get('/course/student/class-schedule', {
+    params: { semester }, 
     headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}` 
     }
 });
 
