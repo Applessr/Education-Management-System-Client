@@ -9,6 +9,7 @@ import {
 } from "@/src/api/course";
 import StudentRegisterPrerequisitesCourses from "@/src/components/student/Enroll/StudentRegisterSearch";
 import StudentRegisterOptionalCourses from "@/src/components/student/Enroll/StudentRegisterOptionalCourses";
+import StudentRegisterMajorCourses from "@/src/components/student/Enroll/StudentRegisterMajorCourses";
 
 function StudentEnrollment() {
   const { getStudentProfile, studentInfo } = useStudent();
@@ -134,6 +135,7 @@ function StudentEnrollment() {
         data={courseSchedules.prerequisites.flat()}
       />
       <StudentRegisterOptionalCourses data={courseSchedules.optional.flat()} />
+      <StudentRegisterMajorCourses data={courseSchedules.selection.flat()} />
     </div>
   );
 }

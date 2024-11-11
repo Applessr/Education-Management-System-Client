@@ -34,6 +34,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import useStudent from "@/src/hooks/useStudent";
+import {
+  studentGetEnrollCourseBySemester,
+  studentSendEnrollRequest,
+} from "@/src/api/course";
 
 // Column definitions
 export const columns = [
@@ -214,12 +219,20 @@ export const columns = [
     accessorKey: "actions",
     header: "Actions",
     cell: ({ row }) => {
+      const { getStudentProfile, studentInfo } = useStudent();
+      const token = localStorage.getItem("token");
+      const currentYear = new Date().getFullYear() + 543;
+      console.log(currentYear, "current Year");
+      const semester = `1/${currentYear}`;
+
       const [isDialogOpen, setIsDialogOpen] = useState(false);
       const courseId = row.getValue("courseId"); // Get courseId for the row
 
       const handleConfirmEnroll = (courseId) => {
         // Perform your enroll action here (e.g., API call)
-        console.log("Enrolling in course:", courseId);
+        console.log("Enrolling in course:", courseId, semester, token);
+        studentSendEnrollRequest(token, { semester, courseId });
+        studentGetEnrollCourseBySemester(token, { semester });
         setIsDialogOpen(false); // Close dialog after confirm
       };
 
@@ -234,10 +247,11 @@ export const columns = [
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you sure you want to enroll?</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone.
-              </DialogDescription>
+              <DialogTitle>
+                Are you sure you want to enroll <br />
+                {row.original.courseCode} {row.original.courseName} section :{" "}
+                {row.original.section} ?
+              </DialogTitle>
             </DialogHeader>
             <DialogFooter>
               <Button onClick={handleCloseDialog}>Cancel</Button>
