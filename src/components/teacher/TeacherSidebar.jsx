@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import useUser from '@/src/hooks/useUser';
 
 const TeacherSidebar = () => {
-    const { logout, user } = useUser()
+    const { logout, user } = useUser();
     const [open, setOpen] = useState(true);
     const [active, setActive] = useState("profile");
     const navigate = useNavigate();
 
-    const sidebarItems = [
+    const sidebarItems = useMemo(() => [
         { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
         { icon: <LayoutDashboard size={24} />, text: "Dashboard", name: "dashboard" },
         { icon: <CalendarRange size={24} />, text: "Schedule", name: "schedule" },
         { icon: <Notebook size={24} />, text: "Course", name: "course" },
         { icon: <Mail size={24} />, text: "Requested Course", name: "requested-course" },
         { icon: <ContactRound size={24} />, text: "Advisors", name: "advisors" },
-
-    ];
+    ], []); 
 
     const handleClickMenu = (name) => {
         setActive(name);
@@ -74,12 +73,12 @@ const TeacherSidebar = () => {
                             </div>
                         )}
                         <div onClick={handleLogout} className={`hover:bg-amber-900 w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
-                            <LogOut className={`text-white `} />
+                            <LogOut className="text-white" />
                         </div>
                     </div>
                 </div>
             </nav>
-        </aside >
+        </aside>
     );
 };
 

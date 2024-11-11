@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   ChevronFirst,
   ChevronLast,
@@ -6,7 +6,6 @@ import {
   CalendarDays,
   BookOpen,
   WalletCards,
-  Bell,
   LogOut,
   LayoutDashboard,
 } from "lucide-react";
@@ -15,14 +14,12 @@ import SidebarItem from "./SidebarItem";
 import useUser from "@/src/hooks/useUser";
 
 const StudentSidebar = () => {
-  const { logout, user } = useUser()
+  const { logout, user } = useUser();
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState("profile");
   const navigate = useNavigate();
 
-  console.log('user :>> ', user);
-
-  const sidebarItems = [
+  const sidebarItems = useMemo(() => [
     {
       icon: <LayoutDashboard size={24} />,
       text: "Dashboard",
@@ -41,7 +38,7 @@ const StudentSidebar = () => {
       text: "Grade Report",
       name: "enrollResult",
     }
-  ];
+  ], []); // `[]` เพื่อให้สร้าง `sidebarItems` แค่ครั้งเดียว
 
   const handleClickMenu = (name) => {
     setActive(name);
@@ -57,10 +54,7 @@ const StudentSidebar = () => {
   };
 
   return (
-    <aside
-      className={`h-screen transition-width duration-300 ${open ? "w-80" : "w-20"
-        }`}
-    >
+    <aside className={`h-screen transition-width duration-300 ${open ? "w-80" : "w-20"}`}>
       <nav className="h-full flex flex-col bg-white border-r">
         <div className="p-4 flex items-center justify-between border-b-2 mx-3 pb-12">
           <div className={`flex items-center gap-4 ${!open && "hidden"}`}>
@@ -100,7 +94,7 @@ const StudentSidebar = () => {
               </div>
             )}
             <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
-              <LogOut className={`text-white `} />
+              <LogOut className="text-white" />
             </div>
           </div>
         </div>

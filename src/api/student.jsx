@@ -12,6 +12,12 @@ export const studentGetNotification = (token) => axios.get('/student/notificatio
     }
 });
 
+export const studentGetCredit = (token) => axios.get('/student/credit', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
 export const studentGetExamDate = (token) => axios.get('/student/exam-date', {
     headers: {
         Authorization: `Bearer ${token}`
@@ -35,3 +41,16 @@ export const studentChangePassword = (token, body) => axios.patch('/student/chan
         Authorization: `Bearer ${token}`
     }
 });
+
+export const studentFetchPublishableKey = (token) => axios.get('/student/config', {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+
+export const studentCreatePaymentIntent = (token, body) => axios.post('/student/create-payment-intent', body, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+

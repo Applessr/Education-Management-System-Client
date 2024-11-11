@@ -64,7 +64,7 @@ function StudentInfo() {
       <div className="w-full h-full flex flex-col gap-14 bg-white py-6 rounded-b-2xl">
 
         <div className="flex h-[6rem] mx-14 gap-6 items-center">
-          <div className=" w-28 h-auto">
+          <div className=" w-28 h-28 rounded-full overflow-hidden">
             <img src="https://res.cloudinary.com/djudr1vzc/image/upload/v1730954704/student_Women_icon_lzt9mr.png" alt="" />
           </div>
           <div className="flex flex-col gap-2 justify-center">
@@ -79,8 +79,8 @@ function StudentInfo() {
           </div>
 
           <div className="flex w-full gap-5 ">
-            <InfoBox title={<span className="flex gap-3"><UserRound /> First Name</span>} detail={studentInfo?.studentId} />
-            <InfoBox title={<span className="flex gap-3"> <UserRound />Last Name </span>} detail={studentInfo?.studentId} />
+            <InfoBox title={<span className="flex gap-3"><UserRound /> First Name</span>} detail={studentInfo?.firstName} />
+            <InfoBox title={<span className="flex gap-3"> <UserRound />Last Name </span>} detail={studentInfo?.lastName} />
           </div>
 
           <div className="flex w-full gap-5">
@@ -98,7 +98,7 @@ function StudentInfo() {
           </div>
 
           <div className="flex flex-col justify-center items-center">
-           
+
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
                 <button className="font-bold text-xl text-[#2726AD] underline">change password</button>
@@ -173,148 +173,5 @@ function StudentInfo() {
 
 export default StudentInfo;
 
-// {/* <div className="border flex flex-col gap-10 bg-red-400 h-[87vh]">
-// <div className="w-full min-h-20 bg-pink-500"></div>
-
-// <div className="flex flex-col gap-9 bg-blue-300">
-
-//   <div className="flex justify-between px-7">
-//     {/* Student Info Display */}
-//     <div>
-//       <div className="flex">
-//         Student Code <UserRound /> :
-//       </div>
-//       <div>{studentInfo?.studentId}</div>
-//     </div>
-//     <div>
-//       <div className="flex">
-//         Name-Surname(Thai) <UserRound /> :
-//       </div>
-//       <div>xxxxxxxxxxxxx</div>
-//     </div>
-//   </div>
-
-//   <div className="flex justify-between">
-//     <div>
-//       <div className="flex">
-//         Name-Surname(English) <UserRound /> :
-//       </div>
-//       <div>{studentInfo?.firstName} {studentInfo?.lastName}</div>
-//     </div>
-//     <div>
-//       <div className="flex">
-//         Faculty <School /> :
-//       </div>
-//       <div>{studentInfo?.major?.faculty?.name}</div>
-//     </div>
-//   </div>
-
-//   <div className="flex justify-between">
-//     <div>
-//       <div className="flex">
-//         Field Of Study <BookAudio /> :
-//       </div>
-//       <div>{studentInfo?.major?.name}</div>
-//     </div>
-//     <div>
-//       <div className="flex">
-//         Phone number <Smartphone /> :
-//       </div>
-//       <div>{studentInfo?.phone}</div>
-//     </div>
-//   </div>
-
-//   <div className="flex justify-between">
-//     <div>
-//       <div className="flex">
-//         Email <Mail /> :
-//       </div>
-//       <div>{studentInfo?.email}</div>
-//     </div>
-//     <div>
-//       <div className="flex">
-//         Adviser <UserRoundSearch /> :
-//       </div>
-//       <div>{studentInfo?.adviser?.firstName} {studentInfo?.adviser?.lastName}</div>
-//     </div>
-//   </div>
-
-//   <div className="flex justify-between">
-//     <div>
-//       <div className="flex">
-//         Status <ChartArea /> :
-//       </div>
-//       <div>{studentInfo?.status}</div>
-//     </div>
-//     <div>
-//       <div className="flex">
-//         Password Change request <ChartArea /> :
-//       </div>
-//       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-//         <DialogTrigger asChild>
-//           <button className="border">Request Change</button>
-//         </DialogTrigger>
-//         <DialogContent>
-//           <DialogHeader>
-//             <DialogTitle>Change Password Request</DialogTitle>
-//             <DialogDescription>
-//               Fill in your current password, then enter your new password.
-//             </DialogDescription>
-//           </DialogHeader>
-//           <form onSubmit={handleSubmit}>
-//             <div className="mb-4">
-//               <label>Current Password:</label>
-//               <input
-//                 className="border w-full p-2 rounded-md"
-//                 type="password"
-//                 value={currentPassword}
-//                 onChange={(e) => setCurrentPassword(e.target.value)}
-//               />
-//             </div>
-//             <div className="mb-4">
-//               <label>New Password:</label>
-//               <input
-//                 className="border w-full p-2 rounded-md"
-//                 type="password"
-//                 value={newPassword}
-//                 onChange={(e) => setNewPassword(e.target.value)}
-//               />
-//             </div>
-//             <div className="mb-4">
-//               <label>Confirm New Password:</label>
-//               <input
-//                 className="border w-full p-2 rounded-md"
-//                 type="password"
-//                 value={confirmPassword}
-//                 onChange={(e) => setConfirmPassword(e.target.value)}
-//               />
-//             </div>
-
-//             {errorMessage && (
-//               <p className="text-red-500 mb-4">{errorMessage}</p>
-//             )}
-
-//             <div className="mt-6 flex justify-end gap-4">
-//               <button
-//                 onClick={closeModal}
-//                 type="button"
-//                 className="bg-gray-500 text-white px-4 py-2 rounded"
-//               >
-//                 Cancel
-//               </button>
-//               <button
-//                 type="submit"
-//                 className="bg-blue-500 text-white px-4 py-2 rounded"
-//               >
-//                 Confirm
-//               </button>
-//             </div>
-//           </form>
-//         </DialogContent>
-//       </Dialog>
-//     </div>
-//   </div>
-// </div>
-// </div> */}
 
 

@@ -60,7 +60,7 @@ export const employeeCreateCourse = (token, body) => axios.post('/course/employe
     }
 });
 
-export const employeeEditCourse = (token, courseId, body) => axios.patch('/course/employee/create-course/' + courseId, body, {
+export const employeeEditCourse = (token, courseId, body) => axios.patch(`/course/employee/edit-course/${courseId}`, body, {
     headers: {
         Authorization: `Bearer ${token}`
     }
