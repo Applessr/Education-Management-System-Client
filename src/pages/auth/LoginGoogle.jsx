@@ -17,7 +17,7 @@ const LoginGoogle = () => {
 
     return (
         <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-            <div className='m-auto w-full border rounded-lg'>
+            <div className='m-auto w-full flex justify-center rounded-lg'>
                 <GoogleLogin
                     onSuccess={handleLogin}
                     onError={() => {

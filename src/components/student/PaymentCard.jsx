@@ -9,9 +9,10 @@ const PaymentCard = () => {
     const token = localStorage.getItem('token');
     const { getStudentProfile, studentInfo } = useStudent();
 
-    const amount = 140000;
-    const semester = '1/2024'; // หรือใช้ `studentInfo?.major?.tuitionFee` หากต้องการดึงจากข้อมูล studentInfo
+    const amount = studentInfo?.major?.tuitionFee;
+    const semester = '1/2024'; 
     console.log('amount :>> ', amount);
+
     const [stripePromise, setStripePromise] = useState(null);
     const [clientSecret, setClientSecret] = useState("");
 
@@ -39,11 +40,12 @@ const PaymentCard = () => {
         }
     };
 
-    // ดึงข้อมูล publishableKey และสร้าง PaymentIntent เมื่อ Component โหลด
     useEffect(() => {
-        fetchPublishableKey();
-        createPaymentIntent();
-    }, []);
+        if (studentInfo?.major?.tuitionFee) {
+            fetchPublishableKey();
+            createPaymentIntent();
+        }
+    }, [studentInfo]);  
 
     return (
         <div>

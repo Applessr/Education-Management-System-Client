@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import validateStudentLogin from '../../utils/loginStudentValidator';
 import useUser from '../../hooks/useUser';
-import { Eye } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
-    const { loginStudent, errorLogin } = useUser()
+    const { loginStudent, errorLogin } = useUser();
     const [formErrors, setFormErrors] = useState({});
     const [formData, setFormData] = useState({
         identifier: '',
         password: '',
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const hdlOnChange = (e) => {
         setFormData({
@@ -21,20 +22,23 @@ const Login = () => {
 
     const hdlSubmit = async (e) => {
         e.preventDefault();
-        const validationErrors = validateStudentLogin(formData)
+        const validationErrors = validateStudentLogin(formData);
         if (validationErrors) {
             return setFormErrors(validationErrors);
         }
         try {
-            await loginStudent(formData)
+            await loginStudent(formData);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
+    };
 
-    }
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
 
     return (
-        <div className='relative min-h-screen flex '
+        <div className='relative min-h-screen flex'
             style={{
                 backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
                 backgroundSize: 'cover',
@@ -43,8 +47,7 @@ const Login = () => {
             <div className='absolute inset-0 bg-white bg-opacity-75'></div>
 
             {/* Right side - Login Form */}
-            <div className='relative w-full  m-36  flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl'>
-
+            <div className='relative w-full m-36 flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl'>
                 <div className='w-full max-w-2xl px-14'>
                     <div className='flex items-center justify-start gap-3 mb-12'>
                         <img
@@ -91,14 +94,13 @@ const Login = () => {
                             </label>
                             <div className='relative'>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     name="password"
                                     value={formData.password}
                                     onChange={hdlOnChange}
                                     className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
                                          ${formErrors.password || errorLogin && 'border-red-500'}`}
                                     placeholder='Enter password'
-
                                 />
                                 {formErrors.password && (
                                     <div className="text-left text-red-500 text-sm dark:text-[#DB5252]">{formErrors.password}</div>
@@ -110,33 +112,16 @@ const Login = () => {
                                 )}
                                 <button
                                     type="button"
+                                    onClick={togglePasswordVisibility}
                                     className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl'
                                 >
-                                    <Eye size={25} />
+                                    {showPassword ? <EyeOff size={25} /> : <Eye size={25} />}
                                 </button>
                             </div>
                             <div className='text-end pr-4 mt-5 text-[#B1B4B9] font-semibold'>
                                 <Link to={`forget-password`}>Forgot password?</Link>
                             </div>
                         </div>
-
-                        {/* <div className='flex items-center justify-between'>
-                            <div className='flex items-center'>
-                                <input
-                                    type="checkbox"
-                                    name="rememberMe"
-                                    checked={formData.rememberMe}
-                                    onChange={hdlOnChange}
-                                    className='h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded'
-                                />
-                                <label className='ml-3 block text-lg text-gray-700'> 
-                                    Remember me
-                                </label>
-                            </div>
-                            <Link to="/forgot-password" className='text-lg text-blue-600 hover:text-blue-500'> 
-                                Forgot password?
-                            </Link>
-                        </div> */}
 
                         <button
                             type="submit"
@@ -155,12 +140,11 @@ const Login = () => {
                             computers and printers in this facility are for the use by patrons authorized to
                             use the university's authentication system.
                         </p>
-
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
