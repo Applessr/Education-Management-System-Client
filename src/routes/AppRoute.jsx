@@ -122,7 +122,7 @@ const router = createBrowserRouter([
       { path: "course", element: <TeacherCourse /> },
       { path: "course/:courseCode/:section", element: <StudentInCourse /> },
       { path: "requested-course", element: <TeacherRequestedCourse /> },
-      { path: "advisors", element: <TeacherAdvisors /> },
+      { path: "advisee", element: <TeacherAdvisors /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],
