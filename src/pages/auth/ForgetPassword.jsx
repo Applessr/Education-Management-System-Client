@@ -49,11 +49,11 @@ const ForgetPassword = () => {
             <div className='absolute inset-0 bg-white bg-opacity-75'></div>
 
             {/* Right side - Login Form */}
-            <div className='relative w-full  m-36  flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl'>
+            <div className='relative w-full  m-36  flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl '>
                 {loading ? (
                     <SendMail />
                 ) : (
-                    <div className='w-full max-w-2xl px-14'>
+                    <div className='w-full max-w-2xl px-14 scale-up-center-Login'>
                         <div className='flex items-center justify-start gap-3 mb-12'>
                             <img
                                 src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"

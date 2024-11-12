@@ -208,13 +208,13 @@ function JuniorTable({ data }) {
   });
 
   return (
-    <div>
-      <div>
+    <div className="mb-4">
+       <div className="bg-orange-300/50 h-11 flex justify-center items-center text-xl font-bold text-[#1B1A53] rounded-t-xl">
         {/* code - subject name -  sec  - studyTime  - room  */}
-        <p className="bg-orange-300">Junior</p>
+        <p >Junior</p>
       </div>
 
-      <div className="w-full">
+      <div className="w-full bg-white px-4 rounded-b-lg">
         <div className="flex items-center py-4">
           {/* search by name */}
 

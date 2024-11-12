@@ -91,7 +91,7 @@ const TeacherInfo = () => {
           {/* Profile Info */}
           <div className="flex items-center gap-4 mb-12">
             <img
-              src="https://i.pinimg.com/236x/f3/c6/ee/f3c6ee1321d3e96270da512e44e0f30b.jpg"
+              src="https://res.cloudinary.com/djudr1vzc/image/upload/v1731404272/teacher_icon2_ulmeuc.png"
               alt="Professor avatar"
               className="w-16 h-16 rounded-full object-cover border-2 border-amber-100"
             />

@@ -112,7 +112,7 @@ function StudentInfo() {
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4 mt-4">
-                    <label className="text-sm text-[#272988] font-medium">Current Password :</label>
+                    <label className="text-sm text-black font-medium">Current Password :</label>
                     <input
                       className="border w-full p-2 rounded-md bg-[#F2F2F2] placeholder:font-light placeholder:text-sm"
                       type="password"
@@ -122,7 +122,7 @@ function StudentInfo() {
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="text-sm text-[#272988] font-medium">New Password:</label>
+                    <label className="text-sm text-black font-medium">New Password:</label>
                     <input
                       className="border w-full p-2 rounded-md bg-[#F2F2F2] placeholder:font-light placeholder:text-sm"
                       type="password"
@@ -132,7 +132,7 @@ function StudentInfo() {
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="text-sm text-[#272988] font-medium">Confirm New Password:</label>
+                    <label className="text-sm text-black font-medium">Confirm New Password:</label>
                     <input
                       className="border w-full p-2 rounded-md bg-[#F2F2F2] placeholder:font-light placeholder:text-sm"
                       type="password"

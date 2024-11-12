@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import AdminSidebar from '../components/admin/AdminSidebar'
 import { Bell } from 'lucide-react'
+import TransitionOutletContent from '../components/box-tools/TransitionOutletContent'
 
 const AdminLayout = () => {
   return (
@@ -21,7 +22,9 @@ const AdminLayout = () => {
                 
                 {/* Scrollable Main Content */}
                 <main className="p-6 bg-gray-100 h-[calc(100vh-64px)] overflow-auto">
+                  <TransitionOutletContent>
                     <Outlet />
+                  </TransitionOutletContent>
                 </main>
             </div>
         </div>
