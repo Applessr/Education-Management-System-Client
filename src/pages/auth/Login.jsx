@@ -38,16 +38,17 @@ const Login = () => {
     };
 
     return (
-        <div className='relative min-h-screen flex'
-            style={{
-                backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: '1px 1px',
-            }}>
-            <div className='absolute inset-0 bg-white bg-opacity-75'></div>
-
+        <div className='relative min-h-screen flex'>
+            <div className='absolute inset-0 slide-br'
+                style={{
+                    backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: '1px 1px',
+                }}>
+                <div className='absolute inset-0 bg-white bg-opacity-75'></div>
+            </div>
             {/* Right side - Login Form */}
-            <div className='relative w-full m-36 flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl'>
+            <div className='relative w-full m-36 flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl slide-tl'>
                 <div className='w-full max-w-2xl px-14'>
                     <div className='flex items-center justify-start gap-3 mb-12'>
                         <img
@@ -60,33 +61,33 @@ const Login = () => {
                         </span>
                     </div>
 
-                        <h2 className='text-3xl font-medium text-start mb-6 text-[#272988]'>
-                            Nice to see you again
-                        </h2>
+                    <h2 className='text-3xl font-medium text-start mb-6 text-[#272988]'>
+                        Nice to see you again
+                    </h2>
 
-                        <form onSubmit={hdlSubmit} className='space-y-8'>
-                            <div>
-                                <label className='block text-lg font-medium text-[#272988] mb-2'>
-                                    PierreUT ID
-                                </label>
-                                <input
-                                    type="text"
-                                    name="identifier"
-                                    value={formData.identifier}
-                                    onChange={hdlOnChange}
-                                    className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                    <form onSubmit={hdlSubmit} className='space-y-8'>
+                        <div>
+                            <label className='block text-lg font-medium text-[#272988] mb-2'>
+                                PierreUT ID
+                            </label>
+                            <input
+                                type="text"
+                                name="identifier"
+                                value={formData.identifier}
+                                onChange={hdlOnChange}
+                                className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
                                     ${formErrors.identifier || errorLogin && 'border-red-500'}`}
-                                    placeholder='Email or phone number'
-                                />
-                                {formErrors.identifier && (
-                                    <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">Student ID or Email is require</div>
-                                )}
-                                {errorLogin && !formErrors.identifier && !errorLogin.includes('Password') && (
-                                    <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">
-                                        email or student ID you entered was not found. Please try again.
-                                    </div>
-                                )}
-                            </div>
+                                placeholder='Email or phone number'
+                            />
+                            {formErrors.identifier && (
+                                <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">Student ID or Email is require</div>
+                            )}
+                            {errorLogin && !formErrors.identifier && !errorLogin.includes('Password') && (
+                                <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">
+                                    email or student ID you entered was not found. Please try again.
+                                </div>
+                            )}
+                        </div>
 
                         <div>
                             <label className='block text-lg font-medium text-[#272988] mb-2'>
@@ -123,13 +124,13 @@ const Login = () => {
                             </div>
                         </div>
 
-                            <button
-                                type="submit"
-                                className='w-full bg-[#272988] text-white rounded-lg py-4 px-6 text-xl hover:bg-blue-700 transition-colors font-semibold mt-4'
-                            >
-                                Sign In
-                            </button>
-                        </form>
+                        <button
+                            type="submit"
+                            className='w-full bg-[#272988] text-white rounded-lg py-4 px-6 text-xl hover:bg-blue-700 transition-colors font-semibold mt-4'
+                        >
+                            Sign In
+                        </button>
+                    </form>
 
                     <div className='mt-6 text-sm text-gray-600 space-y-4'>
                         <p>
