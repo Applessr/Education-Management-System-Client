@@ -79,7 +79,7 @@ const TeacherInfo = () => {
 
   return (
     <div>
-      <h1 className="text-2xl text-amber-700">Profile</h1>
+      <h1 className="text-3xl text-[#ab842e] font-bold">Profile</h1>
 
       {/* Main Card */}
       <div className="mt-6 bg-white rounded-lg shadow-sm overflow-hidden">
@@ -137,14 +137,14 @@ const TeacherInfo = () => {
               value={teacherInfo?.email}
             />
 
-            <div className="pt-4">
+            <div className="pt-4 flex justify-center">
               <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                 <DialogTrigger asChild>
                   <button
                     className="flex items-center px-4 py-2 rounded-md border border-amber-200 text-amber-600 hover:text-amber-700 hover:bg-amber-50 hover:border-amber-300 transition-colors duration-200"
                   >
                     <KeyRound className="w-4 h-4 mr-2" />
-                    Reset password
+                    Change password
                   </button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
