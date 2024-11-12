@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import useTeacher from "@/src/hooks/useTeacher";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import Nodata from "../animations/Nodata";
 
 const CourseRequestItem = ({ course, data }) => {
   const { getEnrollRequest, editEnrollStatus } = useTeacher();
@@ -25,14 +24,14 @@ const CourseRequestItem = ({ course, data }) => {
   const currentItems = rowsData.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleApprove = async (requestId) => {
-    console.log("requestId :>> ", requestId);
-    await editEnrollStatus(token, requestId, { status: "APPROVED" });
+    console.log('requestId :>> ', requestId);
+    await editEnrollStatus(token, requestId, { status: 'APPROVED' });
     getEnrollRequest(token);
   };
 
   const handleReject = async (requestId) => {
-    console.log("requestId :>> ", requestId);
-    await editEnrollStatus(token, requestId, { status: "REJECTED" });
+    console.log('requestId :>> ', requestId);
+    await editEnrollStatus(token, requestId, { status: 'REJECTED' });
     getEnrollRequest(token);
   };
 
@@ -42,117 +41,82 @@ const CourseRequestItem = ({ course, data }) => {
 
   return (
     <div className="mt-4">
-      {rowsData.length > 0 ? (
-        <>
-          <button
-            onClick={() => setIsTableVisible(!isTableVisible)}
-            className="flex w-full mb-4 px-4 py-2 bg-[#ab842e] text-white font-bold rounded-md text-left"
-          >
-            {isTableVisible ? <ChevronDown /> : <ChevronRight />}
-            <h2 className="text-lg ml-2">
-              {course.courseName} ({course.courseCode}) - Pending Requests:{" "}
-              {course.enrollments.length}
-            </h2>
-          </button>
+      <button
+        onClick={() => setIsTableVisible(!isTableVisible)}
+        className="flex w-full mb-4 px-4 py-4 bg-[#ab842e] text-white font-bold rounded-md text-left">
+        {isTableVisible ? <ChevronDown /> : <ChevronRight />}
+        <h2 className="text-lg">{course.courseName} ({course.courseCode}) - Pending Requests: {course.enrollments.length}</h2>
+      </button>
 
-          {isTableVisible && (
-            <div>
-              <table className="-mt-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
-                      Student ID
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Name
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Faculty
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Major
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Status
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentItems.length > 0 ? (
-                    currentItems.map((student) => (
-                      <tr
-                        key={student.id}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      >
-                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {student.studentId}
-                        </td>
-                        <td className="px-6 py-4">{student.name}</td>
-                        <td className="px-6 py-4">{student.faculty}</td>
-                        <td className="px-6 py-4">{student.major}</td>
-                        <td className="px-6 py-4 text-[#F2770E]">
-                          {student.status}
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <button
-                            onClick={() => handleApprove(student.id)}
-                            className="bg-green-500 text-white px-4 py-2 rounded-md mr-2"
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={() => handleReject(student.id)}
-                            className="bg-red-500 text-white px-4 py-2 rounded-md"
-                          >
-                            Reject
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="6" className="text-center px-6 py-4">
-                        No data available.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-
-              {/* Pagination controls */}
-              <div className="flex justify-end gap-2 items-center mt-4">
-                <div className="text-sm text-[#808080]">
-                  <p>
-                    Page {currentPage} of {pageCount}
-                  </p>
-                </div>
-
-                <div className="flex">
-                  <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2"
-                  >
-                    Prev
-                  </button>
-                  <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === pageCount}
-                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      ) : (
+      {isTableVisible && (
         <div>
-          <Nodata />
+          <table className="-mt-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">Student ID</th>
+                <th scope="col" className="px-6 py-3">Name</th>
+                <th scope="col" className="px-6 py-3">Faculty</th>
+                <th scope="col" className="px-6 py-3">Major</th>
+                <th scope="col" className="px-6 py-3">Status</th>
+                <th scope="col" className="px-6 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.length > 0 ? (
+                currentItems.map((student) => (
+                  <tr key={student.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.studentId}</td>
+                    <td className="px-6 py-4">{student.name}</td>
+                    <td className="px-6 py-4">{student.faculty}</td>
+                    <td className="px-6 py-4">{student.major}</td>
+                    <td className="px-6 py-4 text-[#F2770E]">{student.status}</td>
+                    <td className="px-6 py-4 text-right">
+                      <button
+                        onClick={() => handleApprove(student.id)}
+                        className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleReject(student.id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md">
+                        Reject
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center px-6 py-4">
+                    No data available.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+
+          {/* Pagination controls */}
+          <div className="flex justify-end gap-2 items-center mt-4">
+            <div className="text-sm text-[#808080]">
+              <p>Page {currentPage} of {pageCount}</p>
+            </div>
+
+            <div className="flex">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2"
+              >
+                Prev
+              </button>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === pageCount}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -1,8 +1,7 @@
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CourseRequestItem from "./CourseRequestItem";
 import useTeacher from "@/src/hooks/useTeacher";
-
+import Enroll from "../animations/Enroll";
 
 const CourseRequest = () => {
   const { getEnrollRequest, enroll } = useTeacher();
@@ -29,15 +28,22 @@ const CourseRequest = () => {
 
   return (
     <div>
-      {coursesWithPendingEnrollments.map((course) => (
-        <div className="mt-4" key={course.id}>
-          <h1 className="text-2xl font-bold text-[#b45309]">Enroll Request</h1>
-          <CourseRequestItem
-            course={course}
-            data={course.enrollments} 
-          />
+      <h1 className="text-2xl font-bold text-[#b45309]">Enroll Request</h1>
+      {coursesWithPendingEnrollments.length > 0 ? (
+        coursesWithPendingEnrollments.map((course) => (
+          <div className="mt-4" key={course.id}>
+            <CourseRequestItem
+              course={course}
+              data={course.enrollments} 
+            />
+          </div>
+        ))
+      ) : (
+        <div className="flex flex-col justify-center items-center">
+          <Enroll />
+          <h1 className="text-2xl text-[#b9b3b3]">No enroll request...</h1>
         </div>
-      ))}
+      )}
     </div>
   );
 };
