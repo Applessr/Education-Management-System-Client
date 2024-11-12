@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
-import { studentGetCredit, studentGetProfile } from "../api/student";
-import { studentGetGPA, studentGetGPABySemester, studentViewGrade } from "../api/grade";
+import { studentCheckPayMent, studentGetCredit, studentGetExamDate, studentGetProfile } from "../api/student";
+import { studentGetGPA, studentGetGPABySemester, studentViewGrade, studentViewScorePerSub } from "../api/grade";
+import { studentGetClassSchedule } from "../api/course";
 
 const StudentContext = createContext();
 
@@ -10,6 +11,10 @@ const StudentContextProvider = (props) => {
     const [studentCredit, setStudentCredit] = useState(null);
     const [studentGPA, setStudentGPA] = useState(null);
     const [studentCPA, setStudentCPA] = useState(null);
+    const [studentPayMent, setStudentPayMent] = useState(null);
+    const [studentScore, setStudentScore] = useState(null);
+    const [classSchedule, setClassSchedule] = useState(null);
+    const [examDate, setExamDate] = useState(null);
     const token = localStorage.getItem('token');
 
     const getStudentProfile = async () => {
@@ -54,8 +59,63 @@ const StudentContextProvider = (props) => {
             console.log(error.response);
         }
     }
+    const getStudentPayMentStatus = async (token, semester) => {
+        try {
+            const response = await studentCheckPayMent(token, { semester });
+            console.log('response :>> ', response);
+            setStudentPayMent(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const getStudentScore = async (token, courseId) => {
+        try {
+            const response = await studentViewScorePerSub(token, courseId);
+            console.log('response :>> ', response);
+            setStudentScore(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const getClassSchedule = async (token, semester) => {
+        try {
+            const response = await studentGetClassSchedule(token, semester);
+            console.log('response :>> ', response);
+            setClassSchedule(response.data);
+        } catch (error) {
+            console.log(error.response); 
+        }
+    };
+    const getExamDate = async (token) => {
+        try {
+            const response = await studentGetExamDate(token);
+            console.log('response :>> ', response);
+            setExamDate(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
 
-    const values = { getStudentProfile, studentInfo, studentGrade, getStudentGetGrade, getStudentGetCredit, studentCredit, getStudentGetCPA,getStudentGetGPA,studentGPA,studentCPA };
+    const values = {
+        getStudentProfile,
+        studentInfo,
+        studentGrade,
+        getStudentGetGrade,
+        getStudentGetCredit,
+        studentCredit,
+        getStudentGetCPA,
+        getStudentGetGPA,
+        studentGPA,
+        studentCPA,
+        studentPayMent,
+        getStudentPayMentStatus,
+        studentScore,
+        getStudentScore,
+        getClassSchedule,
+        classSchedule,
+        getExamDate,
+        examDate,
+    };
 
     return (
         <StudentContext.Provider value={values}>

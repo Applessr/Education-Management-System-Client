@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { teacherGetConsultedStudent, teacherGetProfile, teacherGetStudentInCourseById } from "../api/teacher";
+import { teacherEditRequestStatus, teacherGetConsultedStudent, teacherGetEnrollRequest, teacherGetProfile, teacherGetStudentInCourseById } from "../api/teacher";
 import { teacherGetCourse } from "../api/course";
 
 const TeacherContext = createContext();
@@ -10,6 +10,7 @@ const TeacherContextProvider = (props) => {
     const [course, setCourse] = useState(null);
     const [selectCourse, setSelectCourse] = useState(null);
     const [studentInCourse, setStudentInCourse] = useState(null);
+    const [enroll, setEnroll] = useState(null);
     const token = localStorage.getItem('token');
 
     const getTeacherProfile = async () => {
@@ -58,8 +59,44 @@ const TeacherContextProvider = (props) => {
             console.error('Error in getTeacherProfile:', error.response || error.message);
         }
     };
+    const getEnrollRequest = async (token) => {
+        try {
+            console.log('hello');
+            const response = await teacherGetEnrollRequest(token);
+            console.log("Data from getEnrollRequest:", response.data);
+            if (response?.data) {
+                setEnroll(response.data);
+            } else {
+                console.log("No data found");
+            }
+        } catch (error) {
+            console.error('Error in getEnrollRequest:', error.response || error.message);
+        }
+    };
+    const editEnrollStatus = async (token, requestId, body) => {
+        try {
+            const response = await teacherEditRequestStatus(token, requestId, body);
+            console.log("Data from editEnrollStatus:", response.data);
+        } catch (error) {
+            console.error('Error in editEnrollStatus:', error.response || error.message);
+        }
+    };
 
-    const values = { getTeacherProfile, teacherInfo, teacherGetConsulted, consulted, teacherCourse, course, setSelectCourse, selectCourse, getStudentIdCourseById, studentInCourse };
+    const values = {
+        getTeacherProfile,
+        teacherInfo,
+        teacherGetConsulted,
+        consulted,
+        teacherCourse,
+        course,
+        setSelectCourse,
+        selectCourse,
+        getStudentIdCourseById,
+        studentInCourse,
+        enroll,
+        getEnrollRequest,
+        editEnrollStatus
+    };
 
     return (
         <TeacherContext.Provider value={values}>
