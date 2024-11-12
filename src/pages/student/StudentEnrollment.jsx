@@ -1,141 +1,147 @@
 import React, { useEffect, useState } from "react";
 import EnrollmentFlow from "@/src/components/student/Enroll/CourseNode";
 import CurrentSemesterEnrollment from "@/src/components/student/Enroll/CurrentSemesterEnrollment";
-import StudentRegisterSearch from "@/src/components/student/Enroll/StudentRegisterSearch";
+import StudentRegisterOptionalCourses from "@/src/components/student/Enroll/StudentRegisterOptionalCourses";
+import StudentRegisterMajorCourses from "@/src/components/student/Enroll/StudentRegisterMajorCourses";
 import useStudent from "@/src/hooks/useStudent";
 import {
   studentGetClassScheduleByCourseId,
   studentGetCourseSyllabus,
 } from "@/src/api/course";
 import StudentRegisterPrerequisitesCourses from "@/src/components/student/Enroll/StudentRegisterSearch";
-import StudentRegisterOptionalCourses from "@/src/components/student/Enroll/StudentRegisterOptionalCourses";
-import StudentRegisterMajorCourses from "@/src/components/student/Enroll/StudentRegisterMajorCourses";
 
 function StudentEnrollment() {
   const { getStudentProfile, studentInfo } = useStudent();
   const token = localStorage.getItem("token");
-  const [syllabus, setSyllabus] = useState([]);
-  const [prerequisitesCourses, setPrerequisitesCourses] = useState([]);
-  const [optionalCourses, setOptionalCourses] = useState([]);
-  const [selectionCourses, setSelectionCourses] = useState([]);
+  const [syllabus, setSyllabus] = useState(null);
+  const [courseCategories, setCourseCategories] = useState({
+    prerequisites: [],
+    optional: [],
+    selection: [],
+  });
   const [courseSchedules, setCourseSchedules] = useState({
     prerequisites: [],
     optional: [],
     selection: [],
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Fetch student profile
   useEffect(() => {
-    getStudentProfile(); // Ensure you fetch student profile
+    getStudentProfile();
   }, []);
 
+  // Fetch syllabus based on student year
   useEffect(() => {
-    const fetchStudentCourse = async () => {
-      const studentId = studentInfo?.studentId;
-      console.log(studentId, "00000000");
-      const currentYear = new Date().getFullYear() + 543;
-      const entryYear = parseInt(studentId.toString().substring(0, 2), 10);
-      const yearDifference = currentYear - (2500 + entryYear);
-      console.log(yearDifference);
+    const fetchSyllabus = async () => {
+      if (!token || !studentInfo?.studentId) return;
 
-      if (token && studentId) {
+      try {
         const resp = await studentGetCourseSyllabus(token);
-        const syllabusData = resp.data?.major?.courseRecommendation["1/1"];
-        // switch (yearDifference) {
-        //   case 0:
-        //     syllabusData = resp.data?.major?.courseRecommendation["1/1"];
-        //     break;
-        //   case 1:
-        //     syllabusData = resp.data?.major?.courseRecommendation["1/2"];
-        //     break;
-        //   case 2:
-        //     syllabusData = resp.data?.major?.courseRecommendation["1/3"];
-        //     break;
 
-        //   default:
-        //     syllabusData = resp.data?.major?.courseRecommendation["1/1"];
+        // Calculate student's year
+        const currentYear = new Date().getFullYear() + 543;
+        const entryYear = parseInt(
+          studentInfo.studentId.toString().substring(0, 2),
+          10
+        );
+        const yearDifference = currentYear - (2500 + entryYear);
 
-        //     break;
-        // }
+        // Get appropriate syllabus based on year
+        const year = `1/${yearDifference + 1}`;
+        const syllabusData = resp.data?.major?.courseRecommendation[year] || [];
 
-        setSyllabus(syllabusData || []); // Set the fetched syllabus data
+        setSyllabus(syllabusData);
+
+        // Extract course codes by category
+        if (syllabusData) {
+          setCourseCategories({
+            prerequisites:
+              syllabusData.PREREQUISITES?.map((item) => item.courseCode) || [],
+            optional:
+              syllabusData.OPTIONAL?.map((item) => item.courseCode) || [],
+            selection:
+              syllabusData.SELECTION?.map((item) => item.courseCode) || [],
+          });
+        }
+      } catch (err) {
+        setError("Failed to fetch syllabus data");
+        console.error("Error fetching syllabus:", err);
       }
     };
 
-    fetchStudentCourse();
+    fetchSyllabus();
   }, [token, studentInfo]);
 
-  // This useEffect will run when syllabus data changes
+  // Fetch course schedules
   useEffect(() => {
-    console.log(syllabus);
-    if (syllabus) {
-      // Extract courseCode values only if syllabus is available
-      setOptionalCourses(
-        syllabus.OPTIONAL?.map((item) => item.courseCode) || []
-      );
-      setPrerequisitesCourses(
-        syllabus.PREREQUISITES?.map((item) => item.courseCode) || []
-      );
-      setSelectionCourses(
-        syllabus.SELECTION?.map((item) => item.courseCode) || []
-      );
-    }
-  }, [syllabus]);
+    const fetchCourseSchedules = async () => {
+      if (!studentInfo?.majorId) return;
 
-  // Example of using fetchCourseSchedules function
-  useEffect(() => {
-    if (
-      prerequisitesCourses.length > 0 ||
-      optionalCourses.length > 0 ||
-      selectionCourses.length > 0
-    ) {
-      const fetchCourseSchedules = async (courses, category) => {
-        const schedules = [];
-        for (const course of courses) {
-          if (token) {
-            try {
-              const resp = await studentGetClassScheduleByCourseId(
-                token,
-                course
-              );
-              console.log(`Schedule for ${course}:`, resp); // Log the response for each course
-              console.log(resp.data);
-              // console.log(studentInfo.majorId);
-              schedules.push(
-                resp.data.filter((item) => item.majorId == studentInfo.majorId)
-              ); // Store the response for each course
-            } catch (error) {
-              console.error(`Error fetching schedule for ${course}:`, error);
-            }
-          }
+      try {
+        setLoading(true);
+        const newSchedules = { prerequisites: [], optional: [], selection: [] };
+
+        // Fetch schedules for each category
+        for (const [category, courses] of Object.entries(courseCategories)) {
+          const schedules = await Promise.all(
+            courses.map(async (courseCode) => {
+              try {
+                const resp = await studentGetClassScheduleByCourseId(
+                  token,
+                  courseCode
+                );
+                return resp.data.filter(
+                  (item) => item.majorId === studentInfo.majorId
+                );
+              } catch (err) {
+                console.error(
+                  `Error fetching schedule for ${courseCode}:`,
+                  err
+                );
+                return [];
+              }
+            })
+          );
+          newSchedules[category] = schedules.flat();
         }
 
-        // Update the state for each category
-        setCourseSchedules((prevSchedules) => ({
-          ...prevSchedules,
-          [category]: schedules,
-        }));
-      };
+        setCourseSchedules(newSchedules);
+      } catch (err) {
+        setError("Failed to fetch course schedules");
+        console.error("Error fetching schedules:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      // Fetch schedules for prerequisites, optional, and selection courses
-      fetchCourseSchedules(prerequisitesCourses, "prerequisites");
-      fetchCourseSchedules(optionalCourses, "optional");
-      fetchCourseSchedules(selectionCourses, "selection");
+    if (
+      Object.values(courseCategories).some((category) => category.length > 0)
+    ) {
+      fetchCourseSchedules();
     }
-  }, [prerequisitesCourses, optionalCourses, selectionCourses, token]);
+  }, [courseCategories, studentInfo?.majorId, token]);
 
-  console.log(courseSchedules.prerequisites);
-  console.log(courseSchedules.optional);
-  console.log(courseSchedules.selection);
-  // console.log(studentInfo);
+  if (error) {
+    return <div className="p-4 text-red-500">Error: {error}</div>;
+  }
+
+  if (loading) {
+    return <div className="p-4">Loading course data...</div>;
+  }
+
+  console.log(courseSchedules);
+
   return (
     <div className="flex flex-col gap-2">
       <EnrollmentFlow />
       <CurrentSemesterEnrollment />
       <StudentRegisterPrerequisitesCourses
-        data={courseSchedules.prerequisites.flat()}
+        data={courseSchedules.prerequisites}
       />
-      <StudentRegisterOptionalCourses data={courseSchedules.optional.flat()} />
-      <StudentRegisterMajorCourses data={courseSchedules.selection.flat()} />
+      <StudentRegisterOptionalCourses data={courseSchedules.optional} />
+      <StudentRegisterMajorCourses data={courseSchedules.selection} />
     </div>
   );
 }

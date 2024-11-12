@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   flexRender,
@@ -24,21 +24,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { format } from "date-fns"; // Import for formatting dates
+import { format } from "date-fns";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useStudent from "@/src/hooks/useStudent";
-import {
-  studentGetEnrollCourseBySemester,
-  studentSendEnrollRequest,
-} from "@/src/api/course";
 
 // Column definitions
 export const columns = [
@@ -144,61 +139,19 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "day",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "day")}
-      >
-        Study day
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    accessorKey: "schedule",
+    header: "Schedule",
     cell: ({ row }) => {
-      const dayNumber = row.getValue("day");
-
-      // Map the day number (1 to 5) to the day name
-      const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-      const dayName = dayNames[dayNumber - 1]; // Adjust for 0-indexing
-
-      return <div className="capitalize">{dayName}</div>;
-    },
-  },
-  {
-    accessorKey: "startTime",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() =>
-          column.toggleSorting(column.getIsSorted() === "startTime")
-        }
-      >
-        Start Time
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => {
-      const startTime = row.getValue("startTime");
+      const schedule = row.getValue("schedule");
       return (
-        <div className="capitalize">{format(new Date(startTime), "HH:mm")}</div>
-      );
-    },
-  },
-  {
-    accessorKey: "endTime",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "endTime")}
-      >
-        End Time
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => {
-      const endTime = row.getValue("endTime");
-      return (
-        <div className="capitalize">{format(new Date(endTime), "HH:mm")}</div>
+        <div>
+          {schedule.map(({ day, startTime, endTime }) => (
+            <div key={`${day}-${startTime}`}>
+              {day} {format(new Date(startTime) - 25200000, "HH:mm")} -{" "}
+              {format(new Date(endTime) - 25200000, "HH:mm")}
+            </div>
+          ))}
+        </div>
       );
     },
   },
@@ -219,25 +172,23 @@ export const columns = [
     accessorKey: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const { getStudentProfile, studentInfo } = useStudent();
       const token = localStorage.getItem("token");
       const currentYear = new Date().getFullYear() + 543;
-      console.log(currentYear, "current Year");
       const semester = `1/${currentYear}`;
+      const {
+        studentSendEnrollRequest,
+        studentGetEnrollCourseBySemester,
+        fetchPendingEnrollment,
+      } = useStudent();
 
       const [isDialogOpen, setIsDialogOpen] = useState(false);
-      const courseId = row.getValue("courseId"); // Get courseId for the row
+      const courseId = row.getValue("courseId");
 
-      const handleConfirmEnroll = (courseId) => {
-        // Perform your enroll action here (e.g., API call)
-        console.log("Enrolling in course:", courseId, semester, token);
-        studentSendEnrollRequest(token, { semester, courseId });
-        studentGetEnrollCourseBySemester(token, { semester });
-        setIsDialogOpen(false); // Close dialog after confirm
-      };
-
-      const handleCloseDialog = () => {
-        setIsDialogOpen(false); // Close dialog after cancel
+      const handleConfirmEnroll = async () => {
+        await studentSendEnrollRequest(token, { semester, courseId });
+        await studentGetEnrollCourseBySemester(token, { semester });
+        await fetchPendingEnrollment();
+        setIsDialogOpen(false);
       };
 
       return (
@@ -248,16 +199,12 @@ export const columns = [
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                Are you sure you want to enroll <br />
-                {row.original.courseCode} {row.original.courseName} section :{" "}
-                {row.original.section} ?
+                Are you sure you want to enroll in this course?
               </DialogTitle>
             </DialogHeader>
             <DialogFooter>
-              <Button onClick={handleCloseDialog}>Cancel</Button>
-              <Button onClick={() => handleConfirmEnroll(courseId)}>
-                Confirm
-              </Button>
+              <Button onClick={() => setIsDialogOpen(false)}>Cancel</Button>
+              <Button onClick={handleConfirmEnroll}>Confirm</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -266,14 +213,38 @@ export const columns = [
   },
 ];
 
-function StudentRegisterPrerequisitesCourses({ data }) {
-  const [sorting, setSorting] = React.useState([]);
-  const [columnFilters, setColumnFilters] = React.useState([]);
-  const [columnVisibility, setColumnVisibility] = React.useState({});
-  const [rowSelection, setRowSelection] = React.useState({});
+// The rest of your component remains the same
+function StudentRegisterOptionalCourses({ data }) {
+  // Preprocess data to combine rows with the same courseId
+  const processedData = useMemo(() => {
+    const courseMap = new Map();
+    const dayAbbreviations = ["MON", "TUE", "WED", "THU", "FRI"];
+
+    data.forEach((row) => {
+      const { courseId, day, startTime, endTime } = row;
+      const dayAbbreviation = dayAbbreviations[day - 1]; // Map day number to abbreviation
+
+      if (!courseMap.has(courseId)) {
+        courseMap.set(courseId, {
+          ...row,
+          schedule: [{ day: dayAbbreviation, startTime, endTime }],
+        });
+      } else {
+        const existing = courseMap.get(courseId);
+        existing.schedule.push({ day: dayAbbreviation, startTime, endTime });
+      }
+    });
+
+    return Array.from(courseMap.values());
+  }, [data]);
+
+  const [sorting, setSorting] = useState([]);
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [columnVisibility, setColumnVisibility] = useState({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data,
+    data: processedData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -293,112 +264,67 @@ function StudentRegisterPrerequisitesCourses({ data }) {
 
   return (
     <div className="flex flex-col p-2 border">
-      <div className="bg bg-yellow-300">prerequisites course</div>
-      <div>
-        <div className="w-full">
-          <div className="flex items-center py-4">
-            <Input
-              placeholder="Filter by course name..."
-              value={table.getState().globalFilter || ""}
-              onChange={(event) => table.setGlobalFilter(event.target.value)}
-              className="max-w-sm"
-            />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
-                  Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    ))}
-                  </TableRow>
+      <div className="bg bg-yellow-300">Prerequisites Courses</div>
+      <div className="w-full">
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter by course name..."
+            value={table.getState().globalFilter || ""}
+            onChange={(event) => table.setGlobalFilter(event.target.value)}
+            className="max-w-sm"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) => column.toggleVisibility(value)}
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
                 ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-
-          <div className="flex items-center justify-end space-x-2 py-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
-          </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
+
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
 }
-
-export default StudentRegisterPrerequisitesCourses;
+export default StudentRegisterOptionalCourses;

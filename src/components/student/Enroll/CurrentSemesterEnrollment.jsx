@@ -1,4 +1,7 @@
-import { studentGetEnrollCourseBySemester } from "@/src/api/course";
+import {
+  studentCancelEnrollRequest,
+  studentGetEnrollCourseBySemester,
+} from "@/src/api/course";
 import useStudent from "@/src/hooks/useStudent";
 import React, { useEffect, useState } from "react";
 import {
@@ -13,10 +16,10 @@ import {
 import { Button } from "@/components/ui/button";
 
 function CurrentSemesterEnrollment() {
-  const [enrollList, setEnrollList] = useState([]); // Change to array
+  // const [enrollList, setEnrollList] = useState([]); // Change to array
   const [isDialogOpen, setIsDialogOpen] = useState(false); // To control the dialog visibility
   const [selectedEnrollment, setSelectedEnrollment] = useState(null); // To store selected enrollment ID for cancellation
-  const { studentInfo } = useStudent();
+  const { studentInfo, fetchPendingEnrollment, enrollList } = useStudent();
   const token = localStorage.getItem("token");
 
   const currentSemester = {
@@ -24,21 +27,8 @@ function CurrentSemesterEnrollment() {
   };
 
   useEffect(() => {
-    const fetchPendingEnrollment = async () => {
-      if (token) {
-        try {
-          const resp = await studentGetEnrollCourseBySemester(
-            token,
-            currentSemester
-          );
-          setEnrollList(resp.data.enrollments || []); // Default to empty array if no data
-        } catch (error) {
-          console.error("Failed to fetch enrollments:", error);
-        }
-      }
-    };
     fetchPendingEnrollment();
-  }, [token]);
+  }, []);
 
   // Filter enrollments to show only APPROVE or PENDING
   const filteredEnrollments = enrollList.filter(
@@ -53,10 +43,14 @@ function CurrentSemesterEnrollment() {
   };
 
   // Handle the Confirm action in the dialog
-  const handleConfirmCancel = () => {
+  const handleConfirmCancel = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
     if (selectedEnrollment) {
       console.log("Cancelled Enrollment ID:", selectedEnrollment); // Log the selected enrollment ID
     }
+    await studentCancelEnrollRequest(token, selectedEnrollment);
+    fetchPendingEnrollment();
     setIsDialogOpen(false); // Close the dialog after confirmation
   };
 

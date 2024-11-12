@@ -57,12 +57,18 @@ export const studentSendEnrollRequest = (token, body) =>
     },
   });
 
-export const studentCancelEnrollRequest = (token, courseId) =>
-  axios.patch("/course/student/cancel-course" + courseId, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const studentCancelEnrollRequest = (token, courseId) => {
+  // console.log(token, courseId);
+  return axios.patch(
+    "/course/student/cancel-course/" + courseId,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
 
 export const employeeCreateCourse = (token, body) =>
   axios.post("/course/employee/create-course", body, {
