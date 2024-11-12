@@ -119,22 +119,31 @@ const StudentDashboard = () => {
                             </div>
 
                             <div className="grid grid-cols-3 gap-4 pt-4">
-                                <div className="bg-blue-50 p-4 rounded-lg">
+                                <div className="bg-blue-100 p-4 rounded-lg">
                                     <h3 className="font-semibold text-blue-900">Main Subjects</h3>
                                     <p className="text-blue-700">
-                                        Summary: {student.mainSubjects.remaining}/{student.mainSubjects.total}
+                                        Summary:
+                                    </p>
+                                    <p className='font-bold text-[#1A237E]'>
+                                        {student.mainSubjects.remaining}/{student.mainSubjects.total}
                                     </p>
                                 </div>
                                 <div className="bg-blue-50 p-4 rounded-lg">
                                     <h3 className="font-semibold text-blue-900">Major Selection</h3>
                                     <p className="text-blue-700">
-                                        Summary: {student.majorSelect.remaining}/{student.majorSelect.total}
+                                        Summary:
+                                    </p>
+                                    <p className='font-bold text-[#1A237E]'>
+                                        {student.majorSelect.remaining}/{student.majorSelect.total}
                                     </p>
                                 </div>
-                                <div className="bg-blue-50 p-4 rounded-lg">
+                                <div className="bg-blue-50/50 p-4 rounded-lg">
                                     <h3 className="font-semibold text-blue-900">Optional Subjects</h3>
                                     <p className="text-blue-700">
-                                        Summary: {student.optionalSubjects.remaining}/{student.optionalSubjects.total}
+                                        Summary:
+                                    </p>
+                                    <p className='font-bold text-[#1A237E]'>
+                                        {student.optionalSubjects.remaining}/{student.optionalSubjects.total}
                                     </p>
                                 </div>
                             </div>
@@ -148,18 +157,23 @@ const StudentDashboard = () => {
                         <CardTitle className="text-2xl font-bold">Student Information</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-4">
+                        <div className='flex justify-around items-center'>
                             <div>
-                                <h3 className="font-semibold text-gray-500">Name</h3>
-                                <p className="text-lg">{student.name} : {student.id}</p>
+                                <img src="https://res.cloudinary.com/djudr1vzc/image/upload/v1730954704/student_Women_icon_lzt9mr.png" alt="student-image" className='w-[130px]' />
                             </div>
-                            <div>
-                                <h3 className="font-semibold text-gray-500">Program</h3>
-                                <p className="text-lg">{student.program}</p>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-gray-500">Major</h3>
-                                <p className="text-lg">{student.major}</p>
+                            <div className="space-y-4">
+                                <div>
+                                    <h3 className="font-semibold text-gray-500">Name</h3>
+                                    <p className="text-lg">{student.name} : {student.id}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-500">Program</h3>
+                                    <p className="text-lg">{student.program}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-500">Major</h3>
+                                    <p className="text-lg">{student.major}</p>
+                                </div>
                             </div>
                         </div>
                     </CardContent>
@@ -174,7 +188,7 @@ const StudentDashboard = () => {
                 <CardContent>
                     <div className="overflow-x-auto">
                         {currentCourses.map((semesterData, index) => (
-                            <Card key={index} className="mt-6">
+                            <Card key={index} className="mt-4">
                                 <CardHeader>
                                     <CardTitle className="text-2xl font-bold">Semester {semesterData.semester}</CardTitle>
                                 </CardHeader>
@@ -209,19 +223,20 @@ const StudentDashboard = () => {
                         ))}
                     </div>
                     {/* Pagination Controls */}
-                    <div className="flex justify-center space-x-4 mt-4">
+                    <div className="flex justify-center items-center space-x-4 mt-4 gap-6">
                         <button
                             onClick={handlePreviousPage}
                             disabled={currentPage === 1}
-                            className="px-4 py-2 bg-gray-300 text-white rounded-lg disabled:opacity-50"
+                            className="px-4 py-2 bg-gray-300 text-black rounded-lg disabled:opacity-75 cursor-pointer hover:bg-gray-800 hover:text-white "
                         >
                             Previous
                         </button>
-                        <span className="text-lg font-semibold">{currentPage} / {totalPages}</span>
+                        <span className="text-lg font-medium">{currentPage} / {totalPages}</span>
                         <button
                             onClick={handleNextPage}
                             disabled={currentPage === totalPages}
-                            className="px-4 py-2 bg-gray-300 text-white rounded-lg disabled:opacity-50"
+                            className="px-4 py-2 bg-gray-200 text-black rounded-lg disabled:opacity-75
+                            cursor-pointer hover:bg-gray-800 hover:text-white"
                         >
                             Next
                         </button>
@@ -264,7 +279,7 @@ const StudentDashboard = () => {
                                                     )}
                                                 </tbody>
                                             </>
-                                        ) : (<div className='flex justify-center'><Nodata/></div>)}
+                                        ) : (<div className='flex justify-center'><Nodata /></div>)}
                                     </table>
                                 </div>
                             </div>
