@@ -164,14 +164,14 @@ const TeacherClassSchedule = () => {
     return (
         <div className="bg-white rounded-lg shadow-lg p-4">
             {/* Filters */}
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex justify-center items-center gap-4 mb-6 mt-10">
                 <div className="flex items-center gap-2">
                     <span className="text-gray-700">Semester</span>
                     <div className="relative">
                         <select
                             value={selectedSemester}
                             onChange={(e) => setSelectedSemester(e.target.value)}
-                            className="appearance-none bg-white border rounded-md px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                            className="cursor-pointer appearance-none bg-white border rounded-md px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-amber-500"
                         >
                             <option value="">Select</option>
                             {semesters.map((semester) => (
@@ -190,7 +190,7 @@ const TeacherClassSchedule = () => {
                         <select
                             value={selectedYear}
                             onChange={(e) => setSelectedYear(e.target.value)}
-                            className="appearance-none bg-white border rounded-md px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                            className="cursor-pointer appearance-none bg-white border rounded-md px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-amber-500"
                         >
                             <option value="">Select</option>
                             {years.map((year) => (

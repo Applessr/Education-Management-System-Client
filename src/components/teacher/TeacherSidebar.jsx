@@ -7,16 +7,16 @@ import useUser from '@/src/hooks/useUser';
 const TeacherSidebar = () => {
     const { logout, user } = useUser();
     const [open, setOpen] = useState(true);
-    const [active, setActive] = useState("profile");
+    const [active, setActive] = useState("dashboard");
     const navigate = useNavigate();
 
     const sidebarItems = useMemo(() => [
-        { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
         { icon: <LayoutDashboard size={24} />, text: "Dashboard", name: "dashboard" },
+        { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
         { icon: <CalendarRange size={24} />, text: "Schedule", name: "schedule" },
         { icon: <Notebook size={24} />, text: "Course", name: "course" },
         { icon: <Mail size={24} />, text: "Requested Course", name: "requested-course" },
-        { icon: <ContactRound size={24} />, text: "Advisors", name: "advisors" },
+        { icon: <ContactRound size={24} />, text: "Advisee", name: "advisee" },
     ], []); 
 
     const handleClickMenu = (name) => {
@@ -42,10 +42,10 @@ const TeacherSidebar = () => {
                             alt="Pierre University"
                             className="h-16"
                         />
-                        <span className="font-semibold text-lg text-amber-700">Pierre University</span>
+                        <span className="font-semibold text-xl text-[#ab842e]">Pierre University</span>
                     </div>
                     <button
-                        className="p-1.5 rounded-lg text-amber-700 bg-gray-50 transition duration-500 hover:bg-gray-300"
+                        className="p-1.5 rounded-lg text-[#ab842e] amber-700 bg-gray-50 transition duration-500 hover:bg-gray-300"
                         onClick={handleClickSidebar}
                     >
                         {open ? <ChevronFirst /> : <ChevronLast />}

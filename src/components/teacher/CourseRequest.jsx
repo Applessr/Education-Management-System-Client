@@ -1,16 +1,15 @@
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CourseRequestItem from "./CourseRequestItem";
 import useTeacher from "@/src/hooks/useTeacher";
+import Enroll from "../animations/Enroll";
 
-
-function CourseRequest() {
+const CourseRequest = () => {
   const { getEnrollRequest, enroll } = useTeacher();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     getEnrollRequest(token);
-  }, []);
+  }, [token]);
 
   console.log('enroll :>> ', enroll);
 
@@ -21,27 +20,32 @@ function CourseRequest() {
         );
         return {
           ...course,
-          pendingEnrollments,
+          enrollments: pendingEnrollments,
           pendingCount: pendingEnrollments.length,
         };
       }).filter(course => course.pendingCount > 0) 
     : [];
 
-
-
-
   return (
     <div>
-      {coursesWithPendingEnrollments?.map((course) => (
-        <div className="mt-4" key={course.id}>
-          <CourseRequestItem
-            course={course}
-            data={course.enrollments}
-          />
+      <h1 className="text-2xl font-bold text-[#b45309]">Enroll Request</h1>
+      {coursesWithPendingEnrollments.length > 0 ? (
+        coursesWithPendingEnrollments.map((course) => (
+          <div className="mt-4" key={course.id}>
+            <CourseRequestItem
+              course={course}
+              data={course.enrollments} 
+            />
+          </div>
+        ))
+      ) : (
+        <div className="flex flex-col justify-center items-center">
+          <Enroll />
+          <h1 className="text-2xl text-[#b9b3b3]">No enroll request...</h1>
         </div>
-      ))}
+      )}
     </div>
   );
-}
+};
 
 export default CourseRequest;
