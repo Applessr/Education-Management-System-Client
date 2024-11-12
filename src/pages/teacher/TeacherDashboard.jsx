@@ -3,6 +3,8 @@ import { CircleUserRound, BookOpen, GraduationCap } from 'lucide-react';
 import useTeacher from '@/src/hooks/useTeacher';
 import { MdOutlineGirl, MdBoy } from "react-icons/md";
 import { BiMaleFemale } from "react-icons/bi";
+import { FaRegClock } from "react-icons/fa6";
+
 
 const TeacherDashboard = () => {
   const { teacherGetConsulted, consulted } = useTeacher();
@@ -49,8 +51,8 @@ const TeacherDashboard = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
-      <h1 className="text-3xl text-amber-700 font-extrabold">Dashboard</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-8 rounded-lg shadow-lg">
+      <h1 className="text-3xl text-[#ab842e] font-bold">Dashboard</h1>
+      <div className="flex justify-between gap-4 bg-white p-8 rounded-lg shadow-lg">
         <div
           className="bg-white rounded-lg flex w-[15rem] h-[8rem] items-center shadow-lg"
           style={{
@@ -125,13 +127,14 @@ const TeacherDashboard = () => {
         </div>
       </div>
       {/* Schedule Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4">
-        <h2 className="text-lg font-semibold mb-4">{formatDate()}</h2>
+      <div className="bg-white rounded-lg shadow-lg p-7">
+        <h2 className="text-lg font-semibold mb-4 ">{formatDate()}</h2>
         <div className="space-y-4">
           {scheduleData.map((schedule, index) => (
             <div key={index} className="flex items-center justify-between border-b pb-2">
-              <div className="w-24">
-                <span className="text-gray-600">{schedule.time}</span>
+              <div className="w-24 flex items-center justify-center ">
+                <FaRegClock className='text-[#ab842e]' />
+                <span className="text-gray-600 ml-2">{schedule.time}</span>
               </div>
               <div className="flex-1 px-4">
                 <div className="flex gap-2">
@@ -155,7 +158,7 @@ const TeacherDashboard = () => {
         <div className="bg-white rounded-lg shadow-lg p-4 justify-center items-center flex flex-col">
           <h2 className="text-2xl text-[#2C0076] font-semibold mb-4">Gender</h2>
           <div className="flex items-center justify-between">
-            <div className="space-y-2 flex gap-4">
+            <div className="flex gap-4">
               <div className='bg-[#FFB7B7] w-[15rem] h-[8rem] rounded-xl flex justify-around items-center'>
                 <MdOutlineGirl className='w-16 h-16 text-white' />
                 <div className='text-white flex flex-col items-end text-xl font-bold'>
@@ -174,8 +177,8 @@ const TeacherDashboard = () => {
           </div>
           <div>
             <div className='flex mt-8'>
-              <div className='flex items-center ml-2'>
-                <BiMaleFemale className='text-[#2C0076]' />
+              <div className='flex items-center ml-2 mr-2'>
+                <BiMaleFemale className='text-[#2C0076] mr-2' />
                 <span className='font-bold text-[#B0B0B0]'>By gender</span>
               </div>
               <div><span className='text-[#FFB7B7]'>Female {femalePercentage}%</span> / <span className='text-[#9EB5FF]'> Male {malePercentage}%</span></div>
@@ -202,7 +205,7 @@ const TeacherDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4">
+        <div className="bg-white rounded-lg shadow-lg p-10">
           <div className='flex items-center gap-2 ml-2'>
             <BiMaleFemale className='w-8 h-8 text-[#2C0076]' />
             <h2 className="text-2xl text-[#2C0076] font-semibold">Gender</h2>
@@ -241,7 +244,7 @@ const TeacherDashboard = () => {
               <div className='bg-[#FFB7B7] w-3 h-3 rounded-full'></div><span className=" ml-1 font-semibold text-[#B0B0B0] mr-3">Female</span> {femalePercentage}%
             </div>
             <div className="text-center mt-4 flex items-center ">
-              <div className='bg-[#9EB5FF] w-3 h-3 rounded-full'></div><span className="font-semibold text-[#B0B0B0] mr-3">Male</span> {malePercentage}%
+              <div className='bg-[#9EB5FF] w-3 h-3 rounded-full'></div><span className="ml-1 font-semibold text-[#B0B0B0] mr-3">Male</span> {malePercentage}%
             </div>
           </div>
         </div>
