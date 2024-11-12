@@ -10,9 +10,11 @@ function ExamSchedule() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const calendarRef = React.useRef(null);
 
+  const semester = '1/2024'
+
   useEffect(() => {
 
-    getExamDate(token)
+    getExamDate(token, semester)
   }, [])
 
   console.log('examDate :>> ', examDate);

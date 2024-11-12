@@ -18,10 +18,11 @@ export const studentGetCredit = (token) => axios.get('/student/credit', {
     }
 });
 
-export const studentGetExamDate = (token) => axios.get('/student/exam-date', {
+export const studentGetExamDate = (token, semester) => axios.get('/student/exam-date', {
     headers: {
         Authorization: `Bearer ${token}`
-    }
+    },
+    params: { semester }  
 });
 
 export const studentSendEditRequest = (token, body) => axios.post('/student/request-change', body, {
