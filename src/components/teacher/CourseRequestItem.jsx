@@ -44,7 +44,7 @@ const CourseRequestItem = ({ course, data }) => {
       <button
         onClick={() => setIsTableVisible(!isTableVisible)}
         className="flex w-full mb-4 px-4 py-4 bg-[#ab842e] text-white font-bold rounded-md text-left">
-        {isTableVisible ? <ChevronDown /> : <ChevronRight />  }
+        {isTableVisible ? <ChevronDown /> : <ChevronRight />}
         <h2 className="text-lg">{course.courseName} ({course.courseCode}) - Pending Requests: {course.enrollments.length}</h2>
       </button>
 
