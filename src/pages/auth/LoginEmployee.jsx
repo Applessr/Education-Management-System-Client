@@ -1,42 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import validateEmployeeLogin from '../../utils/loginvalidator';
 import useUser from '../../hooks/useUser';
 import { toast } from 'react-toastify';
 import LoginGoogle from './LoginGoogle';
-import { Eye } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const LoginEmployee = () => {
-    const { loginEmployee, errorLogin } = useUser()
+    const { loginEmployee, errorLogin } = useUser();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
-
     const [formErrors, setFormErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
 
     const hdlOnChange = (e) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
     const hdlSubmit = async (e) => {
-
         e.preventDefault();
-
-        const validationErrors = validateEmployeeLogin(formData)
+        const validationErrors = validateEmployeeLogin(formData);
         if (validationErrors) {
             return setFormErrors(validationErrors);
         }
         try {
-            await loginEmployee(formData)
+            await loginEmployee(formData);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
         setFormErrors({});
-    }
+    };
 
     return (
         <div className='relative min-h-screen flex '>
@@ -62,7 +60,6 @@ const LoginEmployee = () => {
                             PierreUT
                         </span>
                     </div>
-
                     <h2 className='text-3xl font-medium text-start mb-6 text-[#272988]'>
                         Nice to see you again
                     </h2>
@@ -97,7 +94,7 @@ const LoginEmployee = () => {
                             </label>
                             <div className='relative'>
                                 <input
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     name="password"
                                     value={formData.password}
                                     onChange={hdlOnChange}
@@ -115,33 +112,16 @@ const LoginEmployee = () => {
                                 )}
                                 <button
                                     type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
                                     className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl'
                                 >
-                                    <Eye size={25} />
+                                    {showPassword ? <EyeOff size={25} /> : <Eye size={25} />}
                                 </button>
                             </div>
                             <div className='text-end pr-4 mt-5 text-[#B1B4B9] font-semibold'>
                                 <Link to={`forget-password`}>Forgot password?</Link>
                             </div>
                         </div>
-
-                        {/* <div className='flex items-center justify-between'>
-                            <div className='flex items-center'>
-                                <input
-                                    type="checkbox"
-                                    name="rememberMe"
-                                    checked={formData.rememberMe}
-                                    onChange={hdlOnChange}
-                                    className='h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded'
-                                />
-                                <label className='ml-3 block text-lg text-gray-700'> 
-                                    Remember me
-                                </label>
-                            </div>
-                            <Link to="/forgot-password" className='text-lg text-blue-600 hover:text-blue-500'> 
-                                Forgot password?
-                            </Link>
-                        </div> */}
 
                         <button
                             type="submit"
@@ -150,6 +130,7 @@ const LoginEmployee = () => {
                             Sign In
                         </button>
                     </form>
+                    <div className='divider'></div>
 
                     <div className='mt-5 w-full'>
                         <LoginGoogle />
@@ -164,12 +145,11 @@ const LoginEmployee = () => {
                             computers and printers in this facility are for the use by patrons authorized to
                             use the university's authentication system.
                         </p>
-
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default LoginEmployee
+export default LoginEmployee;
