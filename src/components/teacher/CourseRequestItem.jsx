@@ -41,12 +41,11 @@ const CourseRequestItem = ({ course, data }) => {
 
   return (
     <div className="mt-4">
-      {/* Dropdown button that toggles table visibility */}
       <button
         onClick={() => setIsTableVisible(!isTableVisible)}
         className="flex w-full mb-4 px-4 py-4 bg-[#ab842e] text-white font-bold rounded-md text-left">
         {isTableVisible ? <ChevronDown /> : <ChevronRight />  }
-        <h2 className="text-xl">{course.courseName} ({course.courseCode}) - Pending Requests: {course.enrollments.length}</h2>
+        <h2 className="text-lg">{course.courseName} ({course.courseCode}) - Pending Requests: {course.enrollments.length}</h2>
       </button>
 
       {isTableVisible && (

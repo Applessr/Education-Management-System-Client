@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import CourseRequestItem from "./CourseRequestItem";
-import CourseRequestItemUnsue from "./CourseRequestItemUnuse";
 import useTeacher from "@/src/hooks/useTeacher";
 
 
@@ -35,7 +34,7 @@ function CourseRequest() {
     <div>
       {coursesWithPendingEnrollments?.map((course) => (
         <div className="mt-4" key={course.id}>
-          <CourseRequestItemUnsue
+          <CourseRequestItem
             course={course}
             data={course.enrollments}
           />
