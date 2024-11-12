@@ -77,3 +77,8 @@ export const employeeActiveCourse = (token, courseId) => axios.patch('/course/em
         Authorization: `Bearer ${token}`
     }
 });
+export const assignCourseToSyllabus = (token, body) => axios.post('/course/employee/assign-syllabus', body, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
