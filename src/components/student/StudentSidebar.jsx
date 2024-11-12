@@ -16,7 +16,7 @@ import useUser from "@/src/hooks/useUser";
 const StudentSidebar = () => {
   const { logout, user } = useUser();
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("profile");
+  const [active, setActive] = useState("dashboard");
   const navigate = useNavigate();
 
   const sidebarItems = useMemo(() => [
@@ -93,8 +93,8 @@ const StudentSidebar = () => {
                 <p className="text-[1rem] font-light text-white">{user?.role}</p>
               </div>
             )}
-            <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
-              <LogOut className="text-white" />
+            <div onClick={handleLogout} className={`cursor-pointer hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"} `}>
+              <LogOut className="text-white " />
             </div>
           </div>
         </div>
