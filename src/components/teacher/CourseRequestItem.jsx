@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -32,317 +32,273 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useTeacher from "@/src/hooks/useTeacher";
+import Nodata from "../animations/Nodata";
 
-const handleApprove = (student) => {
-  console.log("Approved studentId:", student);
-  // Implement your approve logic here
-};
+const CourseRequestItem = ({ course, data }) => {
+  const { getEnrollRequest, editEnrollStatus } = useTeacher();
+  const token = localStorage.getItem("token");
+  const [sorting, setSorting] = useState([]);
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [columnVisibility, setColumnVisibility] = useState({});
+  const [rowSelection, setRowSelection] = useState([]);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
 
-const handleReject = (student) => {
-  console.log("Reject studentId:", student);
-  // Implement your reject logic here
-};
+  const handleSortingChange = useCallback((newSorting) => setSorting(newSorting), []);
+  const handleColumnFiltersChange = useCallback((newFilters) => setColumnFilters(newFilters), []);
+  const handleRowSelectionChange = useCallback((newSelection) => setRowSelection(newSelection), []);
 
-//fetch courseRequest
+  // useEffect(() => {
+  //   getEnrollRequest(token);
+  // }, [token]);
 
-export const columns = [
-  {
-    accessorKey: "id",
-    header: "#",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
-  },
-  {
-    accessorKey: "studentId",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "studentId")
-          }
-        >
-          Student Id
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
+  const columns = [
+    {
+      accessorKey: "id",
+      header: "#",
+      cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("studentId")}</div>
-    ),
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "name")}
-        >
-          Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    {
+      accessorKey: "studentId",
+      header: "Student Id",
+      cell: ({ row }) => <div className="capitalize">{row.getValue("studentId")}</div>,
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "faculty",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "faculty")
-          }
-        >
-          Faculty
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("faculty")}</div>
-    ),
-  },
-  {
-    accessorKey: "major",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "major")}
-        >
-          Major
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    {
+      accessorKey: "faculty",
+      header: "Faculty",
+      cell: ({ row }) => <div className="capitalize">{row.getValue("faculty")}</div>,
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("major")}</div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "status")
-          }
-        >
-          Status
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    {
+      accessorKey: "major",
+      header: "Major",
+      cell: ({ row }) => <div className="capitalize">{row.getValue("major")}</div>,
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "note",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "note")}
-        >
-          Note
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("note")}</div>,
-  },
-  {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: ({ row }) => (
-      <div className="flex space-x-2">
-        <Button
-          variant="success"
-          size="sm"
-          onClick={() => handleApprove(row.original.studentId)}
-          className="border"
-        >
-          Approved
-        </Button>
-        <Button
-          variant="danger"
-          size="sm"
-          onClick={() => handleReject(row.original.studentId)}
-          className="border"
-        >
-          Reject
-        </Button>
-      </div>
-    ),
-  },
-];
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: ({ row }) => (
+        <div className="flex space-x-2">
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => handleApprove(row.original)}
+            className="btn bg-[#37B041] text-white font-semibold"
+          >
+            Approved
+          </Button>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => handleReject(row.original)}
+            // onClick={()=>alert('click')}
+            className="btn bg-[#FF3B30] text-white font-semibold"
+          >
+            Reject
+          </Button>
+        </div>
+      ),
+    },
+  ];
 
-function CourseRequestItem({ course, data }) {
-  const [sorting, setSorting] = React.useState([]);
-  const [columnFilters, setColumnFilters] = React.useState([]);
-  const [columnVisibility, setColumnVisibility] = React.useState({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const rowsData = data.map((student) => ({
+    id: student?.id || "N/A",
+    studentId: student?.student?.studentId || "N/A",
+    name: `${student?.student?.firstName} ${student?.student?.lastName}` || "Unknown",
+    faculty: student?.student?.major?.faculty?.name || "N/A",
+    major: student?.student?.major?.name || "N/A",
+    status: student?.status || "Pending",
+  }));
 
   const table = useReactTable({
-    data,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    data: rowsData,
+    columns: columns,
+    onSortingChange: handleSortingChange,
+    onColumnFiltersChange: handleColumnFiltersChange,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    onRowSelectionChange: handleRowSelectionChange,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter,
+      pagination,
     },
+    onPaginationChange: setPagination,
   });
 
-  //   console.log(data);
+  const handleApprove = async (student) => {
+    console.log("Approved studentId:", student.id);
+    await editEnrollStatus(token, student.id, { status: 'APPROVED' });
+    // await getEnrollRequest(token);
+    setRowSelection([]);
+  };
+
+  async function handleReject(student) {
+    console.log("Reject studentId:", student.id);
+    await editEnrollStatus(token, student.id, { status: 'REJECTED' });
+    await getEnrollRequest(token);
+    // setRowSelection([]);
+  };
+
   return (
     <div>
-      <div>
-        {/* code - subject name -  sec  - studyTime  - room  */}
-        <p className="bg-orange-300">
-          {course.courseCode} {course.courseName} Sec. {course.section}
-        </p>
-      </div>
-
-      <div className="w-full">
-        <div className="flex items-center py-4">
-          {/* search by name */}
-
-          {/* <Input
-            placeholder="Filter name of student..."
-            value={table.getColumn("name")?.getFilterValue() ?? ""}
-            onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          /> */}
-
-          {/* seach by name and student Id */}
-          <Input
-            placeholder="Filter by name or student ID..."
-            value={table.getState().globalFilter || ""}
-            onChange={(event) => {
-              table.setGlobalFilter(event.target.value);
-            }}
-            className="max-w-sm"
-          />
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
-                Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
+      {table ? (
+        <div>
+          <p className="bg-orange-300">
+            {course.courseCode} {course.courseName} Sec. {course.section}
+          </p>
+          <div className="w-full">
+            <div className="flex items-center py-4">
+              <Input
+                placeholder="Filter by name or student ID..."
+                value={globalFilter}
+                onChange={(event) => {
+                  setGlobalFilter(event.target.value);
+                  table.setGlobalFilter(event.target.value);
+                }}
+                className="max-w-sm"
+              />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="ml-auto">
+                    Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
                     ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
-          {/* show select row */}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div className="rounded-md border">
+              {/* <Table>
+                <TableHeader>
+                  {table.getHeaderGroups().map(headerGroup => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map(header => (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows.length ? (
+                    table.getRowModel().rows.map(row => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map(cell => (
+                          <TableCell key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={columns.length} className="h-24 text-center">
+                        No results.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table> */}
+              <table className="table table-zebra">
+                {/* head */}
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Job</th>
+                    <th>Favorite Color</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((item) => {
+                    console.log('item :>> ', item)
+                    return (<tr>
+                      <th>1</th>
+                      <td>Cy Ganderton</td>
+                      <td>Quality Control Specialist</td>
+                      <td>Blue</td>
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={() => handleApprove(item.id)}
+                        className="btn bg-[#37B041] text-white font-semibold"
+                      >
+                        Approved
+                      </Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleReject(item.id)}
+                        // onClick={()=>alert('click')}
+                        className="btn bg-[#FF3B30] text-white font-semibold"
+                      >
+                        Reject
+                      </Button>
+                    </tr>)
+                  })}
 
-          {/* <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div> */}
-          <div className="space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
+
+                </tbody>
+              </table>
+            </div>
+            <div className="flex items-center justify-end space-x-2 py-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <Nodata />
+      )}
     </div>
   );
-}
+};
 
 export default CourseRequestItem;

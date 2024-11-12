@@ -14,6 +14,7 @@ function StudentPayment() {
   const { getStudentProfile, studentInfo, getStudentPayMentStatus, studentPayMent } = useStudent();
   const token = localStorage.getItem('token');
   const semester = '1/2024';
+  const amount = studentInfo?.major?.tuitionFee;
 
   const [paymentStatus, setPaymentStatus] = useState('');
   const [showPaymentCard, setShowPaymentCard] = useState(true);
@@ -90,8 +91,8 @@ function StudentPayment() {
         startY: tableStartY,
         head: [['Description', 'Amount (Baht)']],
         body: [
-          [{ content: `Academic year 1/2024\n\nTuition Fees\n\n\n\n\n\n\n\n\n`, styles: { halign: 'left' } }, formatCurrency(paymentDetails.amount)],
-          [{ content: 'Total', styles: { fontStyle: 'bold' } }, formatCurrency(paymentDetails.amount)],
+          [{ content: `Academic year 1/2024\n\nTuition Fees\n\n\n\n\n\n\n\n\n`, styles: { halign: 'left' } }, formatCurrency(amount)],
+          [{ content: 'Total', styles: { fontStyle: 'bold' } }, formatCurrency(amount)],
         ],
         theme: 'grid',
         headStyles: { fillColor: [238, 220, 181] },

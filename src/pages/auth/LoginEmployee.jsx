@@ -126,6 +126,7 @@ const LoginEmployee = () => {
                             Sign In
                         </button>
                     </form>
+                    <div className='divider'></div>
 
                     <div className='mt-5 w-full border-none'>
                         <LoginGoogle />
