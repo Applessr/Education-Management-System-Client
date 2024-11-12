@@ -175,37 +175,11 @@ export const columns = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("CPA")}</div>,
-  },
-  {
-    accessorKey: "action",
-    header: "Transcript",
-    cell: ({ row }) => (
-      <Dialog>
-        <DialogTrigger asChild>
-          <div className="flex space-x-2">
-            <Button
-              className="border"
-              variant="success"
-              size="sm"
-              onClick={() => hdlViewTranscript(row.original.studentId)}
-            >
-              view
-            </Button>
-          </div>
-        </DialogTrigger>
-        <DialogContent className="w-full lg:max-w-[800px] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>
-              view transcript of student id : {row.original.studentId}
-            </DialogTitle>
-            <DialogDescription>all enroll result</DialogDescription>
-          </DialogHeader>
-          <TeacherViewStudentTranscript />
-        </DialogContent>
-      </Dialog>
-    ),
-  },
+    cell: ({ row }) => {
+      const cpaValue = row.getValue("CPA");
+      return <div className="capitalize">{cpaValue.toFixed(2)}</div>; 
+    },
+  }
 ];
 
 function SeniorTable({ data }) {

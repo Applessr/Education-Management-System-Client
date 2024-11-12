@@ -1,115 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import React, { useState } from "react";
 import useTeacher from "@/src/hooks/useTeacher";
-import Nodata from "../animations/Nodata";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 const CourseRequestItem = ({ course, data }) => {
   const { getEnrollRequest, editEnrollStatus } = useTeacher();
   const token = localStorage.getItem("token");
-  const [sorting, setSorting] = useState([]);
-  const [columnFilters, setColumnFilters] = useState([]);
-  const [columnVisibility, setColumnVisibility] = useState({});
-  const [rowSelection, setRowSelection] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
-
-  const handleSortingChange = useCallback((newSorting) => setSorting(newSorting), []);
-  const handleColumnFiltersChange = useCallback((newFilters) => setColumnFilters(newFilters), []);
-  const handleRowSelectionChange = useCallback((newSelection) => setRowSelection(newSelection), []);
-
-  // useEffect(() => {
-  //   getEnrollRequest(token);
-  // }, [token]);
-
-  const columns = [
-    {
-      accessorKey: "id",
-      header: "#",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
-    },
-    {
-      accessorKey: "studentId",
-      header: "Student Id",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("studentId")}</div>,
-    },
-    {
-      accessorKey: "name",
-      header: "Name",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-    },
-    {
-      accessorKey: "faculty",
-      header: "Faculty",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("faculty")}</div>,
-    },
-    {
-      accessorKey: "major",
-      header: "Major",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("major")}</div>,
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
-    },
-    {
-      accessorKey: "actions",
-      header: "Actions",
-      cell: ({ row }) => (
-        <div className="flex space-x-2">
-          <Button
-            variant="success"
-            size="sm"
-            onClick={() => handleApprove(row.original)}
-            className="btn bg-[#37B041] text-white font-semibold"
-          >
-            Approved
-          </Button>
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={() => handleReject(row.original)}
-            // onClick={()=>alert('click')}
-            className="btn bg-[#FF3B30] text-white font-semibold"
-          >
-            Reject
-          </Button>
-        </div>
-      ),
-    },
-  ];
 
   const rowsData = data.map((student) => ({
     id: student?.id || "N/A",
@@ -120,182 +15,110 @@ const CourseRequestItem = ({ course, data }) => {
     status: student?.status || "Pending",
   }));
 
-  const table = useReactTable({
-    data: rowsData,
-    columns: columns,
-    onSortingChange: handleSortingChange,
-    onColumnFiltersChange: handleColumnFiltersChange,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: handleRowSelectionChange,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-      globalFilter,
-      pagination,
-    },
-    onPaginationChange: setPagination,
-  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isTableVisible, setIsTableVisible] = useState(false);
+  const itemsPerPage = 5;
 
-  const handleApprove = async (student) => {
-    console.log("Approved studentId:", student.id);
-    await editEnrollStatus(token, student.id, { status: 'APPROVED' });
-    // await getEnrollRequest(token);
-    setRowSelection([]);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = rowsData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handleApprove = async (requestId) => {
+    console.log('requestId :>> ', requestId);
+    await editEnrollStatus(token, requestId, { status: 'APPROVED' });
+    getEnrollRequest(token);
   };
 
-  async function handleReject(student) {
-    console.log("Reject studentId:", student.id);
-    await editEnrollStatus(token, student.id, { status: 'REJECTED' });
-    await getEnrollRequest(token);
-    // setRowSelection([]);
+  const handleReject = async (requestId) => {
+    console.log('requestId :>> ', requestId);
+    await editEnrollStatus(token, requestId, { status: 'REJECTED' });
+    getEnrollRequest(token);
   };
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const pageCount = Math.ceil(rowsData.length / itemsPerPage);
 
   return (
-    <div>
-      {table ? (
+    <div className="mt-4">
+      {/* Dropdown button that toggles table visibility */}
+      <button
+        onClick={() => setIsTableVisible(!isTableVisible)}
+        className="flex w-full mb-4 px-4 py-4 bg-[#ab842e] text-white font-bold rounded-md text-left">
+        {isTableVisible ? <ChevronDown /> : <ChevronRight />  }
+        <h2 className="text-xl">{course.courseName} ({course.courseCode}) - Pending Requests: {course.enrollments.length}</h2>
+      </button>
+
+      {isTableVisible && (
         <div>
-          <p className="bg-orange-300">
-            {course.courseCode} {course.courseName} Sec. {course.section}
-          </p>
-          <div className="w-full">
-            <div className="flex items-center py-4">
-              <Input
-                placeholder="Filter by name or student ID..."
-                value={globalFilter}
-                onChange={(event) => {
-                  setGlobalFilter(event.target.value);
-                  table.setGlobalFilter(event.target.value);
-                }}
-                className="max-w-sm"
-              />
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="ml-auto">
-                    Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {table
-                    .getAllColumns()
-                    .filter((column) => column.getCanHide())
-                    .map((column) => (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
-                    ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            <div className="rounded-md border">
-              {/* <Table>
-                <TableHeader>
-                  {table.getHeaderGroups().map(headerGroup => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map(header => (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.length ? (
-                    table.getRowModel().rows.map(row => (
-                      <TableRow key={row.id}>
-                        {row.getVisibleCells().map(cell => (
-                          <TableCell key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={columns.length} className="h-24 text-center">
-                        No results.
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table> */}
-              <table className="table table-zebra">
-                {/* head */}
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Job</th>
-                    <th>Favorite Color</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((item) => {
-                    console.log('item :>> ', item)
-                    return (<tr>
-                      <th>1</th>
-                      <td>Cy Ganderton</td>
-                      <td>Quality Control Specialist</td>
-                      <td>Blue</td>
-                      <Button
-                        variant="success"
-                        size="sm"
-                        onClick={() => handleApprove(item.id)}
-                        className="btn bg-[#37B041] text-white font-semibold"
-                      >
-                        Approved
-                      </Button>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleReject(item.id)}
-                        // onClick={()=>alert('click')}
-                        className="btn bg-[#FF3B30] text-white font-semibold"
-                      >
+          <table className="-mt-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">Student ID</th>
+                <th scope="col" className="px-6 py-3">Name</th>
+                <th scope="col" className="px-6 py-3">Faculty</th>
+                <th scope="col" className="px-6 py-3">Major</th>
+                <th scope="col" className="px-6 py-3">Status</th>
+                <th scope="col" className="px-6 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.length > 0 ? (
+                currentItems.map((student) => (
+                  <tr key={student.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.studentId}</td>
+                    <td className="px-6 py-4">{student.name}</td>
+                    <td className="px-6 py-4">{student.faculty}</td>
+                    <td className="px-6 py-4">{student.major}</td>
+                    <td className="px-6 py-4 text-[#F2770E]">{student.status}</td>
+                    <td className="px-6 py-4 text-right">
+                      <button
+                        onClick={() => handleApprove(student.id)}
+                        className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleReject(student.id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md">
                         Reject
-                      </Button>
-                    </tr>)
-                  })}
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center px-6 py-4">
+                    No data available.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
 
-
-                </tbody>
-              </table>
+          {/* Pagination controls */}
+          <div className="flex justify-end gap-2 items-center mt-4">
+            <div className="text-sm text-[#808080]">
+              <p>Page {currentPage} of {pageCount}</p>
             </div>
-            <div className="flex items-center justify-end space-x-2 py-4">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
+
+            <div className="flex">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2"
               >
-                Previous
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
+                Prev
+              </button>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === pageCount}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
               >
                 Next
-              </Button>
+              </button>
             </div>
           </div>
         </div>
-      ) : (
-        <Nodata />
       )}
     </div>
   );

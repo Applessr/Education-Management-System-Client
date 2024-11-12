@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import CourseRequestItem from "./CourseRequestItem";
+import CourseRequestItemUnsue from "./CourseRequestItemUnuse";
 import useTeacher from "@/src/hooks/useTeacher";
 
 
@@ -28,14 +29,15 @@ function CourseRequest() {
     : [];
 
 
+
+
   return (
     <div>
-      {coursesWithPendingEnrollments.map((course) => (
-        <div key={course.id}>
-          <h2>{course.courseName} ({course.courseCode}) - Pending Requests: {course.pendingCount}</h2>
-          <CourseRequestItem
+      {coursesWithPendingEnrollments?.map((course) => (
+        <div className="mt-4" key={course.id}>
+          <CourseRequestItemUnsue
             course={course}
-            data={course.pendingEnrollments} 
+            data={course.enrollments}
           />
         </div>
       ))}
