@@ -103,6 +103,11 @@ const CourseFormModal = ({ isOpen, onClose, onSuccess, course, faculties, majors
                 classSchedules: formData.classSchedules.map(schedule => ({
                     ...schedule,
                     day: parseInt(schedule.day)
+                })),
+                // Ensure exam schedule data is properly formatted
+                examSchedule: formData.examSchedule.map(exam => ({
+                    ...exam,
+                    examDate: new Date(exam.examDate).toISOString()
                 }))
             };
 
@@ -130,6 +135,35 @@ const CourseFormModal = ({ isOpen, onClose, onSuccess, course, faculties, majors
             classSchedules: [...prev.classSchedules, { day: '', startTime: '', endTime: '', room: '' }]
         }));
     };
+
+    const handleAddExamSchedule = () => {
+        if (formData.examSchedule.length >= 2) {
+            toast.warning('Only Midterm and Final exams are allowed');
+            return;
+        }
+        
+        const existingTypes = formData.examSchedule.map(exam => exam.examType);
+        const newType = !existingTypes.includes('MIDTERM') ? 'MIDTERM' : 'FINAL';
+    
+        setFormData(prev => ({
+            ...prev,
+            examSchedule: [
+                ...prev.examSchedule,
+                { examType: newType, examDate: '', startTime: '', endTime: '', room: '' }
+            ]
+        }));
+    };
+    const handleRemoveExamSchedule = (index) => {
+        if (formData.examSchedule.length <= 1) {
+            toast.warning('At least one exam schedule is required');
+            return;
+        }
+        setFormData(prev => ({
+            ...prev,
+            examSchedule: prev.examSchedule.filter((_, i) => i !== index)
+        }));
+    };
+
 
     const handleRemoveClassSchedule = (index) => {
         setFormData(prev => ({
@@ -290,18 +324,29 @@ const CourseFormModal = ({ isOpen, onClose, onSuccess, course, faculties, majors
 
                     {/* Exam Schedules */}
                     <div className="space-y-4">
-                        <h3 className="text-lg font-medium">Exam Schedules</h3>
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-lg font-medium">Exam Schedules</h3>
+                            <Button
+                                type="button"
+                                onClick={handleAddExamSchedule}
+                                disabled={formData.examSchedule.length >= 3 || isSubmitting}
+                            >
+                                <Plus className="w-4 h-4 mr-2" /> Add Exam Schedule
+                            </Button>
+                        </div>
                         {formData.examSchedule.map((exam, index) => (
-                            <ExamScheduleFields
-                                key={index}
-                                exam={exam}
-                                index={index}
-                                onUpdate={(i, field, value) => handleScheduleChange(i, field, value, 'examSchedule')}
-                                isSubmitting={isSubmitting}
-                            />
+                            <div key={index} className="relative">
+                                <ExamScheduleFields
+                                    exam={exam}
+                                    index={index}
+                                    onUpdate={(i, field, value) => handleScheduleChange(i, field, value, 'examSchedule')}
+                                    isSubmitting={isSubmitting}
+                                    canRemove={formData.examSchedule.length > 1}
+                                    onRemove={() => handleRemoveExamSchedule(index)}
+                                />
+                            </div>
                         ))}
                     </div>
-
                     {/* Form Actions */}
                     <div className="flex justify-end gap-4">
                         <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>

@@ -1,4 +1,3 @@
-// utils/courseFormUtils.js
 export const initialFormState = {
     courseCode: '',
     courseName: '',
@@ -16,7 +15,7 @@ export const initialFormState = {
 
 export const validateForm = (formData) => {
     const errors = {};
-    
+
     // Basic validations
     const requiredFields = ['courseCode', 'courseName', 'credits', 'seat', 'section', 'teacherId', 'majorId'];
     requiredFields.forEach(field => {
@@ -41,7 +40,8 @@ export const validateForm = (formData) => {
 };
 
 export const formatCourseData = (course) => {
-    if (!course) return initialFormState;
+    if (!course) 
+        return initialFormState;
 
     return {
         ...course,
@@ -51,13 +51,15 @@ export const formatCourseData = (course) => {
         teacherId: course.teacher?.id?.toString(),
         majorId: course.major?.id?.toString(),
         classSchedules: formatClassSchedules(course.classSchedules),
-        examSchedule: formatExamSchedules(course.examSchedule)
+        // If no exam schedules exist, provide the default ones
+        examSchedule: course.examSchedule?.length
+            ? formatExamSchedules(course.examSchedule)
+            : initialFormState.examSchedule
     };
 };
-
 const formatClassSchedules = (schedules) => {
     if (!schedules?.length) return initialFormState.classSchedules;
-    
+
     return schedules.map(schedule => ({
         day: schedule.day.toString(),
         startTime: new Date(schedule.startTime).toTimeString().slice(0, 5),
@@ -68,7 +70,7 @@ const formatClassSchedules = (schedules) => {
 
 const formatExamSchedules = (schedules) => {
     if (!schedules?.length) return initialFormState.examSchedule;
-    
+
     return schedules.map(exam => ({
         examType: exam.examType,
         examDate: new Date(exam.examDate).toISOString().split('T')[0],

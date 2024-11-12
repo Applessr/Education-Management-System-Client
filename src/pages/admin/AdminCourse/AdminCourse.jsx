@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { Edit, Plus } from 'lucide-react';
 import { getAllCourse, getAllFaculty, getAllMajor } from '@/src/api/course';
 import CourseFormModal from './EditandAddForm';
+import CourseStatusToggle from './CourseStatusToggle';
 
 const AdminCourse = () => {
   // Data states
@@ -219,12 +220,10 @@ const AdminCourse = () => {
                   <td className="px-4 py-3 text-center">{course.seat}</td>
                   <td className="px-4 py-3 text-center">{course._count?.enrollments || 0}</td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-1 rounded-full text-xs ${course.status
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
-                      }`}>
-                      {course.status ? 'Active' : 'Inactive'}
-                    </span>
+                    <CourseStatusToggle
+                      course={course}
+                      onStatusChange={fetchData}
+                    />
                   </td>
                   <td className="px-4 py-3 text-center">
                     <button
@@ -286,7 +285,7 @@ const AdminCourse = () => {
           </div>
         </div>
       </div>
-      <CourseFormModal  
+      <CourseFormModal
         isOpen={isAddModalOpen || isEditModalOpen}
         onClose={() => {
           setIsAddModalOpen(false);
