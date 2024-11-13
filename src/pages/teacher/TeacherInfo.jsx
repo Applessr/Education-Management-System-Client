@@ -78,7 +78,7 @@ const TeacherInfo = () => {
   );
 
   return (
-    <div>
+    <div className='p-6'>
       <h1 className="text-3xl text-[#ab842e] font-bold">Profile</h1>
 
       {/* Main Card */}

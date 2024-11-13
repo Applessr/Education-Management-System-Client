@@ -15,7 +15,7 @@ const AdminStudent = () => {
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    
+
     // Search and filter states
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedFaculty, setSelectedFaculty] = useState('');
@@ -44,11 +44,11 @@ const AdminStudent = () => {
         try {
             const token = localStorage.getItem('token');
             const newStatus = student.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
-            
+
             await adminChangeStudentStatus(token, student.id, { status: newStatus });
             toast.success(`Student status changed to ${newStatus}`);
             handleStudentAdded();
-            
+
         } catch (err) {
             console.error("Error changing student status:", err);
             toast.error("Failed to change student status");
@@ -62,7 +62,7 @@ const AdminStudent = () => {
 
     // Filter students based on search term and faculty
     const filteredStudents = students.filter(student => {
-        const searchMatch = 
+        const searchMatch =
             student.studentId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             student.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             student.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -129,7 +129,7 @@ const AdminStudent = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Students</h1>
+            <h1 className="text-3xl font-bold mb-6">Students</h1>
 
             {/* Search and Filter Section */}
             <div className="mb-6 space-y-4">
@@ -230,11 +230,10 @@ const AdminStudent = () => {
                                     <td className="px-4 py-3">
                                         <button
                                             onClick={() => handleStatusChange(student)}
-                                            className={`px-2 py-1 rounded-full text-sm ${
-                                                student.status === 'ACTIVE'
+                                            className={`px-2 py-1 rounded-full text-sm ${student.status === 'ACTIVE'
                                                     ? 'bg-green-100 text-green-600'
                                                     : 'bg-red-100 text-red-600'
-                                            }`}
+                                                }`}
                                         >
                                             {student.status}
                                         </button>

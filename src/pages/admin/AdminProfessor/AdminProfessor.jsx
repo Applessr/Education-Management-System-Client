@@ -113,7 +113,7 @@ const AdminProfessor = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-semibold mb-6">Professor</h1>
+            <h1 className="text-3xl font-bold mb-6">Professor</h1>
 
             {/* Search and Filter Section */}
             <div className="mb-6 space-y-4">
@@ -174,7 +174,7 @@ const AdminProfessor = () => {
 
             {/* Professor List */}
             <div className="bg-white rounded-lg shadow">
-                <div className="p-4 bg-amber-700 text-white rounded-t-lg flex justify-between items-center">
+                <div className="p-4 bg-[#ab842e] text-white rounded-t-lg flex justify-between items-center">
                     <h2 className="font-semibold">List of Professors ({filteredEmployees.length} professors)</h2>
                     <button
                         className="px-4 py-2 bg-white text-[#1a237e] rounded hover:bg-gray-100"
@@ -209,8 +209,8 @@ const AdminProfessor = () => {
                                         <button
                                             onClick={() => handleStatusChange(emp)}
                                             className={`px-3 py-1 rounded-full text-sm ${emp.active
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-red-100 text-red-800'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-red-100 text-red-800'
                                                 }`}
                                         >
                                             {emp.active ? 'Active' : 'Inactive'}
