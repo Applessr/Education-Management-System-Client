@@ -39,7 +39,7 @@ function ExamSchedule() {
         location: item?.room,
         courseCode: item?.course?.courseCode,
         instructor: item?.teacher,
-        type: item?.examType === "MIDTERMg" ? "Midterm" : "Final",
+        type: item?.examType === "MIDTERM" ? "Midterm" : "Final",
         backgroundColor: "#EF4444",
         borderColor: "#DC2626"
       };
