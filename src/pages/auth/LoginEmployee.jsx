@@ -130,9 +130,9 @@ const LoginEmployee = () => {
                             Sign In
                         </button>
                     </form>
-                    <div className='divider'></div>
+                    <div className="divider text-[#B1B4B9] font-semibold">OR</div>
 
-                    <div className='mt-5 w-full'>
+                    <div className='mt-2 w-full'>
                         <LoginGoogle />
                     </div>
 

@@ -7,6 +7,7 @@ import {
   Mail,
   UserRoundSearch,
   ChartArea,
+  KeyRound,
 } from "lucide-react";
 
 import {
@@ -101,7 +102,10 @@ function StudentInfo() {
 
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
-                <button className="font-bold text-xl text-[#2726AD] underline">change password</button>
+                <button className="flex items-center px-4 py-2 rounded-md border border-[#c2d3ff] text-[#272988] hover:text-white hover:bg-[#2726ad] hover:border-[#9eb5ff] transition-colors duration-200">
+                <KeyRound className="w-4 h-4 mr-2" />
+                  change password
+                  </button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>

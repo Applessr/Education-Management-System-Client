@@ -10,9 +10,11 @@ function ExamSchedule() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const calendarRef = React.useRef(null);
 
+  const semester = '1/2024'
+
   useEffect(() => {
 
-    getExamDate(token)
+    getExamDate(token, semester)
   }, [])
 
   console.log('examDate :>> ', examDate);
@@ -37,7 +39,7 @@ function ExamSchedule() {
         location: item?.room,
         courseCode: item?.course?.courseCode,
         instructor: item?.teacher,
-        type: item?.examType === "MIDTERMg" ? "Midterm" : "Final",
+        type: item?.examType === "MIDTERM" ? "Midterm" : "Final",
         backgroundColor: "#EF4444",
         borderColor: "#DC2626"
       };

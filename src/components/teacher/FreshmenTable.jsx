@@ -209,7 +209,7 @@ function FreshmenTable({ data }) {
 
   return (
     <div className="mb-4">
-      <div className="bg-orange-300/50 h-11 flex justify-center items-center text-xl font-bold text-[#1B1A53] rounded-t-xl">
+      <div className="bg-[#ab842e] text-white h-11 flex justify-center items-center text-xl font-bold rounded-t-xl">
         {/* code - subject name -  sec  - studyTime  - room  */}
         <p >Freshmen</p>
       </div>

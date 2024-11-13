@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   ChevronFirst,
   ChevronLast,
@@ -38,7 +38,13 @@ const StudentSidebar = () => {
       text: "Grade Report",
       name: "enrollResult",
     }
-  ], []); // `[]` เพื่อให้สร้าง `sidebarItems` แค่ครั้งเดียว
+  ], []);
+
+  useEffect(() => {
+    const pathName = location.pathname.split('/').pop(); 
+    setActive(pathName);
+  }, [location]);
+
 
   const handleClickMenu = (name) => {
     setActive(name);
@@ -63,7 +69,7 @@ const StudentSidebar = () => {
               alt="Pierre University"
               className="h-16"
             />
-            <span className="font-bold text-xl">Pierre University</span>
+            <span className="font-semibold text-lg">Pierre University</span>
           </div>
           <button
             className="p-1.5 rounded-lg bg-gray-50 transition duration-500 hover:bg-gray-300"
