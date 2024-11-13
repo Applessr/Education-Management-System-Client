@@ -1,5 +1,5 @@
 
-import {adminGetStudent } from '@/src/api/admin';
+import { adminGetStudent } from '@/src/api/admin';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AddStudentForm from './AddStudentForm';
@@ -116,7 +116,7 @@ const AdminStudent = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">Students</h1>
+            <h1 className="text-3xl font-bold mb-6">Students</h1>
 
             {/* Search and Filter Section */}
             <div className="mb-6 space-y-4">

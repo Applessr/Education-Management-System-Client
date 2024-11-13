@@ -1,14 +1,21 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import useUser from '@/src/hooks/useUser';
 
 const TeacherSidebar = () => {
     const { logout, user } = useUser();
     const [open, setOpen] = useState(true);
-    const [active, setActive] = useState("dashboard");
+    const [active, setActive] = useState("");
     const navigate = useNavigate();
+    const location = useLocation()
+
+
+    useEffect(() => {
+        const currentPath = location.pathname.split('/')[2] || "dashboard";
+        setActive(currentPath);
+    }, [])
 
     const sidebarItems = useMemo(() => [
         { icon: <LayoutDashboard size={24} />, text: "Dashboard", name: "dashboard" },
@@ -17,7 +24,7 @@ const TeacherSidebar = () => {
         { icon: <Notebook size={24} />, text: "Course", name: "course" },
         { icon: <Mail size={24} />, text: "Requested Course", name: "requested-course" },
         { icon: <ContactRound size={24} />, text: "Advisee", name: "advisee" },
-    ], []); 
+    ], []);
 
     useEffect(() => {
         const pathName = location.pathname.split('/').pop(); 

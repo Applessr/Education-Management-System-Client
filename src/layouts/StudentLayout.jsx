@@ -11,7 +11,7 @@ const StudentLayout = () => {
         <div className="flex min-h-screen">
             {/* Fixed Sidebar */}
             <StudentSidebar />
-            
+
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col">
                 {/* Fixed Header */}

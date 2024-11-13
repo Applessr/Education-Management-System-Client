@@ -48,6 +48,7 @@ const StudentDashboard = () => {
         return studentGrade.map((semesterData) => ({
             semester: semesterData.semester,
             courses: semesterData.courses.map((course) => ({
+                id: course.courseId,
                 code: course.courseCode,
                 title: course.courseName,
                 credit: course.credits,

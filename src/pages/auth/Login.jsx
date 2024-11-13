@@ -77,7 +77,7 @@ const Login = () => {
                                 onChange={hdlOnChange}
                                 className={`w-full px-4 py-3 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
                                     ${formErrors.identifier || errorLogin && 'border-red-500'}`}
-                                placeholder='Email or phone number'
+                                placeholder='PierreUT ID or email'
                             />
                             {formErrors.identifier && (
                                 <div className="text-red-500 text-sm text-left dark:text-[#DB5252]">Student ID or Email is require</div>
