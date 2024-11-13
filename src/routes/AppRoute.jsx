@@ -28,7 +28,6 @@ import ProtectRoute from "./ProtectRoute";
 import { StudentContextProvider } from "../contexts/StudentContext";
 import { TeacherContextProvider } from "../contexts/TeacherContext";
 import { AdminContextProvider } from "../contexts/AdminContext";
-import AdminCourse from "../pages/admin/AdminCourse";
 import AboutPage from "../pages/guest/AboutPage";
 import AcademicPage from "../pages/guest/AcademicPage";
 import CampusPage from "../pages/guest/CampusPage";
@@ -36,17 +35,14 @@ import ActivityPage from "../pages/guest/ActivityPage";
 import ContactPage from "../pages/guest/ContactPage";
 import CampusCarryPage from "../pages/guest/CampusCarryPage";
 import CounselingPage from "../pages/guest/CounselingPage";
-import ResearchPage from "../pages/guest/ResearchPage";
 import StudentInCourse from "../pages/teacher/Teacher_Course/StudentInCourse";
-import CourseDetail from "../pages/teacher/Teacher_Course/CourseDetail";
-import TeacherViewStudentTranscript from "../pages/teacher/TeacherAdvisors/TeacherViewStudentTranscript";
-// import AdminProfessor from "../pages/admin/AdminProfessor/AdminProfessor";
 import AdminCourseSyllabus from "../pages/admin/AdminCourseSyllabus";
 import AdminProfessor from "../pages/admin/AdminProfessor/AdminProfessor";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherSchedule/TeacherAcademicSchedule";
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
 import StudentEnrollment from "../pages/student/StudentEnrollment";
+import AdminCourse from "../pages/admin/AdminCourse/AdminCourse";
 
 const router = createBrowserRouter([
   {
@@ -127,7 +123,7 @@ const router = createBrowserRouter([
       { path: "course", element: <TeacherCourse /> },
       { path: "course/:courseCode/:section", element: <StudentInCourse /> },
       { path: "requested-course", element: <TeacherRequestedCourse /> },
-      { path: "advisors", element: <TeacherAdvisors /> },
+      { path: "advisee", element: <TeacherAdvisors /> },
       { path: "unauthorization", element: <Unauthorized /> },
       { path: "*", element: <NotFound /> },
     ],

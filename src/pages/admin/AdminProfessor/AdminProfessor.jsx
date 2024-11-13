@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import { Edit, X } from 'lucide-react';
 import AddEmployeeForm from './AddEmployeeForm';
 import EditProfessorForm from './EditProfessorForm';
-import { adminActiveAccount, adminGetTeacher, adminInactiveAccount } from '@/src/api/admin';
+import { adminGetTeacher } from '@/src/api/admin';
+import UserStatusToggle from '@/src/hooks/UserStatusToggle';
 
 const AdminProfessor = () => {
     // State management
@@ -57,31 +58,6 @@ const AdminProfessor = () => {
         setIsEditModalOpen(true);
     };
 
-    const handleStatusChange = async (emp) => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                toast.error('Please login again');
-                return;
-            }
-            if (emp.active) {
-                await adminInactiveAccount(token, emp.id);
-                toast.success('Teacher status changed to inactive');
-            } else {
-                await adminActiveAccount(token, emp.id);
-                toast.success('Teacher status changed to active');
-            }
-            fetchEmployees();
-        } catch (error) {
-            console.error("Error changing status:", error);
-            if (error.response?.status === 401) {
-                toast.error('Session expired. Please login again');
-            } else {
-                toast.error(error.response?.data?.message || 'Failed to update status');
-            }
-        }
-    };
-
     // Filter professors based on search term and faculty
     const filteredEmployees = employee.filter(emp => {
         const searchMatch =
@@ -113,7 +89,7 @@ const AdminProfessor = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-semibold mb-6">Professor</h1>
+            <h1 className="text-3xl font-bold mb-6">Professor</h1>
 
             {/* Search and Filter Section */}
             <div className="mb-6 space-y-4">
@@ -174,7 +150,7 @@ const AdminProfessor = () => {
 
             {/* Professor List */}
             <div className="bg-white rounded-lg shadow">
-                <div className="p-4 bg-amber-700 text-white rounded-t-lg flex justify-between items-center">
+                <div className="p-4 bg-[#ab842e] text-white rounded-t-lg flex justify-between items-center">
                     <h2 className="font-semibold">List of Professors ({filteredEmployees.length} professors)</h2>
                     <button
                         className="px-4 py-2 bg-white text-[#1a237e] rounded hover:bg-gray-100"
@@ -206,15 +182,11 @@ const AdminProfessor = () => {
                                     <td className="px-4 py-3">{emp.email}</td>
                                     <td className="px-4 py-3">{emp.phone || '-'}</td>
                                     <td className="px-4 py-3">
-                                        <button
-                                            onClick={() => handleStatusChange(emp)}
-                                            className={`px-3 py-1 rounded-full text-sm ${emp.active
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-red-100 text-red-800'
-                                                }`}
-                                        >
-                                            {emp.active ? 'Active' : 'Inactive'}
-                                        </button>
+                                        <UserStatusToggle
+                                            user={emp}
+                                            userType="professor"
+                                            onStatusChange={fetchEmployees}
+                                        />
                                     </td>
                                     <td className="px-4 py-3">
                                         <button

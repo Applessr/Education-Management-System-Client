@@ -53,6 +53,8 @@ function StudentEnrollment() {
 
       setSyllabus(syllabusData);
 
+      console.log("syllabus", syllabusData);
+
       // Extract course codes by category
       if (syllabusData) {
         setCourseCategories({

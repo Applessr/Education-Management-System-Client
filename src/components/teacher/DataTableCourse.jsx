@@ -45,7 +45,7 @@
 //           ) : (
 //             <ChevronRightIcon className="h-5 w-5 mr-2" />
 //           )}
-          
+
 //           <span className="font-bold">
 //             {courseId} {course[courseId][0]?.courseName} ({course[courseId].length} Section{course[courseId].length > 1 ? "s" : ""})
 //           </span>
@@ -171,7 +171,7 @@ export default function DataTableCourse() {
           ) : (
             <ChevronRightIcon className="h-5 w-5 mr-2" />
           )}
-          
+
           <span className="font-bold">
             {courseId} {course[courseId][0]?.courseName} ({course[courseId].length} Section{course[courseId].length > 1 ? "s" : ""})
           </span>
@@ -217,7 +217,7 @@ export default function DataTableCourse() {
                     <TableCell>{section.enrollments.length}</TableCell>
                     <TableCell>
                       <Button
-                        variant="ghost" 
+                        variant="ghost"
                         onClick={(e) => handleEdit(e, section)}
                         className="hover:bg-amber-100"
                       >
@@ -240,8 +240,8 @@ export default function DataTableCourse() {
   }
 
   return (
-    <div className="w-full">
-      <h1 className="text-2xl font-bold text-amber-700 mb-4">Course</h1>
+    <div className="w-full p-6">
+      <h1 className="text-3xl font-bold text-[#ab842e] mb-4">Course</h1>
       {memoizedCourse}
 
       <Dialog open={!!editingCourse} onOpenChange={() => setEditingCourse(null)}>

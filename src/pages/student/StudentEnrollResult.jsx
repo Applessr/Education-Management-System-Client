@@ -4,6 +4,7 @@ import StudentSemesterGrade from "../../components/student/StudentSemisterGrade"
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import useStudent from "@/src/hooks/useStudent";
+import { Printer } from "lucide-react";
 
 function StudentEnrollResult() {
   // State for student info and grades
@@ -29,7 +30,7 @@ function StudentEnrollResult() {
 
   // Fetch data when component mounts
   useEffect(() => {
-    fetchStudentData();
+    // Fetch profile and grade data initially
     getStudentProfile(token);
     getStudentGetGrade(token);
     getStudentGetCredit(token);
@@ -38,10 +39,11 @@ function StudentEnrollResult() {
   }, []);
 
   useEffect(() => {
-    if (studentGrade && studentGPA && studentCPA) {
+    // Check if all data is loaded, then fetch semester data
+    if (studentGrade && studentGPA && studentCPA && studentCredit && studentInfo) {
       fetchStudentData();
     }
-  }, [studentGrade, studentGPA, studentCPA]);
+  }, [studentGrade, studentGPA, studentCPA, studentCredit, studentInfo]);
 
   const mockStudentInfo = {
     studentNo: studentInfo?.studentId,
@@ -58,29 +60,39 @@ function StudentEnrollResult() {
     try {
       setLoading(true);
 
-      const semesterData = studentGrade?.map((grade) => ({
-        semester: grade.semester,
-        courses: [
-          {
-            code: grade.course?.courseCode || "N/A",
-            title: grade.course?.courseName || "N/A",
-            grade: grade.letterGrade || "N/A",
-            credit: grade.course?.credits || 0,
+      // Ensure necessary data is available before proceeding
+      if (!studentGrade || !studentGPA || !studentCPA) {
+        setError("Missing necessary data to generate semester data");
+        return;
+      }
+
+      // Generate semester data
+      const semesterData = studentGrade.map((grade) => {
+        // Find the corresponding GPA data for the semester
+        const semesterGPA = studentGPA?.GPA?.find((g) => g.semester === grade.semester);
+
+        // Map the courses for the semester
+        const courses = grade?.courses.map((course) => ({
+          code: course?.courseCode || "N/A",
+          title: course?.courseName || "N/A",
+          grade: course?.letterGrade || "N/A",
+          credit: course?.credits || 0,
+        }));
+
+        return {
+          semester: grade.semester,
+          courses: courses,
+          gpaInfo: {
+            semGpa: semesterGPA?.gpa || 0,
+            semCredit: semesterGPA?.credits || 0,
+            cumGpa: studentCPA?.AllTermGPA || 0,
           },
-        ],
-        gpaInfo: {
-          semGpa: studentGPA?.GPA?.find((g) => g.semester === grade.semester)?.gpa || 0,
-          semCredit: studentGPA?.GPA?.find((g) => g.semester === grade.semester)?.credits || 0,
-          cumGpa: studentCPA?.AllTermGPA || 0,
-          cumCredit: studentGPA?.GPA?.reduce((total, g) => total + (g?.credits || 0), 0),
-        },
-      })) || [];
+        };
+      }) || [];
 
       setSemesters(semesterData);
-      console.log('semesters :>> ', semesterData);
     } catch (err) {
       setError("Failed to fetch student data");
-      console.error("Error fetching data:", err);
     } finally {
       setLoading(false);
     }
@@ -127,10 +139,13 @@ function StudentEnrollResult() {
       doc.text(`Date Of Graduation: ${mockStudentInfo.dateOfGraduation}`, rightX, startY + 30);
 
       let yPosition = startY + 50;
+
+      // Display courses and GPA information
       semesters.forEach((semester) => {
         doc.setFontSize(14);
         doc.text(semester.semester, doc.internal.pageSize.width / 2, yPosition, { align: "center" });
 
+        // Display courses in a table
         doc.autoTable({
           startY: yPosition + 10,
           head: [["Course Code", "Course Title", "Grade", "Credit"]],
@@ -146,6 +161,8 @@ function StudentEnrollResult() {
         });
 
         yPosition = doc.previousAutoTable.finalY + 10;
+
+        // Display GPA and credit information
         doc.setFontSize(12);
         doc.text(
           `Semester GPA = ${semester.gpaInfo.semGpa} | Semester Credits = ${semester.gpaInfo.semCredit}`,
@@ -153,12 +170,14 @@ function StudentEnrollResult() {
           yPosition
         );
         doc.text(
-          `Cumulative GPA = ${semester.gpaInfo.cumGpa} | Cumulative Credits = ${semester.gpaInfo.cumCredit}`,
+          `Cumulative GPA = ${semester.gpaInfo.cumGpa.toFixed(2)} `,
           leftX,
           yPosition + 10
         );
 
         yPosition += 30;
+
+        // Add a new page if content overflows
         if (yPosition > doc.internal.pageSize.height - 40) {
           doc.addPage();
           yPosition = 20;
@@ -206,19 +225,19 @@ function StudentEnrollResult() {
               <div className="space-y-4 w-1/2">
                 <div className="flex gap-3">
                   <p className="font-semibold">Student ID</p>
-                  <span>{mockStudentInfo.studentNo}</span>
+                  <span>{mockStudentInfo?.studentNo}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Name </p>
-                  <span>{mockStudentInfo.name}</span>
+                  <span>{mockStudentInfo?.name}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Date of Birth</p>
-                  <span>{mockStudentInfo.dateOfBirth}</span>
+                  <span>{mockStudentInfo?.dateOfBirth}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Address</p>
-                  <span>{mockStudentInfo.placeOfBirth}</span>
+                  <span>{mockStudentInfo?.placeOfBirth}</span>
                 </div>
                 {/* ... other student info fields */}
               </div>
@@ -226,19 +245,19 @@ function StudentEnrollResult() {
               <div className="space-y-4 w-1/2 ">
                 <div className="flex gap-3">
                   <p className="font-semibold">Faculty</p>
-                  <span>{mockStudentInfo.fieldOfStudy}</span>
+                  <span>{mockStudentInfo?.fieldOfStudy}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Field of Study</p>
-                  <span>{mockStudentInfo.degreeConferred}</span>
+                  <span>{mockStudentInfo?.degreeConferred}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Date of Admission</p>
-                  <span>{mockStudentInfo.dateOfAdmission}</span>
+                  <span>{mockStudentInfo?.dateOfAdmission}</span>
                 </div>
                 <div className="flex gap-3">
                   <p className="font-semibold">Date of Graduation</p>
-                  <span>{mockStudentInfo.dateOfGraduation}</span>
+                  <span>{mockStudentInfo?.dateOfGraduation}</span>
                 </div>
                 {/* ... other student info fields */}
               </div>
@@ -255,8 +274,9 @@ function StudentEnrollResult() {
       <div className="flex justify-center mb-8">
         <button
           onClick={generatePDF}
-          className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+          className="flex gap-3 px-6 py-3 bg-[#272988] text-white rounded  hover:bg-[#20216d] transition-colors duration-200"
         >
+          <Printer />
           Download Transcript
         </button>
       </div>

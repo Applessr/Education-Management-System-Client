@@ -1,23 +1,35 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import useUser from '@/src/hooks/useUser';
 
 const TeacherSidebar = () => {
     const { logout, user } = useUser();
     const [open, setOpen] = useState(true);
-    const [active, setActive] = useState("profile");
+    const [active, setActive] = useState("");
     const navigate = useNavigate();
+    const location = useLocation()
+
+
+    useEffect(() => {
+        const currentPath = location.pathname.split('/')[2] || "dashboard";
+        setActive(currentPath);
+    }, [])
 
     const sidebarItems = useMemo(() => [
-        { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
         { icon: <LayoutDashboard size={24} />, text: "Dashboard", name: "dashboard" },
+        { icon: <UserCircle size={24} />, text: "Profile", name: "profile" },
         { icon: <CalendarRange size={24} />, text: "Schedule", name: "schedule" },
         { icon: <Notebook size={24} />, text: "Course", name: "course" },
         { icon: <Mail size={24} />, text: "Requested Course", name: "requested-course" },
-        { icon: <ContactRound size={24} />, text: "Advisors", name: "advisors" },
-    ], []); 
+        { icon: <ContactRound size={24} />, text: "Advisee", name: "advisee" },
+    ], []);
+
+    useEffect(() => {
+        const pathName = location.pathname.split('/').pop(); 
+        setActive(pathName);
+      }, [location]);
 
     const handleClickMenu = (name) => {
         setActive(name);
@@ -40,12 +52,12 @@ const TeacherSidebar = () => {
                         <img
                             src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
                             alt="Pierre University"
-                            className="h-8"
+                            className="h-16"
                         />
-                        <span className="font-semibold text-lg text-amber-700">Pierre University</span>
+                        <span className="font-semibold text-xl text-[#ab842e]">Pierre University</span>
                     </div>
                     <button
-                        className="p-1.5 rounded-lg text-amber-700 bg-gray-50 transition duration-500 hover:bg-gray-300"
+                        className="p-1.5 rounded-lg text-[#ab842e] amber-700 bg-gray-50 transition duration-500 hover:bg-gray-300"
                         onClick={handleClickSidebar}
                     >
                         {open ? <ChevronFirst /> : <ChevronLast />}

@@ -1,38 +1,7 @@
-import React from 'react';
+import useStudent from '@/src/hooks/useStudent';
+import React, { useEffect, useState } from 'react';
 
 // Sample data structure matching backend datetime format
-const classes = [
-  {
-    name: "Math",
-    code: "MATH101",
-    instructor: "Dr. Smith",
-    location: "Room 101",
-    startTime: "2024-11-01T09:00:00",
-    endTime: "2024-11-01T10:30:00",
-    dayOfWeek: 1, // 1 = Monday
-    color: "bg-blue-50 hover:bg-blue-100"
-  },
-  {
-    name: "Science",
-    code: "SCI201", 
-    instructor: "Dr. Johnson",
-    location: "Lab 1",
-    startTime: "2024-11-01T10:30:00",
-    endTime: "2024-11-01T12:00:00",
-    dayOfWeek: 3, // 3 = Wednesday
-    color: "bg-green-50 hover:bg-green-100"
-  },
-  {
-    name: "History",
-    code: "HIS301",
-    instructor: "Prof. Williams",
-    location: "Room 202",
-    startTime: "2024-11-01T13:00:00",
-    endTime: "2024-11-01T14:30:00",
-    dayOfWeek: 5, // 5 = Friday
-    color: "bg-purple-50 hover:bg-purple-100"
-  }
-];
 
 const times = Array.from({ length: 19 }, (_, i) => {
   const hour = 8 + Math.floor(i / 2);
@@ -40,7 +9,7 @@ const times = Array.from({ length: 19 }, (_, i) => {
   return `${hour.toString().padStart(2, '0')}:${minutes}`;
 });
 
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday", "Sunday"];
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const isWithinClassTime = (classStartTime, classEndTime, slotTime) => {
   const [slotHour, slotMinute] = slotTime.split(":").map(Number);
@@ -61,18 +30,57 @@ const getColSpan = (startTime, endTime) => {
 };
 
 const formatTimeDisplay = (dateTimeString) => {
-  return new Date(dateTimeString).toLocaleTimeString('en-US', {
+  const date = new Date(dateTimeString);
+  date.setHours(date.getHours());
+
+  return date.toLocaleTimeString('en-GB', {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: true
   });
 };
-
 const getDayIndex = (dayOfWeek) => {
   return dayOfWeek - 1; // Convert 1-based to 0-based index
 };
 
 const ClassSchedule = () => {
+  const { getClassSchedule, classSchedule } = useStudent();
+  const token = localStorage.getItem('token');
+  const semester = '1/2024';
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    getClassSchedule(token, semester).finally(() => setLoaded(true));
+  }, [token, semester]);
+
+  const subtractSevenHours = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    date.setHours(date.getHours() - 7); // Subtract 7 hours
+    return date;
+  };
+
+  const classes = (classSchedule || []).map((item) => {
+    const classSchedules = item?.course?.classSchedules || [];
+
+    return classSchedules.map((schedule) => ({
+      name: item?.course?.courseName,
+      code: item?.course?.courseCode,
+      instructor: `${item?.course?.teacher?.firstName} ${item?.course?.teacher?.lastName}`,
+      location: schedule.room,
+      startTime: subtractSevenHours(schedule.startTime),
+      endTime: subtractSevenHours(schedule.endTime),
+      dayOfWeek: schedule.day,
+      color: "bg-blue-50 hover:bg-blue-100",
+    }));
+  }).flat();
+
+
+  console.log('classSchedule :>> ', classSchedule);
+
+  if (!loaded) {
+    return <div>Loading...</div>;
+  }
+
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
       <div className="mb-4">
@@ -82,13 +90,13 @@ const ClassSchedule = () => {
         <table className="w-full border-collapse" role="grid" aria-label="Class Schedule">
           <thead>
             <tr>
-              <th 
+              <th
                 className="border border-gray-200 px-4 py-2 bg-gray-100 text-left font-semibold"
                 scope="col"
               >
                 Day
               </th>
-              {times.map((time) => (
+              {times?.map((time) => (
                 <th
                   key={time}
                   className="border border-gray-200 px-4 py-2 bg-gray-100 text-center font-semibold text-sm"
@@ -100,7 +108,7 @@ const ClassSchedule = () => {
             </tr>
           </thead>
           <tbody>
-            {days.map((day, dayIndex) => (
+            {days?.map((day, dayIndex) => (
               <tr key={day}>
                 <th
                   className="border border-gray-200 px-4 py-2 bg-gray-50 font-medium text-left"
@@ -109,7 +117,7 @@ const ClassSchedule = () => {
                   {day}
                 </th>
                 {times.map((time) => {
-                  const classDetails = classes.find(
+                  const classDetails = classes?.find(
                     (cls) =>
                       getDayIndex(cls.dayOfWeek) === dayIndex &&
                       isWithinClassTime(cls.startTime, cls.endTime, time)

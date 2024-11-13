@@ -1,189 +1,51 @@
-import * as React from "react";
+import { useEffect } from "react";
 import CourseRequestItem from "./CourseRequestItem";
+import useTeacher from "@/src/hooks/useTeacher";
+import Enroll from "../animations/Enroll";
 
-//fetch data
-const EnrollData = [
-  {
-    id: 1,
-    section: 801,
-    courseCode: 101234,
-    courseName: "ECON1",
-    enrollments: [
-      {
-        id: "1",
-        studentId: 640210011,
-        name: "Paul William",
-        faculty: "Business and Economic",
-        major: "Business Administration",
-        status: "Approved",
-        note: "change section",
-        score: 76,
-      },
-      
-    ],
-  },
-  
-  
-];
+const CourseRequest = () => {
+  const { getEnrollRequest, enroll } = useTeacher();
+  const token = localStorage.getItem("token");
 
-const handleApprove = (student) => {
-  console.log("Approved studentId:", student.studentId);
-  // Implement your approve logic here
-};
+  useEffect(() => {
+    getEnrollRequest(token);
+  }, [token]);
 
-const handleReject = (student) => {
-  console.log("Reject studentId:", student.studentId);
-  // Implement your reject logic here
-};
+  console.log('enroll :>> ', enroll);
 
-//fetch courseRequest
+  const coursesWithPendingEnrollments = enroll
+    ? enroll.map((course) => {
+      const pendingEnrollments = course.enrollments.filter(
+        (enrollment) => enrollment.status === "PENDING"
+      );
+      return {
+        ...course,
+        enrollments: pendingEnrollments,
+        pendingCount: pendingEnrollments.length,
+      };
+    }).filter(course => course.pendingCount > 0)
+    : [];
 
-export const columns = [
-  {
-    accessorKey: "id",
-    header: "#",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
-  },
-  {
-    accessorKey: "studentId",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "studentId")
-          }
-        >
-          Student Id
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("studentId")}</div>
-    ),
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "name")}
-        >
-          Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "faculty",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "faculty")
-          }
-        >
-          Faculty
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("faculty")}</div>
-    ),
-  },
-  {
-    accessorKey: "major",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "major")}
-        >
-          Major
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("major")}</div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() =>
-            column.toggleSorting(column.getIsSorted() === "status")
-          }
-        >
-          Status
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "note",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "note")}
-        >
-          Note
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("note")}</div>,
-  },
-  {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: ({ row }) => (
-      <div className="flex space-x-2">
-        <Button
-          variant="success"
-          size="sm"
-          onClick={() => handleApprove(row.original.studentId)}
-        >
-          Approved
-        </Button>
-        <Button
-          variant="danger"
-          size="sm"
-          onClick={() => handleReject(row.original.studentId)}
-        >
-          Reject
-        </Button>
-      </div>
-    ),
-  },
-];
-
-function CourseRequest() {
   return (
-    <div>
-      {EnrollData.map((data) => (
-        <CourseRequestItem
-          key={data.id}
-          course={data}
-          data={data.enrollments}
-        />
-      ))}
+    <div className="p-6">
+      <h1 className="text-3xl font-bold text-[#ab842e]">Enroll Request</h1>
+      {coursesWithPendingEnrollments.length > 0 ? (
+        coursesWithPendingEnrollments.map((course) => (
+          <div className="mt-4" key={course.id}>
+            <CourseRequestItem
+              course={course}
+              data={course.enrollments}
+            />
+          </div>
+        ))
+      ) : (
+        <div className="flex flex-col justify-center items-center">
+          <Enroll />
+          <h1 className="text-2xl text-[#b9b3b3]">No enroll request...</h1>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default CourseRequest;

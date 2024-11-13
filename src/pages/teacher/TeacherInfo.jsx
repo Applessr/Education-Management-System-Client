@@ -78,8 +78,8 @@ const TeacherInfo = () => {
   );
 
   return (
-    <div>
-      <h1 className="text-2xl text-amber-700">Profile</h1>
+    <div className='p-6'>
+      <h1 className="text-3xl text-[#ab842e] font-bold">Profile</h1>
 
       {/* Main Card */}
       <div className="mt-6 bg-white rounded-lg shadow-sm overflow-hidden">
@@ -91,7 +91,7 @@ const TeacherInfo = () => {
           {/* Profile Info */}
           <div className="flex items-center gap-4 mb-12">
             <img
-              src="https://i.pinimg.com/236x/f3/c6/ee/f3c6ee1321d3e96270da512e44e0f30b.jpg"
+              src="https://res.cloudinary.com/djudr1vzc/image/upload/v1731404272/teacher_icon2_ulmeuc.png"
               alt="Professor avatar"
               className="w-16 h-16 rounded-full object-cover border-2 border-amber-100"
             />
@@ -137,14 +137,14 @@ const TeacherInfo = () => {
               value={teacherInfo?.email}
             />
 
-            <div className="pt-4">
+            <div className="pt-4 flex justify-center">
               <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                 <DialogTrigger asChild>
                   <button
                     className="flex items-center px-4 py-2 rounded-md border border-amber-200 text-amber-600 hover:text-amber-700 hover:bg-amber-50 hover:border-amber-300 transition-colors duration-200"
                   >
                     <KeyRound className="w-4 h-4 mr-2" />
-                    Reset password
+                    Change password
                   </button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">

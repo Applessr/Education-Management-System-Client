@@ -15,7 +15,7 @@ import MajorRegisNodeItem from "../MajorRegisNodeItem";
 
 function MajorNormalNode({ data }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  console.log(data, "gradeeeeeee");
+  // console.log(data, "gradeeeeeee");
   return (
     <div
       className="relative "

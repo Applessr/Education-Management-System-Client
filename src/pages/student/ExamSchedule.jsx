@@ -1,47 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import listPlugin from "@fullcalendar/list";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
-
-const examEvents = [
-  {
-    title: "MATH101 Final Exam",
-    start: "2024-11-05T14:00:00",
-    end: "2024-11-05T16:00:00",
-    location: "Exam Hall A",
-    courseCode: "MATH101",
-    instructor: "Dr. Smith",
-    type: "Final Exam",
-    backgroundColor: "#EF4444",
-    borderColor: "#DC2626"
-  },
-  {
-    title: "SCI201 Midterm",
-    start: "2024-11-12T10:00:00",
-    end: "2024-11-12T12:00:00",
-    location: "Lab 1",
-    courseCode: "SCI201",
-    instructor: "Dr. Johnson",
-    type: "Midterm Exam",
-    backgroundColor: "#EF4444",
-    borderColor: "#DC2626"
-  },
-  {
-    title: "HIS301 Final Exam",
-    start: "2024-11-20T09:00:00",
-    end: "2024-11-20T11:00:00",
-    location: "Exam Hall B",
-    courseCode: "HIS301",
-    instructor: "Prof. Williams",
-    type: "Final Exam",
-    backgroundColor: "#EF4444",
-    borderColor: "#DC2626"
-  }
-];
+import useStudent from "@/src/hooks/useStudent";
 
 function ExamSchedule() {
+  const { getExamDate, examDate } = useStudent();
+  const token = localStorage.getItem('token');
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const calendarRef = React.useRef(null);
+
+  const semester = '1/2024'
+
+  useEffect(() => {
+
+    getExamDate(token, semester)
+  }, [])
+
+  console.log('examDate :>> ', examDate);
+  const examEvents = useMemo(() => {
+    if (!examDate || examDate.length === 0) return [];
+    return examDate.map((item) => {
+      const examDateObject = new Date(item.examDate);
+      const startTime = item.startTime.split(':');
+      const endTime = item.endTime.split(':');
+      
+
+      const startDateTime = new Date(examDateObject);
+      startDateTime.setHours(startTime[0], startTime[1], startTime[2]);
+      
+      const endDateTime = new Date(examDateObject);
+      endDateTime.setHours(endTime[0], endTime[1], endTime[2]);
+  
+      return {
+        title: `${item?.course?.courseName}`,
+        start: startDateTime.toISOString(),
+        end: endDateTime.toISOString(),
+        location: item?.room,
+        courseCode: item?.course?.courseCode,
+        instructor: item?.teacher,
+        type: item?.examType === "MIDTERM" ? "Midterm" : "Final",
+        backgroundColor: "#EF4444",
+        borderColor: "#DC2626"
+      };
+    });
+  }, [examDate]);
+
+  console.log('examEvents :>> ', examEvents);
+
+
+  // const examEvents = [
+  //   {
+  //     title: "MATH101 Final Exam",
+  //     start: "2024-11-05T14:00:00",
+  //     end: "2024-11-05T16:00:00",
+  //     location: "Exam Hall A",
+  //     courseCode: "MATH101",
+  //     instructor: "Dr. Smith",
+  //     type: "Final Exam",
+  //     backgroundColor: "#EF4444",
+  //     borderColor: "#DC2626"
+  //   },
+
+  // ];
+
 
   const handleYearChange = (yearDelta) => {
     const newYear = selectedYear + yearDelta;
@@ -132,7 +154,7 @@ function ExamSchedule() {
           Viewing exams for year: {selectedYear}
         </div>
       </div>
-      
+
       <FullCalendar
         ref={calendarRef}
         plugins={[listPlugin]}

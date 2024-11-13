@@ -31,14 +31,14 @@ function StudentSemesterGradeItem({ semester, courses, gpaInfo }) {
       <div style={{ textAlign: "right", margin: "20px 10%" }} >
         <p style={{ color: "blue" }}>
           <strong>
-            sem. GPA = {gpaInfo.semGpa} Credit = {gpaInfo.semCredit}
+            GPA = {gpaInfo.semGpa} Credit = {gpaInfo.semCredit}
           </strong>
         </p>
-        <p style={{ color: "blue" }}>
+        {/* <p style={{ color: "blue" }}>
           <strong>
-            cum. GPA = {gpaInfo.cumGpa} Credit = {gpaInfo.cumCredit}
+            CPA = {gpaInfo.cumGpa.toFixed(2)} 
           </strong>
-        </p>
+        </p> */}
       </div>
     </div>
   );

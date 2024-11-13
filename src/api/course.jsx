@@ -43,8 +43,9 @@ export const studentGetEnrollCourseBySemester = (token, body) =>
     },
   });
 
-export const studentGetClassSchedule = (token, body) =>
-  axios.get("/course/student/class-schedule", body, {
+export const studentGetClassSchedule = (token, semester) =>
+  axios.get("/course/student/class-schedule", {
+    params: { semester },
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -85,22 +86,37 @@ export const employeeEditCourse = (token, courseId, body) =>
   });
 
 export const employeeInactiveCourse = (token, courseId) =>
-  axios.patch("/course/employee/inactive-course/" + courseId, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  axios.patch(
+    "/course/employee/inactive-course/" + courseId,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
 export const employeeActiveCourse = (token, courseId) =>
-  axios.patch("/course/employee/active-course/" + courseId, {
+  axios.patch(
+    "/course/employee/active-course/" + courseId,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+export const assignCourseToSyllabus = (token, body) =>
+  axios.post("/course/employee/assign-syllabus", body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-export const studentGetClassScheduleByCourseId = (token, courseId) =>
-  axios.get("/course/student/class-schedule-by-id/" + courseId, {
+export const studentGetClassScheduleByCourseId = (token, courseCode) => {
+  return axios.get("/course/student/class-schedule-by-id/" + courseCode, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+};

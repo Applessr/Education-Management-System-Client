@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ChevronFirst,
   ChevronLast,
@@ -12,7 +12,7 @@ import {
   IdCard,
   LibraryBig,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
 import useUser from "@/src/hooks/useUser";
 
@@ -20,8 +20,14 @@ const AdminSidebar = () => {
   const { logout, user } = useUser();
   console.log(user);
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("profile");
+  const [active, setActive] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = location.pathname.split("/")[2] || "dashboard";
+    setActive(currentPath);
+  }, []);
 
   const sidebarItems = useMemo(
     () => [
@@ -46,6 +52,10 @@ const AdminSidebar = () => {
     setActive(name);
     navigate(`/admin/${name}`);
   };
+  useEffect(() => {
+    const pathName = location.pathname.split("/").pop();
+    setActive(pathName);
+  }, [location]);
 
   const handleClickSidebar = () => {
     setOpen(!open);
@@ -67,9 +77,9 @@ const AdminSidebar = () => {
             <img
               src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
               alt="Pierre University"
-              className="h-8"
+              className="h-16"
             />
-            <span className="font-semibold text-lg">Pierre University</span>
+            <span className="font-semibold text-xl">Pierre University</span>
           </div>
           <button
             className="p-1.5 rounded-lg bg-gray-50 transition duration-500 hover:bg-gray-300"
@@ -91,35 +101,23 @@ const AdminSidebar = () => {
           ))}
         </ul>
 
-        <ul className="flex-1 px-3">
-          {sidebarItems.map((item) => (
-            <SidebarItem
-              key={item.name}
-              icon={() => item.icon}
-              text={open ? item.text : ""}
-              active={item.name === active}
-              onClick={() => handleClickMenu(item.name)}
-            />
-          ))}
-        </ul>
-
-        <div className="bg-[#393af2] border-t p-4">
+        <div className="bg-[#D1D1D1] border-t p-4">
           <div className="flex items-center gap-4">
             {open && (
               <div>
-                <h4 className="font-extrabold text-white">
+                <h4 className="font-extrabold text-black">
                   {user?.firstName} {user?.lastName}
                 </h4>
-                <p className="text-md text-white">{user?.role}</p>
+                <p className="text-md text-black">{user?.role}</p>
               </div>
             )}
             <div
               onClick={handleLogout}
-              className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${
+              className={`hover:bg-white w-12 h-12 rounded-full flex justify-center items-center ${
                 open ? "ml-auto" : "hidden"
               }`}
             >
-              <LogOut className={`text-white `} />
+              <LogOut className={`text-black `} />
             </div>
           </div>
         </div>

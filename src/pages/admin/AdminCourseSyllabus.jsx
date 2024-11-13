@@ -42,12 +42,12 @@ const AdminCourseSyllabus = () => {
     };
 
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center pt-6'>
             <div className='flex flex-col justify-center items-center'>
-                <h1 className='text-2xl font-semibold'>Course Syllabus</h1>
+                <h1 className='text-3xl font-bold'>Course Syllabus</h1>
                 <div className='mt-8'>
                     <Select onValueChange={handleSelect}>
-                        <SelectTrigger className="w-[300px] text-lg">
+                        <SelectTrigger className="w-[300px] text-lg bg-white">
                             <SelectValue placeholder="Faculty" />
                         </SelectTrigger>
                         <SelectContent>
@@ -59,7 +59,7 @@ const AdminCourseSyllabus = () => {
                         </SelectContent>
                     </Select>
                 </div>
-                <div className='mt-8'>
+                <div className='mt-8 bg-white'>
                     <Select onValueChange={handleSelectMajor}>
                         <SelectTrigger className="w-[300px] text-lg">
                             <SelectValue placeholder="Major" />
@@ -86,3 +86,4 @@ const AdminCourseSyllabus = () => {
 }
 
 export default AdminCourseSyllabus
+

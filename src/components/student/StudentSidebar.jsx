@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   ChevronFirst,
   ChevronLast,
@@ -16,7 +16,7 @@ import useUser from "@/src/hooks/useUser";
 const StudentSidebar = () => {
   const { logout, user } = useUser();
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("profile");
+  const [active, setActive] = useState("dashboard");
   const navigate = useNavigate();
 
   const sidebarItems = useMemo(() => [
@@ -38,7 +38,13 @@ const StudentSidebar = () => {
       text: "Grade Report",
       name: "enrollResult",
     }
-  ], []); // `[]` เพื่อให้สร้าง `sidebarItems` แค่ครั้งเดียว
+  ], []);
+
+  useEffect(() => {
+    const pathName = location.pathname.split('/').pop(); 
+    setActive(pathName);
+  }, [location]);
+
 
   const handleClickMenu = (name) => {
     setActive(name);
@@ -61,9 +67,9 @@ const StudentSidebar = () => {
             <img
               src="https://i.postimg.cc/mZnSzDB9/Group-7-Project.png"
               alt="Pierre University"
-              className="h-8"
+              className="h-16"
             />
-            <span className="font-bold text-xl">Pierre University</span>
+            <span className="font-semibold text-lg">Pierre University</span>
           </div>
           <button
             className="p-1.5 rounded-lg bg-gray-50 transition duration-500 hover:bg-gray-300"
@@ -93,8 +99,8 @@ const StudentSidebar = () => {
                 <p className="text-[1rem] font-light text-white">{user?.role}</p>
               </div>
             )}
-            <div onClick={handleLogout} className={`hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"}`}>
-              <LogOut className="text-white" />
+            <div onClick={handleLogout} className={`cursor-pointer hover:bg-[#2f2fc8] w-12 h-12 rounded-full flex justify-center items-center ${open ? "ml-auto" : "hidden"} `}>
+              <LogOut className="text-white " />
             </div>
           </div>
         </div>

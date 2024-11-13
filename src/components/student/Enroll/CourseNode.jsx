@@ -32,7 +32,7 @@ import SubjectReport from "../SubjectReport";
 // import MajorSelection from "./Enroll/MajorSelection";
 import SemesterHeader from "./SemesterHeader";
 import MajorNormalNode from "./MajorNormalNode";
-import { studentViewGrade } from "@/src/api/grade";
+import { studentGetAllGrade } from "@/src/api/grade";
 
 const nodeTypes = {
   majorNormalNode: MajorNormalNode,
@@ -447,7 +447,7 @@ export default function EnrollmentFlow() {
       // console.log(node.data.code);
 
       const matchingGrade = studentGrades.find(
-        (grade) => grade?.course?.courseCode === node.data.code
+        (grade) => grade?.course?.courseCode === node?.data?.code
       );
 
       // If there's a matching course, update the node
@@ -456,8 +456,8 @@ export default function EnrollmentFlow() {
           ...node,
           data: {
             ...node.data,
-            code: matchingGrade.course.courseCode,
-            grade: matchingGrade.letterGrade,
+            code: matchingGrade?.course?.courseCode,
+            grade: matchingGrade?.letterGrade,
           },
         };
       }
@@ -1171,7 +1171,7 @@ export default function EnrollmentFlow() {
   ];
   useEffect(() => {
     const fetchStudentGrade = async () => {
-      const resp = await studentViewGrade(token);
+      const resp = await studentGetAllGrade(token);
       setStudentGrade(resp.data);
     };
 

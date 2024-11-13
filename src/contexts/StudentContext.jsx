@@ -1,11 +1,19 @@
 import React, { createContext, useState } from "react";
-import { studentGetCredit, studentGetProfile } from "../api/student";
+
 import {
   studentGetGPA,
   studentGetGPABySemester,
   studentViewGrade,
+  studentViewScorePerSub,
 } from "../api/grade";
 import * as courseApi from "../api/course";
+import {
+  studentCheckPayMent,
+  studentGetCredit,
+  studentGetExamDate,
+  studentGetNotification,
+  studentGetProfile,
+} from "../api/student";
 
 const StudentContext = createContext();
 
@@ -15,9 +23,13 @@ const StudentContextProvider = (props) => {
   const [studentCredit, setStudentCredit] = useState(null);
   const [studentGPA, setStudentGPA] = useState(null);
   const [studentCPA, setStudentCPA] = useState(null);
-  const token = localStorage.getItem("token");
-  //enrollment
+  const [studentPayMent, setStudentPayMent] = useState(null);
+  const [studentScore, setStudentScore] = useState(null);
+  const [classSchedule, setClassSchedule] = useState(null);
+  const [examDate, setExamDate] = useState(null);
+  const [notification, setNotification] = useState(null);
   const [enrollList, setEnrollList] = useState([]);
+  const token = localStorage.getItem("token");
 
   const getStudentProfile = async () => {
     try {
@@ -70,6 +82,51 @@ const StudentContextProvider = (props) => {
       console.log(error.response);
     }
   };
+  const getStudentPayMentStatus = async (token, semester) => {
+    try {
+      const response = await studentCheckPayMent(token, { semester });
+      console.log("response :>> ", response);
+      setStudentPayMent(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  const getStudentScore = async (token, courseId) => {
+    try {
+      const response = await studentViewScorePerSub(token, courseId);
+      console.log("response :>> ", response);
+      setStudentScore(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  const getClassSchedule = async (token, semester) => {
+    try {
+      const response = await courseApi.studentGetClassSchedule(token, semester);
+      console.log("response getClassSchedule :>> ", response);
+      setClassSchedule(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  const getExamDate = async (token, semester) => {
+    try {
+      const response = await studentGetExamDate(token, semester);
+      console.log("response :>> ", response);
+      setExamDate(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  const getNotification = async (token) => {
+    try {
+      const response = await studentGetNotification(token);
+      console.log("response :>> ", response);
+      setNotification(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   const studentGetEnrollCourseBySemester = async (token, body) => {
     try {
@@ -112,11 +169,20 @@ const StudentContextProvider = (props) => {
     getStudentGetGPA,
     studentGPA,
     studentCPA,
+    studentPayMent,
+    studentScore,
+    getStudentScore,
+    getClassSchedule,
+    classSchedule,
+    getExamDate,
+    examDate,
+    getNotification,
+    notification,
     fetchPendingEnrollment,
+    getStudentPayMentStatus,
     enrollList,
     studentGetEnrollCourseBySemester,
     studentSendEnrollRequest,
-    enrollList,
   };
 
   return (
