@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { studentCheckPayMent, studentGetCredit, studentGetExamDate, studentGetProfile } from "../api/student";
+import { studentCheckPayMent, studentGetCredit, studentGetExamDate, studentGetNotification, studentGetProfile } from "../api/student";
 import { studentGetGPA, studentGetGPABySemester, studentViewGrade, studentViewScorePerSub } from "../api/grade";
 import { studentGetClassSchedule } from "../api/course";
 
@@ -15,6 +15,7 @@ const StudentContextProvider = (props) => {
     const [studentScore, setStudentScore] = useState(null);
     const [classSchedule, setClassSchedule] = useState(null);
     const [examDate, setExamDate] = useState(null);
+    const [notification, setNotification] = useState(null);
     const token = localStorage.getItem('token');
 
     const getStudentProfile = async () => {
@@ -95,6 +96,15 @@ const StudentContextProvider = (props) => {
             console.log(error.response);
         }
     }
+    const getNotification = async (token) => {
+        try {
+            const response = await studentGetNotification(token);
+            console.log('response :>> ', response);
+            setNotification(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
 
     const values = {
         getStudentProfile,
@@ -115,6 +125,8 @@ const StudentContextProvider = (props) => {
         classSchedule,
         getExamDate,
         examDate,
+        getNotification,
+        notification,
     };
 
     return (

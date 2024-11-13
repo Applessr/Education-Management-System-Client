@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   ChevronFirst,
   ChevronLast,
@@ -38,7 +38,13 @@ const StudentSidebar = () => {
       text: "Grade Report",
       name: "enrollResult",
     }
-  ], []); // `[]` เพื่อให้สร้าง `sidebarItems` แค่ครั้งเดียว
+  ], []);
+
+  useEffect(() => {
+    const pathName = location.pathname.split('/').pop(); 
+    setActive(pathName);
+  }, [location]);
+
 
   const handleClickMenu = (name) => {
     setActive(name);

@@ -4,30 +4,35 @@ import StatsCard from './StatsCard';
 
 const StatsGrid = ({ data }) => {
     const statsData = [
-        { 
-            title: 'Professor', 
-            value: data?.teacher?.toString() || '0', 
-            icon: Users 
+        {
+            title: 'Professor',
+            value: data?.teacher?.toString() || '0',
+            icon: Users,
+            color: 'bg-[#DFF3FF]'
         },
-        { 
-            title: 'Student', 
-            value: data?.student?.toString() || '0', 
-            icon: BookOpen 
+        {
+            title: 'Student',
+            value: data?.student?.toString() || '0',
+            icon: BookOpen,
+            color: 'bg-[#E7E7E7]'
         },
-        { 
-            title: 'Subject', 
-            value: data?.subject?.toString() || '0', 
-            icon: Bookmark 
+        {
+            title: 'Subject',
+            value: data?.subject?.toString() || '0',
+            icon: Bookmark,
+            color: 'bg-[#DFF3FF]'
         },
-        { 
-            title: 'Faculty', 
-            value: data?.faculty?.toString() || '0', 
-            icon: School 
+        {
+            title: 'Faculty',
+            value: data?.faculty?.toString() || '0',
+            icon: School ,
+            color: 'bg-[#E7E7E7]'
         },
-        { 
-            title: 'Major', 
-            value: data?.major?.toString() || '0', 
-            icon: GraduationCap 
+        {
+            title: 'Major',
+            value: data?.major?.toString() || '0',
+            icon: GraduationCap,
+            color: 'bg-[#DFF3FF]'
         }
     ];
 
@@ -39,6 +44,7 @@ const StatsGrid = ({ data }) => {
                     title={stat.title}
                     value={stat.value}
                     icon={stat.icon}
+                    bgColor={stat.color}
                 />
             ))}
         </div>

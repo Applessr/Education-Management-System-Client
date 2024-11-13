@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
@@ -18,6 +18,11 @@ const TeacherSidebar = () => {
         { icon: <Mail size={24} />, text: "Requested Course", name: "requested-course" },
         { icon: <ContactRound size={24} />, text: "Advisee", name: "advisee" },
     ], []); 
+
+    useEffect(() => {
+        const pathName = location.pathname.split('/').pop(); 
+        setActive(pathName);
+      }, [location]);
 
     const handleClickMenu = (name) => {
         setActive(name);

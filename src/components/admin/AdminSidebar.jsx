@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound, IdCard, LibraryBig } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
@@ -18,6 +18,11 @@ const AdminSidebar = () => {
         { icon: <IdCard size={24} />, text: "Students", name: "student" },
         { icon: <LibraryBig size={24} />, text: "Course Syllabus", name: "course-syllabus" },
     ], [])
+
+    useEffect(() => {
+        const pathName = location.pathname.split('/').pop(); 
+        setActive(pathName);
+      }, [location]);
 
     const handleClickMenu = (name) => {
         setActive(name);

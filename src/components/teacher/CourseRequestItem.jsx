@@ -25,13 +25,13 @@ const CourseRequestItem = ({ course, data }) => {
 
   const handleApprove = async (requestId) => {
     console.log('requestId :>> ', requestId);
-    await editEnrollStatus(token, requestId, { status: 'APPROVED' });
+    await editEnrollStatus(token, requestId, { status: 'APPROVED', courseId: course.id, courseName: course.courseName });
     getEnrollRequest(token);
   };
 
   const handleReject = async (requestId) => {
     console.log('requestId :>> ', requestId);
-    await editEnrollStatus(token, requestId, { status: 'REJECTED' });
+    await editEnrollStatus(token, requestId, { status: 'REJECTED', courseId: course.id, courseName: course.courseName });
     getEnrollRequest(token);
   };
 
