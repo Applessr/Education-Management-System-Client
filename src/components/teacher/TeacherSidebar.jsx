@@ -26,6 +26,11 @@ const TeacherSidebar = () => {
         { icon: <ContactRound size={24} />, text: "Advisee", name: "advisee" },
     ], []);
 
+    useEffect(() => {
+        const pathName = location.pathname.split('/').pop(); 
+        setActive(pathName);
+      }, [location]);
+
     const handleClickMenu = (name) => {
         setActive(name);
         navigate(`/teacher/${name}`);

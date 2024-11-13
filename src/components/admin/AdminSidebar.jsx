@@ -26,6 +26,11 @@ const AdminSidebar = () => {
         { icon: <LibraryBig size={24} />, text: "Course Syllabus", name: "course-syllabus" },
     ], [])
 
+    useEffect(() => {
+        const pathName = location.pathname.split('/').pop(); 
+        setActive(pathName);
+      }, [location]);
+
     const handleClickMenu = (name) => {
         setActive(name);
         navigate(`/admin/${name}`);

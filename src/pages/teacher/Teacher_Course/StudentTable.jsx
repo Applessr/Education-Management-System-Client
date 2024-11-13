@@ -37,7 +37,7 @@ const StudentTable = ({ students, onFilter, courseId,refreshData }) => {
                                 <td className="p-2">{student.name}</td>
                                 <td className="p-2">{student.faculty}</td>
                                 <td className="p-2">{student.major}</td>
-                                <td className="p-2">{student.score[0].totalPoint}</td>
+                                <td className="p-2">{student.score[0]?.totalPoint}</td>
                                 <td className="p-2">
                                     <div className="flex space-x-2">
                                         <AddScoreButton
