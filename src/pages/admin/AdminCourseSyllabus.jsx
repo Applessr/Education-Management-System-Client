@@ -86,3 +86,4 @@ const AdminCourseSyllabus = () => {
 }
 
 export default AdminCourseSyllabus
+

@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import { Edit, X } from 'lucide-react';
 import AddEmployeeForm from './AddEmployeeForm';
 import EditProfessorForm from './EditProfessorForm';
-import { adminActiveAccount, adminGetTeacher, adminInactiveAccount } from '@/src/api/admin';
+import { adminGetTeacher } from '@/src/api/admin';
+import UserStatusToggle from '@/src/hooks/UserStatusToggle';
 
 const AdminProfessor = () => {
     // State management
@@ -55,31 +56,6 @@ const AdminProfessor = () => {
     const hdlEdit = (emp) => {
         setSelectedEmployee(emp);
         setIsEditModalOpen(true);
-    };
-
-    const handleStatusChange = async (emp) => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                toast.error('Please login again');
-                return;
-            }
-            if (emp.active) {
-                await adminInactiveAccount(token, emp.id);
-                toast.success('Teacher status changed to inactive');
-            } else {
-                await adminActiveAccount(token, emp.id);
-                toast.success('Teacher status changed to active');
-            }
-            fetchEmployees();
-        } catch (error) {
-            console.error("Error changing status:", error);
-            if (error.response?.status === 401) {
-                toast.error('Session expired. Please login again');
-            } else {
-                toast.error(error.response?.data?.message || 'Failed to update status');
-            }
-        }
     };
 
     // Filter professors based on search term and faculty
@@ -206,15 +182,11 @@ const AdminProfessor = () => {
                                     <td className="px-4 py-3">{emp.email}</td>
                                     <td className="px-4 py-3">{emp.phone || '-'}</td>
                                     <td className="px-4 py-3">
-                                        <button
-                                            onClick={() => handleStatusChange(emp)}
-                                            className={`px-3 py-1 rounded-full text-sm ${emp.active
-                                                ? 'bg-green-100 text-green-800'
-                                                : 'bg-red-100 text-red-800'
-                                                }`}
-                                        >
-                                            {emp.active ? 'Active' : 'Inactive'}
-                                        </button>
+                                        <UserStatusToggle
+                                            user={emp}
+                                            userType="professor"
+                                            onStatusChange={fetchEmployees}
+                                        />
                                     </td>
                                     <td className="px-4 py-3">
                                         <button

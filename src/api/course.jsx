@@ -67,13 +67,18 @@ export const employeeEditCourse = (token, courseId, body) => axios.patch(`/cours
     }
 });
 
-export const employeeInactiveCourse = (token, courseId) => axios.patch('/course/employee/inactive-course/' + courseId, {
+export const employeeInactiveCourse = (token, courseId) => axios.patch('/course/employee/inactive-course/' + courseId, {}, {
     headers: {
         Authorization: `Bearer ${token}`
     }
 });
 
-export const employeeActiveCourse = (token, courseId) => axios.patch('/course/employee/active-course/' + courseId, {
+export const employeeActiveCourse = (token, courseId) => axios.patch('/course/employee/active-course/' + courseId, {}, {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+});
+export const assignCourseToSyllabus = (token, body) => axios.post('/course/employee/assign-syllabus', body, {
     headers: {
         Authorization: `Bearer ${token}`
     }

@@ -45,7 +45,7 @@ function LandingItem1() {
         </video>
       </div>
 
-      <div className="relative w-full mt-[-36rem] ">
+      <div className="relative w-full mt-[-40rem] ">
         <img src={previewImage1} alt="Your Description" className="w-full h-auto object-cover" />
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           {/* this is overRay   */}

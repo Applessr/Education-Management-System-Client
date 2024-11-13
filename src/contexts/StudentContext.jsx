@@ -80,15 +80,15 @@ const StudentContextProvider = (props) => {
     const getClassSchedule = async (token, semester) => {
         try {
             const response = await studentGetClassSchedule(token, semester);
-            console.log('response :>> ', response);
+            console.log('response getClassSchedule :>> ', response);
             setClassSchedule(response.data);
         } catch (error) {
             console.log(error.response); 
         }
     };
-    const getExamDate = async (token) => {
+    const getExamDate = async (token,semester) => {
         try {
-            const response = await studentGetExamDate(token);
+            const response = await studentGetExamDate(token,semester);
             console.log('response :>> ', response);
             setExamDate(response.data);
         } catch (error) {

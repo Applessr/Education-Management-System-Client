@@ -1,9 +1,10 @@
 
-import { adminChangeStudentStatus, adminGetStudent } from '@/src/api/admin';
+import { adminGetStudent } from '@/src/api/admin';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AddStudentForm from './AddStudentForm';
 import EditStudentForm from './EditStudentForm';
+import UserStatusToggle from '@/src/hooks/UserStatusToggle';
 
 const AdminStudent = () => {
     // State management
@@ -40,25 +41,6 @@ const AdminStudent = () => {
         }
     };
 
-    const handleStatusChange = async (student) => {
-        try {
-            const token = localStorage.getItem('token');
-            const newStatus = student.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
-
-            await adminChangeStudentStatus(token, student.id, { status: newStatus });
-            toast.success(`Student status changed to ${newStatus}`);
-            handleStudentAdded();
-
-        } catch (err) {
-            console.error("Error changing student status:", err);
-            toast.error("Failed to change student status");
-        }
-    };
-
-    const handleEdit = (student) => {
-        setSelectedStudent(student);
-        setIsEditModalOpen(true);
-    };
 
     // Filter students based on search term and faculty
     const filteredStudents = students.filter(student => {
@@ -103,6 +85,11 @@ const AdminStudent = () => {
 
         fetchStudents();
     }, []);
+
+    const handleEdit = (student) => {
+        setSelectedStudent(student);
+        setIsEditModalOpen(true);
+    };
 
     // Calculate pagination
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -228,15 +215,11 @@ const AdminStudent = () => {
                                     <td className="px-4 py-3">{student.email}</td>
                                     <td className="px-4 py-3">{student.phone}</td>
                                     <td className="px-4 py-3">
-                                        <button
-                                            onClick={() => handleStatusChange(student)}
-                                            className={`px-2 py-1 rounded-full text-sm ${student.status === 'ACTIVE'
-                                                    ? 'bg-green-100 text-green-600'
-                                                    : 'bg-red-100 text-red-600'
-                                                }`}
-                                        >
-                                            {student.status}
-                                        </button>
+                                        <UserStatusToggle
+                                            user={student}
+                                            userType="student"
+                                            onStatusChange={handleStudentAdded}
+                                        />
                                     </td>
                                     <td className="px-4 py-3">
                                         <button
