@@ -9,7 +9,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import ChooseRole from "../pages/auth/ChooseRole";
 import AuthenLayout from "../layouts/AuthenLayout";
 import Login from "../pages/auth/Login";
-import EnrollmentFlow from "../components/student/CourseNode";
+import EnrollmentFlow from "../components/student/Enroll/CourseNode";
 import LoginEmployee from "../pages/auth/LoginEmployee";
 import { UserContextProvider } from "../contexts/UserContext";
 import StudentInfo from "../pages/student/StudentInfo";
@@ -41,6 +41,7 @@ import AdminProfessor from "../pages/admin/AdminProfessor/AdminProfessor";
 import TeacherAcademicSchedule from "../pages/teacher/TeacherSchedule/TeacherAcademicSchedule";
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
+import StudentEnrollment from "../pages/student/StudentEnrollment";
 import AdminCourse from "../pages/admin/AdminCourse/AdminCourse";
 
 const router = createBrowserRouter([
@@ -94,7 +95,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <StudentDashboard /> },
       { path: "profile", element: <StudentInfo /> },
-      { path: "enroll", element: <EnrollmentFlow /> },
+      { path: "enroll", element: <StudentEnrollment /> },
       { path: "dashboard", element: <StudentDashboard /> },
       { path: "enrollResult", element: <StudentEnrollResult /> },
       { path: "academic-schedule", element: <AcademicSchedule /> },
