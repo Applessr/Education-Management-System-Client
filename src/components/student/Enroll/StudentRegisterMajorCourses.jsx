@@ -173,7 +173,7 @@ export const columns = [
     header: "Actions",
     cell: ({ row }) => {
       const token = localStorage.getItem("token");
-      const currentYear = new Date().getFullYear() + 543;
+      const currentYear = 2024;
       const semester = `1/${currentYear}`;
       const {
         studentSendEnrollRequest,
@@ -263,7 +263,7 @@ function StudentRegisterMajorCourses({ data }) {
 
   return (
     <div className="flex flex-col p-2 border">
-      <div className="bg bg-yellow-300">Optional Courses</div>
+      <div className="bg bg-yellow-300">Major selection Courses</div>
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input

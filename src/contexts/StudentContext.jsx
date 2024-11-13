@@ -86,14 +86,14 @@ const StudentContextProvider = (props) => {
     if (token) {
       try {
         const currentSemester = {
-          semester: "1/2567",
+          semester: "1/2024",
         };
         const resp = await courseApi.studentGetEnrollCourseBySemester(
           token,
           currentSemester
         );
 
-        console.log(resp);
+        console.log("-----", resp);
         setEnrollList(resp.data.enrollments || []); // Default to empty array if no data
       } catch (error) {
         console.error("Failed to fetch enrollments:", error);
@@ -116,6 +116,7 @@ const StudentContextProvider = (props) => {
     enrollList,
     studentGetEnrollCourseBySemester,
     studentSendEnrollRequest,
+    enrollList,
   };
 
   return (

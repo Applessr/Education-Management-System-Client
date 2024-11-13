@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   flexRender,
@@ -173,7 +173,7 @@ export const columns = [
     header: "Actions",
     cell: ({ row }) => {
       const token = localStorage.getItem("token");
-      const currentYear = new Date().getFullYear() + 543;
+      const currentYear = 2024;
       const semester = `1/${currentYear}`;
       const {
         studentSendEnrollRequest,
@@ -220,6 +220,8 @@ function StudentRegisterOptionalCourses({ data }) {
     const courseMap = new Map();
     const dayAbbreviations = ["MON", "TUE", "WED", "THU", "FRI"];
 
+    console.log(data);
+
     data.forEach((row) => {
       const { courseId, day, startTime, endTime } = row;
       const dayAbbreviation = dayAbbreviations[day - 1]; // Map day number to abbreviation
@@ -242,6 +244,12 @@ function StudentRegisterOptionalCourses({ data }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
+  const { enrollList } = useStudent();
+
+  const filteredEnrollments = enrollList.filter(
+    (enrollment) =>
+      enrollment.status === "APPROVED" || enrollment.status === "PENDING"
+  );
 
   const table = useReactTable({
     data: processedData,

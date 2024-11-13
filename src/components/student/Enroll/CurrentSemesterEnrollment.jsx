@@ -16,47 +16,46 @@ import {
 import { Button } from "@/components/ui/button";
 
 function CurrentSemesterEnrollment() {
-  // const [enrollList, setEnrollList] = useState([]); // Change to array
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // To control the dialog visibility
-  const [selectedEnrollment, setSelectedEnrollment] = useState(null); // To store selected enrollment ID for cancellation
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedEnrollment, setSelectedEnrollment] = useState(null);
   const { studentInfo, fetchPendingEnrollment, enrollList } = useStudent();
-  const token = localStorage.getItem("token");
-
-  const currentSemester = {
-    semester: "1/2567",
-  };
 
   useEffect(() => {
     fetchPendingEnrollment();
   }, []);
 
-  // Filter enrollments to show only APPROVE or PENDING
+  // Filter enrollments to show only APPROVED or PENDING
   const filteredEnrollments = enrollList.filter(
     (enrollment) =>
       enrollment.status === "APPROVED" || enrollment.status === "PENDING"
   );
 
+  // Calculate the total credits
+  const totalCredits = filteredEnrollments.reduce(
+    (sum, enrollment) => sum + (enrollment.course?.credits || 0),
+    0
+  );
+
   // Handle the cancel enrollment button click
   const handleCancelEnrollment = (enrollmentId) => {
-    setSelectedEnrollment(enrollmentId); // Store the selected enrollment ID
-    setIsDialogOpen(true); // Open the dialog
+    setSelectedEnrollment(enrollmentId);
+    setIsDialogOpen(true);
   };
 
   // Handle the Confirm action in the dialog
   const handleConfirmCancel = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
     if (selectedEnrollment) {
-      console.log("Cancelled Enrollment ID:", selectedEnrollment); // Log the selected enrollment ID
+      console.log("Cancelled Enrollment ID:", selectedEnrollment);
     }
     await studentCancelEnrollRequest(token, selectedEnrollment);
-    fetchPendingEnrollment();
-    setIsDialogOpen(false); // Close the dialog after confirmation
+    await fetchPendingEnrollment();
+    setIsDialogOpen(false);
   };
 
   // Handle the Cancel action in the dialog
   const handleCloseDialog = () => {
-    setIsDialogOpen(false); // Simply close the dialog without doing anything
+    setIsDialogOpen(false);
   };
 
   return (
@@ -79,7 +78,6 @@ function CurrentSemesterEnrollment() {
             <th className="text-left px-6 py-3 border-b border-gray-200 text-gray-600 font-semibold uppercase tracking-wider">
               Enroll Status
             </th>
-
             <th className="text-left px-6 py-3 border-b border-gray-200 text-gray-600 font-semibold uppercase tracking-wider">
               Action
             </th>
@@ -88,7 +86,7 @@ function CurrentSemesterEnrollment() {
         <tbody>
           {filteredEnrollments.length === 0 ? (
             <tr>
-              <td colSpan="4" className="text-center py-4 text-gray-500">
+              <td colSpan="5" className="text-center py-4 text-gray-500">
                 No enrollment data
               </td>
             </tr>
@@ -150,6 +148,27 @@ function CurrentSemesterEnrollment() {
           )}
         </tbody>
       </table>
+      {/* Display Total Credits and Warnings */}
+      <div
+        className={`mt-4 text-center font-semibold ${
+          totalCredits > 22 || totalCredits < 9
+            ? "text-red-500"
+            : "text-gray-800"
+        }`}
+      >
+        Total Credits: {totalCredits} / 22
+        {totalCredits > 22 && (
+          <p className="text-red-500 mt-2">
+            Warning: You have enrolled in more than 22 credits.
+          </p>
+        )}
+        {totalCredits < 9 && (
+          <p className="text-red-500 mt-2">
+            Warning: Your credits are below the minimum required (9 credits) for
+            each semester.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

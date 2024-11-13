@@ -15,6 +15,7 @@ import MajorRegisNodeItem from "../MajorRegisNodeItem";
 
 function MajorNormalNode({ data }) {
   const [showTooltip, setShowTooltip] = useState(false);
+  console.log(data, "gradeeeeeee");
   return (
     <div
       className="relative "
@@ -69,7 +70,7 @@ function MajorNormalNode({ data }) {
               : data.grade === "B"
               ? "bg-blue-600"
               : data.grade === "C"
-              ? "bg-blue-500"
+              ? "bg-yellow-500"
               : data.grade === "D"
               ? "bg-orange-500"
               : data.grade === "F"

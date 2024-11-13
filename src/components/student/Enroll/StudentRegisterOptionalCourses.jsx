@@ -173,7 +173,7 @@ export const columns = [
     header: "Actions",
     cell: ({ row }) => {
       const token = localStorage.getItem("token");
-      const currentYear = new Date().getFullYear() + 543;
+      const currentYear = 2024;
       const semester = `1/${currentYear}`;
       const {
         studentSendEnrollRequest,
