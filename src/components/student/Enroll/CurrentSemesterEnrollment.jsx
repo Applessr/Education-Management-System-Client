@@ -119,11 +119,11 @@ function CurrentSemesterEnrollment() {
                   {/* Shadcn Dialog for Confirmation */}
                   <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger>
-                      <Button
+                      { enrollment.status === "PENDING"&&<Button
                         onClick={() => handleCancelEnrollment(enrollment.id)}
                       >
                         Cancel Enroll
-                      </Button>
+                      </Button>}
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
