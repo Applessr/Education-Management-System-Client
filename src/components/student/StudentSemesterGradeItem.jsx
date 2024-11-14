@@ -34,11 +34,6 @@ function StudentSemesterGradeItem({ semester, courses, gpaInfo }) {
             GPA = {gpaInfo.semGpa} Credit = {gpaInfo.semCredit}
           </strong>
         </p>
-        {/* <p style={{ color: "blue" }}>
-          <strong>
-            CPA = {gpaInfo.cumGpa.toFixed(2)} 
-          </strong>
-        </p> */}
       </div>
     </div>
   );
