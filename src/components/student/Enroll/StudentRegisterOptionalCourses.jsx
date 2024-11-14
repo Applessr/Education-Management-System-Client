@@ -262,8 +262,8 @@ function StudentRegisterOptionalCourses({ data }) {
   });
 
   return (
-    <div className="flex flex-col p-2 border">
-      <div className="bg bg-yellow-300">Optional Courses</div>
+    <div className="flex flex-col p-2 border bg-white rounded-md shadow-md">
+      <div className="text-2xl font-bold text-gray-600">Optional Courses</div>
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
