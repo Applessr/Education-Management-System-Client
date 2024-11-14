@@ -177,9 +177,13 @@ function StudentEnrollment() {
   return (
     <div className="flex flex-col gap-2">
       <EnrollmentFlow />
+      <div className="h-10"></div>
       <CurrentSemesterEnrollment />
+      <div className="h-2"></div>
       <StudentRegisterPrerequisitesCourses data={resultPrerequisites} />
+      <div className="h-2"></div>
       <StudentRegisterOptionalCourses data={resultOptionalSelections} />
+      <div className="h-2"></div>
       <StudentRegisterMajorCourses data={resultMajorSelections} />
     </div>
   );

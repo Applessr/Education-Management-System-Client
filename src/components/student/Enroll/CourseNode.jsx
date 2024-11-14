@@ -1219,7 +1219,7 @@ export default function EnrollmentFlow() {
 
   console.log(initialNodes, "initialnode");
   return (
-    <div className="w-full h-[70vh]">
+    <div className="w-full h-[70vh] ">
       <div className="bg-white p-4 mb-4 rounded-lg shadow">
         <h2 className="text-xl font-bold text-gray-800">
           Course Prerequisites - Materials Engineering
