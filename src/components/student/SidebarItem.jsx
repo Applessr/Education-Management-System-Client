@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 /* eslint-disable react/prop-types */
 const SidebarItem = ({ icon, text = "", active, onClick }) => {
     return (
@@ -11,7 +13,7 @@ const SidebarItem = ({ icon, text = "", active, onClick }) => {
             onClick={onClick}
         >
             {/* Icon wrapper with consistent color styling */}
-            <span className={`${active ? 'text-white' : 'text-[#1e3a8a]'}`}>
+            <span>
                 {icon()}
             </span>
             

@@ -268,6 +268,11 @@ function StudentEnrollResult() {
           <div className="mt-4 ">
             <StudentSemesterGrade semester={semesters} />
           </div>
+          <p className='bg-[#eedcb5] text-center text-xl mr-10'>
+            <strong>
+              GPA : {semesters?.[0]?.gpaInfo?.cumGpa?.toFixed(2)}
+            </strong>
+          </p>
         </div>
       </Card>
 

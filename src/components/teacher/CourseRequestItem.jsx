@@ -23,15 +23,16 @@ const CourseRequestItem = ({ course, data }) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = rowsData.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleApprove = async (requestId) => {
-    console.log('requestId :>> ', requestId);
-    await editEnrollStatus(token, requestId, { status: 'APPROVED', courseId: course.id, courseName: course.courseName });
+  const handleApprove = async (enrollmentId) => {
+    console.log('requestId:', enrollmentId, 'courseId:', course.id, 'courseName:', course.courseName);
+    await editEnrollStatus(token, enrollmentId, { status: 'APPROVED', courseId: course.id, courseName: course.courseName });
     getEnrollRequest(token);
   };
 
-  const handleReject = async (requestId) => {
-    console.log('requestId :>> ', requestId);
-    await editEnrollStatus(token, requestId, { status: 'REJECTED', courseId: course.id, courseName: course.courseName });
+
+  const handleReject = async (enrollmentId) => {
+    console.log('requestId:', enrollmentId, 'courseId:', course.id, 'courseName:', course.courseName);
+    await editEnrollStatus(token, enrollmentId, { status: 'REJECTED', courseId: course.id, courseName: course.courseName });
     getEnrollRequest(token);
   };
 
@@ -73,12 +74,12 @@ const CourseRequestItem = ({ course, data }) => {
                     <td className="px-6 py-4 text-right">
                       <button
                         onClick={() => handleApprove(student.id)}
-                        className="bg-green-500 text-white px-4 py-2 rounded-md mr-2">
+                        className="bg-[#55b361] text-white px-4 py-2 rounded-md mr-2">
                         Approve
                       </button>
                       <button
                         onClick={() => handleReject(student.id)}
-                        className="bg-red-500 text-white px-4 py-2 rounded-md">
+                        className="bg-red-400 text-white px-4 py-2 rounded-md">
                         Reject
                       </button>
                     </td>

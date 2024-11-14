@@ -54,11 +54,14 @@ export const teacherChangePassword = (token, body) => axios.patch('/teacher/chan
     }
 });
 
-export const teacherEditStudentEnroll = (token, enrollmentId, body) => axios.patch('/teacher/update-enroll-status/' + enrollmentId, body, {
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-});
+export const teacherEditStudentEnroll = (token, enrollmentId, body) => {
+    console.log('Data sent to server:', { token, enrollmentId, body });
+    return axios.patch('/teacher/update-enroll-status/' + enrollmentId, body, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+};
 
 export const teacherEditRequestStatus = (token, requestId, body) => axios.patch('/teacher/update-request-status/' + requestId, body, {
     headers: {

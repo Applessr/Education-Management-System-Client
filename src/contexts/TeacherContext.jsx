@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { teacherEditRequestStatus, teacherGetConsultedStudent, teacherGetEnrollRequest, teacherGetProfile, teacherGetStudentInCourseById } from "../api/teacher";
+import { teacherEditRequestStatus, teacherEditStudentEnroll, teacherGetConsultedStudent, teacherGetEnrollRequest, teacherGetProfile, teacherGetStudentInCourseById } from "../api/teacher";
 import { teacherGetCourse } from "../api/course";
 
 const TeacherContext = createContext();
@@ -73,9 +73,9 @@ const TeacherContextProvider = (props) => {
             console.error('Error in getEnrollRequest:', error.response || error.message);
         }
     };
-    const editEnrollStatus = async (token, requestId, body) => {
+    const editEnrollStatus = async (token, enrollmentId, body) => {
         try {
-            const response = await teacherEditRequestStatus(token, requestId, body);
+            const response = await teacherEditStudentEnroll(token, enrollmentId, body);
             console.log("Data from editEnrollStatus:", response.data);
         } catch (error) {
             console.error('Error in editEnrollStatus:', error.response || error.message);

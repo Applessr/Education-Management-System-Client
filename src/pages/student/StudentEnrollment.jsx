@@ -9,6 +9,8 @@ import {
   studentGetCourseSyllabus,
 } from "@/src/api/course";
 import StudentRegisterPrerequisitesCourses from "@/src/components/student/Enroll/StudentRegisterSearch";
+import LoadData from "@/src/components/animations/LoadData";
+import Loading from "@/src/components/animations/Loading";
 
 function StudentEnrollment() {
   const { getStudentProfile, studentInfo, enrollList } = useStudent();
@@ -135,15 +137,12 @@ function StudentEnrollment() {
   }
 
   if (loading) {
-    return <div className="p-4">Loading course data...</div>;
+    return <div className="p-4 flex justify-center m-auto items-center"><Loading/></div>;
   }
 
   //prepare data before send prob
 
   //find filter
-
-  console.log(enrollList, "11111112222222");
-  console.log(courseSchedules.prerequisites, "3333333333");
 
   const findApprovePendingCourse = enrollList.filter((item) => {
     console.log(item.status !== "PENDING", "item");
