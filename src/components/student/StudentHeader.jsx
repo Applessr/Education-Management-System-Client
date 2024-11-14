@@ -19,18 +19,19 @@ const StudentHeader = () => {
 
     const toggleModal = () => {
         if (isModalOpen) {
-            setIsModalClosing(true)
+            setIsModalClosing(true);
             setTimeout(() => {
-                setIsModalOpen(false)  
-                setIsModalClosing(false)
-            }, 300)
+                const newReadNotificationIds = notification?.map(noti => noti.id) || [];
+                setReadNotificationIds(newReadNotificationIds);
+                localStorage.setItem('readNotificationIds', JSON.stringify(newReadNotificationIds));
+    
+                setIsModalOpen(false);
+                setIsModalClosing(false);
+            }, 300);
         } else {
-            const newReadNotificationIds = notification?.map(noti => noti.id) || []
-            setReadNotificationIds(newReadNotificationIds)
-            localStorage.setItem('readNotificationIds', JSON.stringify(newReadNotificationIds))
-            setIsModalOpen(true)
+            setIsModalOpen(true);
         }
-    }
+    };
 
     const groupedNotifications = useMemo(() => {
         return notification?.reduce((acc, noti) => {

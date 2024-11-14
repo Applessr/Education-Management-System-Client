@@ -1,19 +1,17 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Instagram } from "lucide-react";
+import { ChevronRight, Instagram } from "lucide-react";
 
 function GuestFooter() {
   const navigate = useNavigate();
 
   return (
     <div>
-      <footer className="footer text-base-content p-10 bg-white">
-        <nav className="w-[50%]">
-          <h6 className="footer-title">Pierre University</h6>
-          <div className="mb-5">
-            Join us at Pierre University,
-            where your journey to success begins!
-          </div>
+      <footer className="footer flex justify-evenly text-base-content p-10 bg-white">
+        <nav className="w-[50%] ml-20">
+          <h6 className="footer-title text-lg">Pierre University</h6>
+          <h2 className=""> Join us at Pierre University,</h2>
+          <h2 className="mb-5">   where your journey to success begins!</h2>
           <div className="grid grid-flow-col">
             <div className="flex gap-8">
               <a>
@@ -56,12 +54,12 @@ function GuestFooter() {
           </div>
         </nav>
 
-        <nav>
-          <h6 className="footer-title">More Info</h6>
-          <Link to="/contact" className="link-hover">Contact</Link>
-          <Link to="/campusCarry" className="link-hover">Campus Carry</Link>
-          <Link to="/counsel" className="link-hover">Counseling and Mental Health</Link>
-          <Link to="/research" className="link-hover">Research Units & Centers</Link>
+        <nav className=" mr-20">
+          <h6 className="footer-title text-lg">More Info</h6>
+          <Link to="/contact" className="link-hover flex"><ChevronRight className="w-5" /><span>Contact</span></Link>
+          <Link to="/campusCarry" className="link-hover flex"><ChevronRight  className="w-5" /><span>Campus Carry</span></Link>
+          <Link to="/counsel" className="link-hover flex"><ChevronRight  className="w-5" /><span>Counseling and Mental Health</span></Link>
+          <Link to="/research" className="link-hover flex"><ChevronRight  className="w-5" /><span>Research Units & Centers</span></Link>
         </nav>
 
       </footer >

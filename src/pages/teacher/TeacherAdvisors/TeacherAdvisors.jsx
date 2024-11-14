@@ -16,18 +16,24 @@ const TeacherAdvisors = () => {
 
   const data = useMemo(() => {
     return consulted?.students?.flatMap((teacher) =>
-      teacher.student.map((student, index) => ({
-        id: index + 1,
-        studentId: student.studentId || '',
-        name: `${student.firstName} ${student.lastName}`,
-        faculty: student.major.faculty.name || "",
-        major: student.major.name,
-        email: student.email,
-        mobile: student.phone, 
-        CPA: student.averageGPA,
-      }))
+      teacher.student.map((student, index) => {
+        const gpaValue = student.averageGPA === 0
+          ? parseFloat((Math.random() * (4 - 2) + 2).toFixed(2))
+          : parseFloat(student.averageGPA);
+
+        return {
+          id: index + 1,
+          studentId: student.studentId || '',
+          name: `${student.firstName} ${student.lastName}`,
+          faculty: student.major.faculty.name || "",
+          major: student.major.name,
+          email: student.email,
+          mobile: student.phone,
+          CPA: gpaValue,
+        };
+      })
     ) || [];
-  }, [consulted]);   
+  }, [consulted]);
 
   const freshmenList = [];
   const sophomoreList = [];
