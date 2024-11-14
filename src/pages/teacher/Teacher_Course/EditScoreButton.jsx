@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/dialog";
 import CourseScoreEdit from "@/src/components/teacher/CourseScoreEdit";
 import { useState } from "react";
-
-const EditScoreButton = ({ student, courseId,onScoreUpdate }) => {
+// Now update EditScoreButton.jsx to refresh properly
+const EditScoreButton = ({ student, courseId, onScoreUpdate }) => {
     const [open, setOpen] = useState(false);
 
-    const handleClose = () => {
+    const handleClose = async () => {
         setOpen(false);
         if (onScoreUpdate) {
-            onScoreUpdate();
+            await onScoreUpdate(); // Make sure to wait for the update
         }
     };
 

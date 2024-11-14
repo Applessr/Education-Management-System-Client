@@ -22,11 +22,13 @@ const AddScoreButton = ({ student, courseId, onScoreUpdate }) => {
     // Add loading and error states
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
     const SEMESTER_OPTIONS = [
         "1/2024",
         "2/2024",
     ];
+
+
+    console.log("Student ID:", student.id);
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -42,6 +44,13 @@ const AddScoreButton = ({ student, courseId, onScoreUpdate }) => {
                 point: parseInt(score)
             };
 
+            console.log('Request Data:', {
+                token,
+                courseId,
+                body,
+                student
+            });
+
             const response = await teacherAddScore(token, courseId, body);
             console.log('Score added successfully:', response.data);
 
@@ -52,10 +61,8 @@ const AddScoreButton = ({ student, courseId, onScoreUpdate }) => {
             setOpen(false);
 
             if(onScoreUpdate){
-                onScoreUpdate();
+                await onScoreUpdate();
             }
-            // Optional: Add some success feedback
-            // You might want to add a toast notification here
             toast.success('Score added successfully');
         } catch (err) {
             console.error('Error adding score:', err);
