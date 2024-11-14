@@ -24,12 +24,20 @@ function CourseScoreEdit({ studentId, courseId, onClose }) {
       try {
         const token = localStorage.getItem('token');
         const response = await studentViewScorePerSub(token, courseId);
+        console.log('Raw response:', response.data);
 
-        if (response?.data?.[0]?.components) {
-          setScores(response.data[0].components);
+        // Find the correct grade entry for this student
+        const studentGrade = response.data?.find(grade => 
+          // Add any other necessary student ID checks
+          grade?.components && Array.isArray(grade.components)
+        );
+
+        if (studentGrade?.components) {
+          setScores(studentGrade.components);
         } else {
           setScores([]);
         }
+
       } catch (err) {
         console.error('API Error:', err);
         setError(err.message || 'Failed to fetch scores');
@@ -39,11 +47,10 @@ function CourseScoreEdit({ studentId, courseId, onClose }) {
       }
     };
 
-    if (courseId) {
+    if (courseId && studentId) {
       fetchScores();
     }
-  }, [courseId]);
-
+}, [courseId, studentId]);
   const handleRowClick = (row) => {
     const newSelected = selectedRow?.id === row.id ? null : row;
     console.log(newSelected);
@@ -74,16 +81,19 @@ function CourseScoreEdit({ studentId, courseId, onClose }) {
 
       await teacherEditScore(token, selectedRow.id, body);
       
-      // Refresh scores after update
+      // Refresh scores
       const response = await studentViewScorePerSub(token, courseId);
-      console.log(response.data)
-      if (response?.data?.[0]?.components) {
-        setScores(response.data[0].components);
+      const studentGrade = response.data?.find(grade => 
+        grade?.components && Array.isArray(grade.components)
+      );
+
+      if (studentGrade?.components) {
+        setScores(studentGrade.components);
       }
       
       toast.success('Score updated successfully');
       
-      // Reset selection
+      // Reset form
       setSelectedRow(null);
       setTopic('');
       setScore('');
@@ -114,7 +124,7 @@ function CourseScoreEdit({ studentId, courseId, onClose }) {
       <h2 className="text-lg font-semibold mb-4">
         Scores for Student ID: {studentId}
       </h2>
-      
+
       <div className="space-y-4">
         {/* Score Table */}
         <div className="border rounded">
@@ -131,9 +141,8 @@ function CourseScoreEdit({ studentId, courseId, onClose }) {
                 <tr
                   key={score.id}
                   onClick={() => handleRowClick(score)}
-                  className={`cursor-pointer hover:bg-gray-50 ${
-                    selectedRow?.id === score.id ? "bg-blue-100" : ""
-                  }`}
+                  className={`cursor-pointer hover:bg-gray-50 ${selectedRow?.id === score.id ? "bg-blue-100" : ""
+                    }`}
                 >
                   <td className="py-2 px-4 border-b text-center">{score.id}</td>
                   <td className="py-2 px-4 border-b">{score.type}</td>
@@ -171,8 +180,8 @@ function CourseScoreEdit({ studentId, courseId, onClose }) {
               />
             </div>
             <div className="flex justify-end space-x-2">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isLoading}
               >
                 {isLoading ? 'Updating...' : 'Update Score'}

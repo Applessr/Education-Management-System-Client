@@ -43,7 +43,7 @@ const AdminCourse = () => {
 
   useEffect(() => {
     fetchData();
-  }, [searchTerm]);
+  }, []);
 
   // Filtering logic
   const getFilteredMajors = () => {
@@ -52,15 +52,24 @@ const AdminCourse = () => {
     return selectedFacultyObj ? majors.filter(major => major.facultyId === selectedFacultyObj.id) : [];
   };
 
+  // Replace your current getFilteredCourses function with this:
   const getFilteredCourses = () => {
     return courses.filter(course => {
-      if (!course.major) return false;
-      if (selectedFaculty && course.major?.faculty?.name !== selectedFaculty) return false;
-      if (selectedMajor && course.major?.name !== selectedMajor) return false;
-      return true;
+      // First filter by search term
+      const searchMatch =
+        !searchTerm || // if no search term, include all
+        course.courseName?.toLowerCase().includes(searchTerm.toLowerCase()) || // search in name
+        course.courseCode?.toString().includes(searchTerm)||
+        course.teacher?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()); // search in teacher name;
+
+      // Then apply faculty and major filters
+      const facultyMatch = !selectedFaculty || course.major?.faculty?.name === selectedFaculty;
+      const majorMatch = !selectedMajor || course.major?.name === selectedMajor;
+
+      return searchMatch && facultyMatch && majorMatch;
     });
   };
-
+console.log("Course:<><><>",courses);
   // Filter and pagination results
   const filteredMajors = getFilteredMajors();
   const filteredCourses = getFilteredCourses();

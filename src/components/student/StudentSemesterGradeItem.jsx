@@ -2,9 +2,12 @@
 import React from "react";
 
 function StudentSemesterGradeItem({ semester, courses, gpaInfo }) {
+  const newSemester = semester.split('/')
+  const year = newSemester[1];
+  const semesterNumber = newSemester[0];
   return (
     <div className="semester-grade" style={{ textAlign: "center", fontFamily: "Arial" }} >
-      <h3 style={{ color: "blue", textDecoration: "underline" }} className="bg-[#eedcb5] h-8">{semester}</h3>
+      <h3 style={{ color: "blue", textDecoration: "underline" }} className="bg-[#eedcb5] h-8">Semester {semesterNumber} Year {year}</h3>
       <table
         border="1"
         style={{ width: "80%", margin: "0 auto", borderCollapse: "collapse" }}
