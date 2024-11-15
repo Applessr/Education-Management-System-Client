@@ -38,14 +38,15 @@ const Login = () => {
     };
 
     return (
-        <div className='relative min-h-screen flex'>
-            <div className='absolute inset-0 slide-br'
+        <div className='relative min-h-screen flex overflow-x-hidden'>
+            <div className='absolute inset-0 slide-br w-screen overflow-x-hidden'
                 style={{
                     backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: '1px 1px',
                 }}>
-                <div className='absolute inset-0 bg-white bg-opacity-75'></div>
+                <div className='absolute inset-0 bg-white bg-opacity-75'>
+                </div>
             </div>
             {/* Right side - Login Form */}
             <div className='relative w-full m-36 flex flex-col items-center justify-center px-8 py-12 lg:px-16 bg-white rounded-2xl slide-tl'>
