@@ -10,7 +10,7 @@ import LandingItem7 from "@/src/components/guest/LandingItem7";
 
 const LandingPage = () => {
   return (
-      <div>
+      <div className="max-w-screen">
         <LandingItem1 />
         <FadeInUpComponent>
           <LandingItem2 />

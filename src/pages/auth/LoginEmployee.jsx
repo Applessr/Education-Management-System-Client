@@ -5,6 +5,7 @@ import useUser from '../../hooks/useUser';
 import { toast } from 'react-toastify';
 import LoginGoogle from './LoginGoogle';
 import { Eye, EyeOff } from 'lucide-react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const LoginEmployee = () => {
     const { loginEmployee, errorLogin } = useUser();
@@ -37,7 +38,7 @@ const LoginEmployee = () => {
     };
 
     return (
-        <div className='relative min-h-screen flex overflow-x-hidden '>
+        <div className='relative min-h-screen flex '>
             <div className='absolute inset-0 slide-br'
                 style={{
                     backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
@@ -132,9 +133,9 @@ const LoginEmployee = () => {
                     </form>
                     <div className="divider text-[#B1B4B9] font-semibold">OR</div>
 
-                    <div className='mt-2 w-full'>
+                    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID} className='mt-2 w-full'>
                         <LoginGoogle />
-                    </div>
+                    </GoogleOAuthProvider>
 
                     <div className='mt-6 text-sm text-gray-600 space-y-4'>
                         <p>

@@ -9,7 +9,6 @@ import {
   studentGetCourseSyllabus,
 } from "@/src/api/course";
 import StudentRegisterPrerequisitesCourses from "@/src/components/student/Enroll/StudentRegisterSearch";
-import LoadData from "@/src/components/animations/LoadData";
 import Loading from "@/src/components/animations/Loading";
 
 function StudentEnrollment() {
@@ -137,18 +136,15 @@ function StudentEnrollment() {
   }
 
   if (loading) {
-    return <div className="p-4 flex justify-center m-auto items-center"><Loading/></div>;
+    return <div className="flex justify-center items-center"><Loading/></div>;
   }
 
-  //prepare data before send prob
-
-  //find filter
 
   const findApprovePendingCourse = enrollList.filter((item) => {
     console.log(item.status !== "PENDING", "item");
-    if (item.status === "PENDING") return true; //keep PENDING
-    if (item.status === "APPROVED") return true; // keep APPROVED
-    return false; // filter non pending , approve  out
+    if (item.status === "PENDING") return true; 
+    if (item.status === "APPROVED") return true; 
+    return false; 
   });
   const getApprovePendingCourseCourseCode = findApprovePendingCourse.map(
     (item) => item.course.courseCode
