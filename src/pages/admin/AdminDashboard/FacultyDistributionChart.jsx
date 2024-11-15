@@ -13,9 +13,9 @@ const FacultyDistributionChart = ({ data, title = "Professors by Faculty" }) => 
     const maxValue = Math.max(...chartData.map(d => d.value), 0) + 2;
 
     return (
-        <div className="bg-white rounded-lg p-6 shadow-md">
+        <div className="bg-white rounded-lg p-6 shadow-md h-[600px]">
             <h3 className="text-lg font-semibold mb-4">{title}</h3>
-            <div className="h-64">
+            <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
@@ -26,7 +26,7 @@ const FacultyDistributionChart = ({ data, title = "Professors by Faculty" }) => 
                             angle={-45}
                             textAnchor="end"
                             interval={0}
-                            height={20}
+                            height={90}
                             tick={{ fontSize: 12 }}
                         />
                         <YAxis domain={[0, maxValue]} />
@@ -43,10 +43,10 @@ const FacultyDistributionChart = ({ data, title = "Professors by Faculty" }) => 
                 </ResponsiveContainer>
             </div>
 
-            {/* Legend */}
-            <div className="mt-4 space-y-2">
+            {/* Only changed this legend section */}
+            <div className="mt-8 space-y-2">
                 {chartData.map((faculty, index) => (
-                    <div key={index} className="flex items-center justify-between gap-2">
+                    <div key={index} className="grid grid-cols-[auto,100px] items-center gap-2">
                         <div className="flex items-center gap-2">
                             <div 
                                 className="w-3 h-3 rounded-full" 
@@ -54,7 +54,9 @@ const FacultyDistributionChart = ({ data, title = "Professors by Faculty" }) => 
                             />
                             <span className="text-sm text-gray-600">{faculty.name}</span>
                         </div>
-                        <span className="text-sm font-medium">{faculty.value} professors</span>
+                        <span className="text-sm font-medium text-right whitespace-nowrap">
+                            {faculty.value} professors
+                        </span>
                     </div>
                 ))}
             </div>

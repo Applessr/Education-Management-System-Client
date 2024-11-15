@@ -13,20 +13,20 @@ const StudentFacultyDistribution = ({ data }) => {
     const maxValue = Math.max(...chartData.map(d => d.students), 0) + 5;
 
     return (
-        <div className="bg-white rounded-lg p-6 shadow-md">
+        <div className="bg-white rounded-lg p-6 shadow-md h-[600px]">
             <h3 className="text-lg font-semibold mb-4">Students by Faculty</h3>
-            <div className="h-64">
+            <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
-                        margin={{ top: 20, right: 30, left: 0, bottom: 60 }}
+                        margin={{ top: 20, right: 10, left: 0, bottom: 60 }}
                     >
                         <XAxis
                             dataKey="name"
                             angle={-45}
                             textAnchor="end"
                             interval={0}
-                            height={60}
+                            height={90}
                             tick={{ fontSize: 12 }}
                         />
                         <YAxis domain={[0, maxValue]} />
@@ -47,10 +47,10 @@ const StudentFacultyDistribution = ({ data }) => {
                 </ResponsiveContainer>
             </div>
 
-            {/* Legend */}
-            <div className="mt-4 space-y-2">
+            {/* Legend with grid layout for better alignment */}
+            <div className="mt-8 space-y-2">
                 {chartData.map((faculty, index) => (
-                    <div key={index} className="flex items-center justify-between gap-2">
+                    <div key={index} className="grid grid-cols-[auto,100px] items-center gap-2">
                         <div className="flex items-center gap-2">
                             <div 
                                 className="w-3 h-3 rounded-full" 
@@ -58,7 +58,9 @@ const StudentFacultyDistribution = ({ data }) => {
                             />
                             <span className="text-sm text-gray-600">{faculty.name}</span>
                         </div>
-                        <span className="text-sm font-medium">{faculty.students} students</span>
+                        <span className="text-sm font-medium text-right whitespace-nowrap">
+                            {faculty.students} students
+                        </span>
                     </div>
                 ))}
             </div>
