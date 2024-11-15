@@ -21,10 +21,12 @@ const TeacherLayout = () => {
           </header> */}
 
           {/* {/* Scrollable Main Content */}
-          <main className="p-6 h-[calc(100vh-64px)] overflow-auto">
+          <main className=" h-[calc(100vh)] overflow-auto">
+            <div className='p-6 bg-gray-100'>
             <TransitionOutletContent>
               <Outlet />
             </TransitionOutletContent>
+            </div>
           </main>
         </div>
       </div>
