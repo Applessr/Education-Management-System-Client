@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import validateStudentLogin from '../../utils/loginStudentValidator';
 import useUser from '../../hooks/useUser';
 import { Eye, EyeOff } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const { loginStudent, errorLogin } = useUser();
@@ -28,6 +29,7 @@ const Login = () => {
         }
         try {
             await loginStudent(formData);
+            toast.success('Login Success');
         } catch (error) {
             console.log(error);
         }
