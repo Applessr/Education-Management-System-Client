@@ -53,10 +53,10 @@ export default function DataTableCourse() {
   const formatTime = (timeString) => {
     if (!timeString) return "N/A";
     const time = new Date(timeString);
-    return time.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
+    return time.toLocaleTimeString('en-US', {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: true 
+      hour12: true
     });
   };
 
@@ -128,17 +128,21 @@ export default function DataTableCourse() {
                 {course[courseId].map((section, index) => {
                   const classSchedule = section.classSchedules?.[0];
                   const examSchedule = section.examSchedule?.[0];
-                  
+
                   return (
                     <TableRow key={section.id} className='hover:bg-slate-200' onClick={() => courseSelect(section.id)}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>
-                        <Link to={`${section.courseCode}/${section.section}`}>
+                        <Link
+                          className="hover:underline font-bold hover:text-blue-700"
+                          to={`${section.courseCode}/${section.section}`}>
                           {section.courseCode}
                         </Link>
                       </TableCell>
                       <TableCell>
-                        <Link to={`${section.courseCode}/${section.section}`}>
+                        <Link
+                          className="hover:underline font-bold hover:text-blue-700"
+                          to={`${section.courseCode}/${section.section}`}>
                           {section.courseName}
                         </Link>
                       </TableCell>
@@ -195,7 +199,7 @@ export default function DataTableCourse() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <CourseDetail
-              courseData={editingCourse} 
+              courseData={editingCourse}
               onClose={() => setEditingCourse(null)}
               onSuccess={() => {
                 teacherCourse(token);

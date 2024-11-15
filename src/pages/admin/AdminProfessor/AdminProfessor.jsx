@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Edit, X } from 'lucide-react';
+import { Edit, X, Plus } from 'lucide-react';
 import AddEmployeeForm from './AddEmployeeForm';
 import EditProfessorForm from './EditProfessorForm';
 import { adminGetTeacher } from '@/src/api/admin';
@@ -153,9 +153,10 @@ const AdminProfessor = () => {
                 <div className="p-4 bg-[#ab842e] text-white rounded-t-lg flex justify-between items-center">
                     <h2 className="font-semibold">List of Professors ({filteredEmployees.length} professors)</h2>
                     <button
-                        className="px-4 py-2 bg-white text-[#1a237e] rounded hover:bg-gray-100"
+                        className="px-4 py-2 bg-white text-[#1a237e] rounded hover:bg-gray-100 flex items-center gap-2"
                         onClick={() => setIsAddModalOpen(true)}
                     >
+                        <Plus className="w-4 h-4" />
                         Add Professor
                     </button>
                 </div>

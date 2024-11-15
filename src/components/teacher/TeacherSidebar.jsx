@@ -27,9 +27,9 @@ const TeacherSidebar = () => {
     ], []);
 
     useEffect(() => {
-        const pathName = location.pathname.split('/').pop(); 
+        const pathName = location.pathname.split('/').pop();
         setActive(pathName);
-      }, [location]);
+    }, [location]);
 
     const handleClickMenu = (name) => {
         setActive(name);
