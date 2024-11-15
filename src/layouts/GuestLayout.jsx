@@ -14,7 +14,7 @@ const GuestLayout = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
       <GuestHeader />
       <Transition>
         <ScrollTop />

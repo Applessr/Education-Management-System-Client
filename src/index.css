@@ -371,3 +371,7 @@
   animation: gradient-motion 5s ease infinite;
 }
 
+* {
+  font-family: "Open Sans", serif;
+  font-display: swap;
+}
