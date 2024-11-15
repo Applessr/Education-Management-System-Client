@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import AddStudentForm from './AddStudentForm';
 import EditStudentForm from './EditStudentForm';
 import UserStatusToggle from '@/src/hooks/UserStatusToggle';
+import { Plus } from 'lucide-react';
 
 const AdminStudent = () => {
     // State management
@@ -34,7 +35,7 @@ const AdminStudent = () => {
             const token = localStorage.getItem('token');
             const response = await adminGetStudent(token);
             setStudents(response.data);
-            toast.success('Student list updated successfully');
+            // toast.success('Student list updated successfully');
         } catch (err) {
             console.error("Error fetching students:", err);
             toast.error('Failed to update student list');
@@ -180,9 +181,10 @@ const AdminStudent = () => {
                 <div className="p-4 bg-[#1a237e] text-white rounded-t-lg flex justify-between items-center">
                     <h2 className="font-semibold">Student List ({filteredStudents.length} students)</h2>
                     <button
-                        className="px-4 py-2 bg-white text-[#1a237e] rounded hover:bg-gray-100"
+                        className="px-4 py-2 bg-white text-[#1a237e] rounded hover:bg-gray-100 flex items-center gap-2"
                         onClick={() => setIsAddModalOpen(true)}
                     >
+                        <Plus className="w-4 h-4" />
                         Add Student
                     </button>
                 </div>
