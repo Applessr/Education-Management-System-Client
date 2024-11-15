@@ -21,18 +21,12 @@ const TeacherSidebar = () => {
     ], []);
 
     useEffect(() => {
-<<<<<<< HEAD
-        const pathName = location.pathname.split('/').pop();
-        setActive(pathName);
-    }, [location]);
-=======
         const pathSegments = location.pathname.split('/');
         const lastSegment = pathSegments[pathSegments.length - 1];
 
         const currentPath = lastSegment === 'teacher' ? 'dashboard' : lastSegment;
         setActive(currentPath);
     }, [location.pathname]);
->>>>>>> dev
 
     const handleClickMenu = (name) => {
         setActive(name);
