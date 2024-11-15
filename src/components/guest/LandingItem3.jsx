@@ -6,6 +6,7 @@ function LandingItem3() {
 
       <div className="w-2/5 h-[750px] bg-blue-900">
         <img
+          loading="lazy"
           src="https://res.cloudinary.com/djudr1vzc/image/upload/v1730795553/env1_c6otti.jpg"
           alt="enviroment"
           className="w-full h-full object-cover"
@@ -42,10 +43,10 @@ function LandingItem3() {
 
         </div>
 
-      </div>  
+      </div>
 
-    </div>  
-  )      
+    </div>
+  )
 }
 
 export default LandingItem3;

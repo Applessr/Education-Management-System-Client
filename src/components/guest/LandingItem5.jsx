@@ -93,7 +93,7 @@ export default function LandingItem5() {
           </div>
 
           <div className="w-1/2 h-[600px] clip-custom-second mr-6">
-            <img src="https://res.cloudinary.com/djudr1vzc/image/upload/v1731233112/bg-media2_hfekgu.jpg" alt="media2" className='object-cover w-full h-full' />
+            <img loading="lazy" src="https://res.cloudinary.com/djudr1vzc/image/upload/v1731233112/bg-media2_hfekgu.jpg" alt="media2" className='object-cover w-full h-full' />
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@ export default function LandingItem5() {
           </div>
 
           <div className="w-1/2 h-[500px] clip-custom mr-6">
-            <img src="https://res.cloudinary.com/djudr1vzc/image/upload/v1731233113/bg-media3_wxyhah.jpg" alt="media3" className='object-cover w-full h-full' />
+            <img loading="lazy" src="https://res.cloudinary.com/djudr1vzc/image/upload/v1731233113/bg-media3_wxyhah.jpg" alt="media3" className='object-cover w-full h-full' />
           </div>
         </div>
       </div>
