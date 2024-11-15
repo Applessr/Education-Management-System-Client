@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, act } from 'react';
 import { ChevronFirst, ChevronLast, UserCircle, LogOut, LayoutDashboard, CalendarRange, Notebook, Mail, ContactRound } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
@@ -7,15 +7,9 @@ import useUser from '@/src/hooks/useUser';
 const TeacherSidebar = () => {
     const { logout, user } = useUser();
     const [open, setOpen] = useState(true);
-    const [active, setActive] = useState("");
+    const [active, setActive] = useState(null);
     const navigate = useNavigate();
     const location = useLocation()
-
-
-    useEffect(() => {
-        const currentPath = location.pathname.split('/')[2] || "dashboard";
-        setActive(currentPath);
-    }, [])
 
     const sidebarItems = useMemo(() => [
         { icon: <LayoutDashboard size={24} />, text: "Dashboard", name: "dashboard" },
@@ -27,9 +21,18 @@ const TeacherSidebar = () => {
     ], []);
 
     useEffect(() => {
+<<<<<<< HEAD
         const pathName = location.pathname.split('/').pop();
         setActive(pathName);
     }, [location]);
+=======
+        const pathSegments = location.pathname.split('/');
+        const lastSegment = pathSegments[pathSegments.length - 1];
+
+        const currentPath = lastSegment === 'teacher' ? 'dashboard' : lastSegment;
+        setActive(currentPath);
+    }, [location.pathname]);
+>>>>>>> dev
 
     const handleClickMenu = (name) => {
         setActive(name);

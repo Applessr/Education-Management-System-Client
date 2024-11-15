@@ -21,8 +21,8 @@ function CourseDetail({ courseData, onSuccess }) {
   const formatTimeForDisplay = (timeString) => {
     if (!timeString) return 'N/A';
     const time = new Date(timeString);
-    return time.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
+    return time.toLocaleTimeString('en-US', {
+      hour: '2-digit',
       minute: '2-digit',
       hour12: true
     });
@@ -32,10 +32,10 @@ function CourseDetail({ courseData, onSuccess }) {
   const formatTimeForInput = (timeString) => {
     if (!timeString) return '';
     const time = new Date(timeString);
-    return time.toLocaleTimeString('en-GB', { 
-      hour: '2-digit', 
+    return time.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: false 
+      hour12: false
     });
   };
 
@@ -74,7 +74,7 @@ function CourseDetail({ courseData, onSuccess }) {
   const handleSave = async () => {
     try {
       setIsLoading(true);
-      
+
       const updateData = {
         seat: parseInt(formData.seat),
         teacherId: parseInt(formData.teacherId),
@@ -98,7 +98,7 @@ function CourseDetail({ courseData, onSuccess }) {
 
       toast.success('Course updated successfully');
       setIsEditing(false);
-      
+
       if (onSuccess) {
         onSuccess();
       }
@@ -121,62 +121,64 @@ function CourseDetail({ courseData, onSuccess }) {
   };
 
   return (
-    <div className="flex flex-col mx-auto items-start justify-center text-gray-600 space-y-2">
-      <div className="text-xl font-bold mb-4">
+    <div className="flex flex-col mx-auto items-start justify-center text-gray-600 gap-8">
+      {/* <div className="text-xl font-bold mb-4">
         {courseData?.courseCode} {courseData?.courseName} (Section {courseData?.section})
-      </div>
+      </div> */}
 
-      <div className="space-y-2 w-full">
+      <div className="flex flex-col gap-3 w-full">
         <p>
-          <span className="font-semibold">Credits:</span> {courseData?.credits || 'N/A'}
+          <span className="font-bold">Credits:</span> {courseData?.credits || 'N/A'}
         </p>
         <p>
-          <span className="font-semibold">Seats Available:</span>{" "}
+          <span className="font-bold">Seats Available:</span>{" "}
           {courseData?.seat || 'N/A'}
         </p>
         <p>
-          <span className="font-semibold">Teacher ID:</span>{" "}
-          {courseData?.teacherId || 'N/A'} 
+          <span className="font-bold">Teacher ID:</span>{" "}
+          {courseData?.teacherId || 'N/A'}
           {courseData?.employee && ` (${courseData.employee.firstName} ${courseData.employee.lastName})`}
         </p>
-        
+
         {courseData?.classSchedules?.[0] && (
           <>
             <p>
-              <span className="font-semibold">Study day:</span>{" "}
+              <span className="font-bold">Study day:</span>{" "}
               {dayOfWeek[courseData.classSchedules[0].day]}{" "}
               {formatTimeForDisplay(courseData.classSchedules[0].startTime)} -{" "}
               {formatTimeForDisplay(courseData.classSchedules[0].endTime)}
             </p>
             <p>
-              <span className="font-semibold">Study room:</span>{" "}
+              <span className="font-bold">Study room:</span>{" "}
               {courseData.classSchedules[0].room}
             </p>
           </>
         )}
-        
+
         {courseData?.examSchedule?.[0] && (
           <>
             <p>
-              <span className="font-semibold">Exam day:</span>{" "}
+              <span className="font-bold">Exam day:</span>{" "}
               {formatDate(courseData.examSchedule[0].examDate)}{" "}
               {formatTimeForDisplay(courseData.examSchedule[0].startTime)} -{" "}
               {formatTimeForDisplay(courseData.examSchedule[0].endTime)}
             </p>
             <p>
-              <span className="font-semibold">Exam room:</span>{" "}
+              <span className="font-bold ">Exam room:</span>{" "}
               {courseData.examSchedule[0].room}
             </p>
           </>
         )}
       </div>
 
-      <Button onClick={() => setIsEditing(true)} className="mt-4" variant="default">Edit</Button>
+      <div className="flex w-full justify-center ">
+        <Button onClick={() => setIsEditing(true)} className=" bg-[#1B1C52]" variant="default">Edit</Button>
+      </div>
 
       <Dialog open={isEditing} onOpenChange={setIsEditing}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-h-[90vh] overflow-y-auto min-w-[50vw] hide-scrollbar">
           <DialogHeader>
-            <DialogTitle>Edit Course Details</DialogTitle>
+            <DialogTitle><h1 className="text-2xl font-bold ">Edit Course Details</h1></DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
@@ -274,10 +276,11 @@ function CourseDetail({ courseData, onSuccess }) {
             <Button variant="secondary" onClick={() => setIsEditing(false)}>
               Cancel
             </Button>
-            <Button 
+            <Button
               variant="default"
               onClick={handleSave}
               disabled={isLoading}
+              className="bg-[#1B1B52]"
             >
               {isLoading ? "Saving..." : "Save"}
             </Button>

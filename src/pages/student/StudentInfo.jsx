@@ -21,6 +21,8 @@ import {
 import useStudent from "@/src/hooks/useStudent";
 import headerImage from '../../assets/HeaderBarContainer.png'
 import InfoBox from "@/src/components/box-tools/InfoBox";
+import { studentChangePassword } from "@/src/api/student";
+import { toast } from "react-toastify";
 
 function StudentInfo() {
   const { getStudentProfile, studentInfo } = useStudent()
@@ -44,17 +46,36 @@ function StudentInfo() {
     setErrorMessage("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newPassword === confirmPassword) {
-      console.log("New Password:", newPassword);
-      console.log("Confirm Password:", confirmPassword);
-      closeModal();
-    } else {
-      setErrorMessage("Passwords do not match.");
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      toast.error("Please fill all fields");
+      return;
     }
-  };
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
+    if (newPassword !== confirmPassword) {
+      toast.error("New passwords do not match");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      await studentChangePassword(token,
+        {
+          currentPassword,
+          newPassword,
+          confirmPassword
+        });
+
+        toast.success("Password changed successfully");
+        closeModal();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to change password");
+    }
+  }
   return (
     <div className=" flex flex-col h-auto rounded-2xl">
       <div className="w-full min-h-20 " style={{
@@ -103,9 +124,9 @@ function StudentInfo() {
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
                 <button className="flex items-center px-4 py-2 rounded-md border border-[#c2d3ff] text-[#272988] hover:text-white hover:bg-[#2726ad] hover:border-[#9eb5ff] transition-colors duration-200">
-                <KeyRound className="w-4 h-4 mr-2" />
+                  <KeyRound className="w-4 h-4 mr-2" />
                   change password
-                  </button>
+                </button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>

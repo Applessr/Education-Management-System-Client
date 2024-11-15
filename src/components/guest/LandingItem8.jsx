@@ -72,7 +72,7 @@ export default function LandingItem8() {
     return (
         <div
             ref={scrollRef}
-            className='horizontal-scroll overflow-x-scroll flex  ml-2 mt-4 hide-scrollbar '>
+            className='horizontal-scroll overflow-x-scroll flex  ml-2 mt-4 hide-scrollbar'>
 
             <div className=' w-screen h-screen flex-shrink-0'
                 style={{

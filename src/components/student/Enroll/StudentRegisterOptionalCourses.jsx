@@ -39,9 +39,9 @@ import useStudent from "@/src/hooks/useStudent";
 export const columns = [
   {
     accessorKey: "courseId",
-    header: "course Id",
+    header: "",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("courseId")}</div>
+      <div className="capitalize hidden">{row.getValue("courseId")}</div>
     ),
   },
   {
@@ -58,7 +58,7 @@ export const columns = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("courseCode")}</div>
+      <div className="capitalize text-center">{row.getValue("courseCode")}</div>
     ),
   },
   {
@@ -75,7 +75,7 @@ export const columns = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("courseName")}</div>
+      <div className="capitalize text-center">{row.getValue("courseName")}</div>
     ),
   },
   {
@@ -90,7 +90,7 @@ export const columns = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("credits")}</div>
+      <div className="capitalize text-center">{row.getValue("credits")}</div>
     ),
   },
   {
@@ -104,7 +104,9 @@ export const columns = [
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue("seat")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize text-center">{row.getValue("seat")}</div>
+    ),
   },
   {
     accessorKey: "section",
@@ -118,7 +120,7 @@ export const columns = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("section")}</div>
+      <div className="capitalize text-center">{row.getValue("section")}</div>
     ),
   },
   {
@@ -166,7 +168,9 @@ export const columns = [
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue("room")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize text-center">{row.getValue("room")}</div>
+    ),
   },
   {
     accessorKey: "actions",
