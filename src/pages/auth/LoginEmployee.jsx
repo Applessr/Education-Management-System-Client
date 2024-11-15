@@ -5,7 +5,6 @@ import useUser from '../../hooks/useUser';
 import { toast } from 'react-toastify';
 import LoginGoogle from './LoginGoogle';
 import { Eye, EyeOff } from 'lucide-react';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const LoginEmployee = () => {
     const { loginEmployee, errorLogin } = useUser();
@@ -133,9 +132,9 @@ const LoginEmployee = () => {
                     </form>
                     <div className="divider text-[#B1B4B9] font-semibold">OR</div>
 
-                    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID} className='mt-2 w-full'>
+                    <div className='mt-2 w-full'>
                         <LoginGoogle />
-                    </GoogleOAuthProvider>
+                    </div>
 
                     <div className='mt-6 text-sm text-gray-600 space-y-4'>
                         <p>
