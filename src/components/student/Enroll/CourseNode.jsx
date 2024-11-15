@@ -1222,10 +1222,10 @@ export default function EnrollmentFlow() {
     <div className="w-full h-[70vh] ">
       <div className="bg-white p-4 mb-4 rounded-lg shadow">
         <h2 className="text-xl font-bold text-gray-800">
-          Course Prerequisites - Materials Engineering
+          Course Prerequisites - Chemistry
         </h2>
         <p className="text-sm text-gray-600 mt-1">
-          Graduate School, Kasetsart University
+          Graduate School, Pierre University
         </p>
         <p>
           Each semester Student have to Enroll (at least 9 credits , maximum 22
