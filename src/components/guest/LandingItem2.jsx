@@ -3,7 +3,7 @@ import dotBackground from '../../assets/bg-dotDotdot.webp';
 function LandingItem2() {
   return (
     <div >
-      <div className="relative w-full h-screen overflow-hidden text-white"
+      <div className="relative w-screen h-screen overflow-hidden text-white"
         style={{
           backgroundImage: `url(${dotBackground})`,
           backgroundSize: 'cover',

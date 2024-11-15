@@ -190,10 +190,10 @@ export default function DataTableCourse() {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>
-              {editingCourse?.courseCode} {editingCourse?.courseName} (Section {editingCourse?.section})
+             <h1 className="text-xl font-bold"> {editingCourse?.courseCode} {editingCourse?.courseName} (Section {editingCourse?.section})</h1>
             </DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-4 py-2">
             <CourseDetail
               courseData={editingCourse} 
               onClose={() => setEditingCourse(null)}

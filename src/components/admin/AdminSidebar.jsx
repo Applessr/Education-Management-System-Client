@@ -20,14 +20,9 @@ const AdminSidebar = () => {
   const { logout, user } = useUser();
   console.log(user);
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const currentPath = location.pathname.split("/")[2] || "dashboard";
-    setActive(currentPath);
-  }, []);
 
   const sidebarItems = useMemo(
     () => [
@@ -52,10 +47,15 @@ const AdminSidebar = () => {
     setActive(name);
     navigate(`/admin/${name}`);
   };
+  
   useEffect(() => {
-    const pathName = location.pathname.split("/").pop();
-    setActive(pathName);
-  }, [location]);
+    const pathSegments = location.pathname.split('/');
+    const lastSegment = pathSegments[pathSegments.length - 1];
+
+    const currentPath = lastSegment === 'admin' ? 'dashboard' : lastSegment;
+    setActive(currentPath);
+  }, [location.pathname]);
+  
 
   const handleClickSidebar = () => {
     setOpen(!open);
