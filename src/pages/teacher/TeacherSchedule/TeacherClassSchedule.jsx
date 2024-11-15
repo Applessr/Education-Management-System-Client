@@ -163,53 +163,6 @@ const TeacherClassSchedule = () => {
 
     return (
         <div className="bg-white rounded-lg shadow-lg p-4">
-            {/* Filters */}
-            <div className="flex justify-center items-center gap-4 mb-6 mt-10">
-                <div className="flex items-center gap-2">
-                    <span className="text-gray-700">Semester</span>
-                    <div className="relative">
-                        <select
-                            value={selectedSemester}
-                            onChange={(e) => setSelectedSemester(e.target.value)}
-                            className="cursor-pointer appearance-none bg-white border rounded-md px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        >
-                            <option value="">Select</option>
-                            {semesters.map((semester) => (
-                                <option key={semester} value={semester}>
-                                    {semester}
-                                </option>
-                            ))}
-                        </select>
-                        <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
-                    </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <span className="text-gray-700">Year</span>
-                    <div className="relative">
-                        <select
-                            value={selectedYear}
-                            onChange={(e) => setSelectedYear(e.target.value)}
-                            className="cursor-pointer appearance-none bg-white border rounded-md px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        >
-                            <option value="">Select</option>
-                            {years.map((year) => (
-                                <option key={year} value={year}>
-                                    {year}
-                                </option>
-                            ))}
-                        </select>
-                        <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
-                    </div>
-                </div>
-
-                <button
-                    className="px-4 py-2 bg-amber-700 text-white rounded-md hover:bg-amber-800 transition-colors"
-                >
-                    Search
-                </button>
-            </div>
-
             <div className="mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">Weekly Class Schedule</h2>
             </div>
