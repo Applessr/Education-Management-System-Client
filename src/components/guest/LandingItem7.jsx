@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function LandingItem7() {
     return (
-        <div>
+        <div className='w-screen'>
             {/* left to right */}
             <div class="slider-container mb-4">
                 <div class="slider flex gap-5 ">

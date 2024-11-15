@@ -15,7 +15,7 @@ import useUser from "@/src/hooks/useUser";
 const AdminSidebar = () => {
   const { logout, user } = useUser();
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 

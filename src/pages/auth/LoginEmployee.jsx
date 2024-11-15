@@ -37,7 +37,7 @@ const LoginEmployee = () => {
     };
 
     return (
-        <div className='relative min-h-screen flex '>
+        <div className='relative min-h-screen flex overflow-x-hidden '>
             <div className='absolute inset-0 slide-br'
                 style={{
                     backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1730878665/bg-login_a0gvdw.jpg)',
