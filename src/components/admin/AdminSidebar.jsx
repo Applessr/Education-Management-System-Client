@@ -2,13 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   ChevronFirst,
   ChevronLast,
-  UserCircle,
   LogOut,
   LayoutDashboard,
   CalendarRange,
-  Notebook,
-  Mail,
-  ContactRound,
   IdCard,
   LibraryBig,
 } from "lucide-react";
@@ -18,11 +14,17 @@ import useUser from "@/src/hooks/useUser";
 
 const AdminSidebar = () => {
   const { logout, user } = useUser();
-  console.log(user);
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    // Extract the current path from location
+    const pathName = location.pathname.split("/").pop();
+    // If we're at the root admin path, set active to dashboard
+    setActive(pathName === "admin" ? "dashboard" : pathName);
+  }, [location.pathname]); // Add location.pathname as dependency
 
   const sidebarItems = useMemo(
     () => [
@@ -47,15 +49,6 @@ const AdminSidebar = () => {
     setActive(name);
     navigate(`/admin/${name}`);
   };
-  
-  useEffect(() => {
-    const pathSegments = location.pathname.split('/');
-    const lastSegment = pathSegments[pathSegments.length - 1];
-
-    const currentPath = lastSegment === 'admin' ? 'dashboard' : lastSegment;
-    setActive(currentPath);
-  }, [location.pathname]);
-  
 
   const handleClickSidebar = () => {
     setOpen(!open);
@@ -66,11 +59,7 @@ const AdminSidebar = () => {
   };
 
   return (
-    <aside
-      className={`h-screen transition-width duration-300 ${
-        open ? "w-80" : "w-20"
-      }`}
-    >
+    <aside className={`h-screen transition-width duration-300 ${open ? "w-80" : "w-20"}`}>
       <nav className="h-full flex flex-col bg-white border-r">
         <div className="p-4 flex items-center justify-between">
           <div className={`flex items-center gap-4 ${!open && "hidden"}`}>
@@ -108,7 +97,7 @@ const AdminSidebar = () => {
                 <h4 className="font-extrabold text-black">
                   {user?.firstName} {user?.lastName}
                 </h4>
-                <p className="text-md text-black">{user?.role}</p>
+                <p className="text-md text-black">{user?.employeeRole}</p>
               </div>
             )}
             <div
@@ -117,7 +106,7 @@ const AdminSidebar = () => {
                 open ? "ml-auto" : "hidden"
               }`}
             >
-              <LogOut className={`text-black `} />
+              <LogOut className="text-black" />
             </div>
           </div>
         </div>
