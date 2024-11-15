@@ -2,7 +2,7 @@ import React from "react";
 
 function LandingItem3() {
   return (
-    <div className="flex mt-5">
+    <div className="flex mt-5 w-screen">
 
       <div className="w-2/5 h-[750px] bg-blue-900">
         <img

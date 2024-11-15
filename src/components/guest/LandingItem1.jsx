@@ -20,6 +20,7 @@ function LandingItem1() {
   }, []);
 
   return (
+<<<<<<< HEAD
     <div className="relative w-full h-auto ">
 
       <div className="sticky top-[2rem] z-10 h-[100vh] flex flex-col items-start justify-center p-16  text-white text-[80px] font-bold shadow-xl"
@@ -30,9 +31,20 @@ function LandingItem1() {
           <h1>Change</h1>
           <h1>The World</h1>
         </div>
+=======
+    <div className="relative w-full h-auto">
+      <div className="sticky top-[2rem] z-50 h-[100vh] flex flex-col items-start justify-center p-16  text-white text-[80px] font-bold shadow-xl"
+        style={{ textShadow: '6px 6px 6px rgba(0, 0, 0, 0.5)'}}>
+       <div className="m-20">
+       <h1>What</h1>
+        <h1>Start Here</h1>
+        <h1>Change</h1>
+        <h1>The World</h1>
+       </div>
+>>>>>>> dev
       </div>
 
-      <div className="relative w-full h-[100vh] mt-[-32rem] ">
+      <div className="relative w-full h-[100vh] mt-[-30rem] ">
         <video
           rel="preload"
           ref={videoRef}
@@ -49,8 +61,6 @@ function LandingItem1() {
       <div className="relative w-full mt-[-40rem] ">
         <img rel="preload" src={previewImage1} alt="Your Description" className="w-full h-auto object-cover" />
         <div className="absolute inset-0 w-full h-full pointer-events-none">
-          {/* this is overRay   */}
-          {/* <div className="w-full h-full bg-gradient-to-b from-[#ffffff] via-transparent to-transparent filter blur-3xl"></div> */}
         </div>
       </div>
     </div>

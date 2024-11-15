@@ -26,7 +26,7 @@ export default function LandingItem6() {
   return (
     <div 
     ref={contentRef}
-    className={`h-screen  mb-2 ${contentVisible ? 'opacity-100 slide-media' : 'opacity-0'}`} 
+    className={`h-screen mb-2 ${contentVisible ? 'opacity-100 slide-media' : 'opacity-0'}`} 
     style={{
       backgroundImage: 'url(https://res.cloudinary.com/djudr1vzc/image/upload/v1731287255/BBA_qowoqs.jpg)',
       backgroundSize: 'cover',

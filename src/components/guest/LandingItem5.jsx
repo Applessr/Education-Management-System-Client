@@ -51,16 +51,16 @@ export default function LandingItem5() {
   }, [])
 
   return (
-    <div className='flex flex-col gap-2 w-screen items-center'
+    <div className='flex flex-col gap-2 w-screen items-center overflow-y-hidden'
       style={{
         backgroundImage: `url(${stringBackground})`,
         backgroundSize: 'cover',
       }}
     >
 
-      <div className={`w-[85%] flex ${contentVisible[0] ? 'opacity-100 slide-media' : 'opacity-0'}`} ref={contentRef[0]} >
+      <div className={`w-[85%] flex  ${contentVisible[0] ? 'opacity-100 slide-media' : 'opacity-0'}`} ref={contentRef[0]} >
 
-        <div className=' flex items-center'>
+        <div className=' flex items-center '>
           <div className='w-1/2 '>
             <h1 className='text-4xl text-[#272988] font-bold mb-4'>Discover the Faculty of Communication and Media Studies at Pierre University</h1>
             <p className='text-xl'>Unlock your potential in one of the world’s fastest-growing fields! The Faculty of Communication and Media Studies at Pierre University offers dynamic programs that blend creativity with cutting-edge technology, preparing you for success in the global media landscape.</p>

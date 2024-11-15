@@ -59,7 +59,7 @@ const AdminCourse = () => {
       const searchMatch =
         !searchTerm || // if no search term, include all
         course.courseName?.toLowerCase().includes(searchTerm.toLowerCase()) || // search in name
-        course.courseCode?.toString().includes(searchTerm)||
+        course.courseCode?.toString().includes(searchTerm) ||
         course.teacher?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()); // search in teacher name;
 
       // Then apply faculty and major filters
@@ -69,7 +69,7 @@ const AdminCourse = () => {
       return searchMatch && facultyMatch && majorMatch;
     });
   };
-console.log("Course:<><><>",courses);
+  console.log("Course:<><><>", courses);
   // Filter and pagination results
   const filteredMajors = getFilteredMajors();
   const filteredCourses = getFilteredCourses();
@@ -129,7 +129,7 @@ console.log("Course:<><><>",courses);
         <select
           value={selectedFaculty}
           onChange={handleFacultyChange}
-          className="p-2 border rounded-lg"
+          className="p-2 border rounded-lg cursor-pointer"
         >
           <option value="">All Faculties</option>
           {faculties.map(faculty => (
@@ -142,7 +142,7 @@ console.log("Course:<><><>",courses);
         <select
           value={selectedMajor}
           onChange={handleMajorChange}
-          className="p-2 border rounded-lg"
+          className="p-2 border rounded-lg cursor-pointer"
           disabled={!selectedFaculty}
         >
           <option value="">All Majors</option>

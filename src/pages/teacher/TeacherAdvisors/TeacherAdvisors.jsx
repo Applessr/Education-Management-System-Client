@@ -60,6 +60,9 @@ const TeacherAdvisors = () => {
 
   return (
     <div>
+      <div className='p-6'>
+        <h1 className='text-3xl text-[#ab842e] font-bold'>Advisee</h1>
+      </div>
       <FreshmenTable data={freshmenList} />
       <SophomoreTable data={sophomoreList} />
       <JuniorTable data={juniorList} />
